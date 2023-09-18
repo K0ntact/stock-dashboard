@@ -20,13 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CandleChartFragment extends Fragment {
-    private float[] highs = {3.5F, 4.5F, 5.5F, 6.5F, 7.5F, 8.5F, 9.5F};
-    private float[] lows = {1F, 2.3F, 3.5F, 4.5F, 5.5F, 6.5F, 7.5F};
-    private float[] closes = {2.5F, 3.5F, 4.5F, 5.5F, 6.5F, 7.5F, 8.5F};
-    private float[] opens = {1.5F, 2.5F, 3.5F, 4.5F, 5.5F, 6.5F, 7.5F};
+    private CandleDataSet dataSet;
+    private CandleData data;
+    private CandleStickChart candleStickChart;
+    private String dateRange;
 
     public CandleChartFragment() {
         // Required empty public constructor
+    }
+
+    public CandleChartFragment(String dateRange) {
+        this.dateRange = dateRange;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class CandleChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_candle_chart, container, false);
 
-        CandleStickChart candleStickChart = view.findViewById(R.id.candleChart);
+        candleStickChart = view.findViewById(R.id.candleChart);
 
         // This Description is visible at Bottom Right side
         candleStickChart.getDescription().setText("GFG");
@@ -65,7 +69,7 @@ public class CandleChartFragment extends Fragment {
         entries.add(new CandleEntry(14, 72f, 70f, 70f, 68f)); // Down (red)
 
         // Created a CandleDataSet from the entries
-        CandleDataSet dataSet = new CandleDataSet(entries, "Data");
+        dataSet = new CandleDataSet(entries, "Data");
 
         dataSet.setDrawIcons(false);
         dataSet.setIncreasingColor(Color.GREEN);  // Color for up (green) candlesticks
@@ -75,7 +79,8 @@ public class CandleChartFragment extends Fragment {
         dataSet.setDrawValues(false);             // Hiding the values on the chart if not needed
 
         // Created a CandleData object from the CandleDataSet
-        CandleData data = new CandleData(dataSet);
+        data = new CandleData();
+        data.addDataSet(dataSet);
 
         // Seinft the CandleData to the CandleStickChart
         candleStickChart.setData(data);
