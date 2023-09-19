@@ -13,7 +13,7 @@ public class StockDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_stock_detail);
 
         ViewPager2 viewPager = findViewById(R.id.viewPager2);
         ChartAdapter chartAdapter = new ChartAdapter(this);
