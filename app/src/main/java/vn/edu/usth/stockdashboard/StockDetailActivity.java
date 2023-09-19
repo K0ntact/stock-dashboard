@@ -3,17 +3,28 @@ package vn.edu.usth.stockdashboard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class StockDetailActivity extends AppCompatActivity {
+    private String stockName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_detail);
+
+        Intent intent = getIntent();
+        stockName = intent.getStringExtra("stockName");
+
+        if (stockName != null) {
+            TextView stockNameView = findViewById(R.id.stockName);
+            stockNameView.setText(stockName);
+        }
 
         ViewPager2 viewPager = findViewById(R.id.viewPager2);
         ChartAdapter chartAdapter = new ChartAdapter(this);

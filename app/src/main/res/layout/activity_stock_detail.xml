@@ -11,7 +11,7 @@
         android:id="@+id/stockName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VNM"
+        android:text="@string/usth"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         android:id="@+id/compName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VanEck Vietnam EFT"
+        android:text="@string/usth_retake_corp"
         android:textSize="13sp"
         android:textColor="#a5a4a9"
 
