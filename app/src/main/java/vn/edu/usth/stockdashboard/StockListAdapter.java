@@ -57,7 +57,11 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
         entries.add(new Entry(1, 20)); // Sample data point 2
         entries.add(new Entry(2, 15)); // Sample data point 3
         entries.add(new Entry(3, 25)); // Sample data point 4
-        entries.add(new Entry(4, 18)); // Sample data point 5
+        entries.add(new Entry(4, 9));
+        entries.add(new Entry(5, 12));
+        entries.add(new Entry(6, 4));
+        entries.add(new Entry(7, 10));
+        entries.add(new Entry(8, 25));// Sample data point 5
 
         LineDataSet dataSet = new LineDataSet(entries, "Stock Data");
 
@@ -98,4 +102,5 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
         lineChart.invalidate();
         return convertView;
     }
+
 }
