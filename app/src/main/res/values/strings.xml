@@ -8,4 +8,7 @@
     <string name="time_all">TẤT CẢ</string>
     <string name="usth">USTH</string>
     <string name="usth_retake_corp">USTH Retake Corp.</string>
+    <string name="up_percent">+12.4%</string>
+    <string name="up_val">+1.69</string>
+    <string name="stock_val">15.30</string>
 </resources>

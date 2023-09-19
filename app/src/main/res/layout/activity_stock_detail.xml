@@ -48,7 +48,7 @@
         android:id="@+id/stockPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="15.30"
+        android:text="@string/stock_val"
         android:textColor="@color/white"
         android:textSize="33sp"
         android:textStyle="bold"
@@ -64,7 +64,7 @@
         android:id="@+id/changeVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+1.69"
+        android:text="@string/up_val"
         android:textColor="#589c51"
         android:textSize="12sp"
 
@@ -79,7 +79,7 @@
         android:id="@+id/changPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+12.4%"
+        android:text="@string/up_percent"
         android:textColor="#589c51"
         android:textSize="12sp"
 
@@ -143,18 +143,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
-
-
-    <!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/chartContainerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="450dp"-->
-
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tabLayout"-->
-<!--        app:layout_constraintVertical_bias="0.045" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
