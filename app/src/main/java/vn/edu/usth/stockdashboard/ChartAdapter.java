@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ChartAdapter extends FragmentStateAdapter {
-    public ChartAdapter(MainActivity mainActivity) {
-        super(mainActivity);
+    public ChartAdapter(StockDetailActivity activity) {
+        super(activity);
     }
 
     @Override
