@@ -41,7 +41,7 @@ public class MyStockFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Start the MainActivity when an item is clicked
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Intent intent = new Intent(getActivity(),StockDetailActivity.class);
         startActivity(intent);
     }
 }
