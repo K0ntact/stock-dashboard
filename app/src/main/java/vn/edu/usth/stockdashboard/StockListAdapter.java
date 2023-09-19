@@ -2,6 +2,7 @@ package vn.edu.usth.stockdashboard;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -52,27 +54,43 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
         // LineChart lineChart = convertView.findViewById(R.id.lineChart);
 
         // Create a LineDataSet with sample data
-        ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0, 10)); // Sample data point 1
-        entries.add(new Entry(1, 20)); // Sample data point 2
-        entries.add(new Entry(2, 15)); // Sample data point 3
-        entries.add(new Entry(3, 25)); // Sample data point 4
-        entries.add(new Entry(4, 9));
-        entries.add(new Entry(5, 12));
-        entries.add(new Entry(6, 4));
-        entries.add(new Entry(7, 10));
-        entries.add(new Entry(8, 25));// Sample data point 5
+        if (currentItem.getRandomData() == null) {
+            currentItem.generateRandomData(20);
+        }
 
-        LineDataSet dataSet = new LineDataSet(entries, "Stock Data");
+        ArrayList<Entry> randomData = currentItem.getRandomData();
+        LineDataSet dataSet = new LineDataSet(randomData, "Random Data");
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // Smooth line
 
-        // Set gradient fill for the dataset
+        float dottedLineY = 45f;
+        float aboveArea = 0f;
+        float belowArea = 0f;
+
+        for (Entry entry: randomData){
+            if(entry.getY() > dottedLineY){
+                aboveArea += entry.getY() - dottedLineY;
+            } else {
+                belowArea += dottedLineY - entry.getY();
+            }
+        }
         dataSet.setDrawFilled(true);
-        dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_chart_gradient));
-        // Configure the appearance of the line
-        dataSet.setColor(Color.GREEN); // Line color
-        dataSet.setLineWidth(2f); // Line width
-        dataSet.setDrawCircles(false); // Do not draw circles on data points
+        int graphColor;
 
+        if(aboveArea > belowArea){
+            graphColor = getContext().getColor(R.color.positive);
+            percentageTextView.setBackgroundResource(R.drawable.rounded_box_green);
+            addHorizontalDottedLine(lineChart, dottedLineY, getContext().getColor(R.color.positive));
+            dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_chart_gradient_positive));
+        } else {
+            graphColor = getContext().getColor(R.color.negative);
+            percentageTextView.setBackgroundResource(R.drawable.round_box_red);
+            addHorizontalDottedLine(lineChart, dottedLineY, getContext().getColor(R.color.negative));
+            dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_chart_gradient_negative));
+        }
+
+        dataSet.setColor(graphColor);
+        dataSet.setLineWidth(1f); // Line width
+        dataSet.setDrawCircles(false); // Do not draw circles on data points
         // Create a LineData object and set the dataSet
         LineData lineData = new LineData(dataSet);
 
@@ -87,6 +105,16 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
         xAxis.setDrawAxisLine(false); // Disable X-axis line
         xAxis.setDrawGridLines(false); // Disable X-axis grid lines
         xAxis.setDrawLabels(false); // Disable X-axis labels
+        // Disable all user interaction
+        lineChart.setTouchEnabled(false); // Disable touch gestures
+        lineChart.setDragEnabled(false);  // Disable panning
+        lineChart.setScaleEnabled(false); // Disable zooming
+        lineChart.setPinchZoom(false);    // Disable pinch zoom
+        lineChart.setDoubleTapToZoomEnabled(false); // Disable double tap to zoom
+
+        lineChart.setHighlightPerDragEnabled(false); // Disable highlighting on drag
+        lineChart.setHighlightPerTapEnabled(false);  // Disable highlighting on tap
+
 
         // Disable Y-axis (left)
         YAxis leftYAxis = lineChart.getAxisLeft();
@@ -100,7 +128,41 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
 
         // Invalidate the chart to refresh it
         lineChart.invalidate();
+        View separatorView = convertView.findViewById(R.id.separatorView);
+
+        if (position == getCount() -1){
+            separatorView.setVisibility(View.GONE);
+        } else {
+            separatorView.setVisibility(View.VISIBLE);
+        }
+        // Check if there are at least two data points
+        if (randomData.size() >= 2){
+            float lastValue = randomData.get(randomData.size() - 1).getY();
+            float secondLastValue = randomData.get(randomData.size() - 2).getY();
+            float percentageChange = ((lastValue - secondLastValue) / secondLastValue * 100);
+
+            // Update the previousValue field in the StockItem
+            currentItem.setPreviousValue(secondLastValue);
+
+            // Set the percentage text with a plus or minus sign
+            String percentageText;
+            if (percentageChange > 0){
+                percentageText = "+" + String.format("%.2f%%",percentageChange);
+            } else if (percentageChange < 0) {
+                percentageText = String.format("%.2f%%",percentageChange);
+            } else {
+                percentageText = "0.00%";
+            }
+
+        }
         return convertView;
     }
 
+    private void addHorizontalDottedLine(LineChart lineChart, float yValue, int lineColor){
+        LimitLine horizontalLine = new LimitLine(yValue, "");
+        horizontalLine.setLineWidth(1f);
+        horizontalLine.setLineColor(lineColor);
+        horizontalLine.enableDashedLine(5f,5f,0f);
+        lineChart.getAxisLeft().addLimitLine(horizontalLine);
+    }
 }

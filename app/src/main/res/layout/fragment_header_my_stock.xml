@@ -27,13 +27,16 @@
         android:layout_marginStart="16sp"/>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:id="@+id/searchHeaderBar"
+        android:background="@drawable/round_box_gray"
         android:hint="Search..."
+        android:paddingStart="16sp"
         android:textColor="@color/white"
         android:textColorHint="@color/grey"
         android:inputType="text"
+        android:layout_marginTop="15sp"
         android:layout_below="@+id/dateTextViewHeader"
-        android:layout_marginStart="16sp"
+        android:layout_marginStart="12sp"
         android:layout_marginEnd="16sp"/>
 </RelativeLayout>

@@ -1,11 +1,31 @@
 package vn.edu.usth.stockdashboard;
 
+import com.github.mikephil.charting.data.Entry;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 public class StockItem {
     private String symbol;
     private String name;
     private String money;
     private String percentage;
+    private ArrayList<Entry> randomData;
+    private float previousValue;
 
+    public ArrayList<Entry> getRandomData() {
+        return randomData;
+    }
+
+    public void generateRandomData(int numberOfDataPoints){
+        randomData = new ArrayList<>();
+        Random random = new Random();
+        for(int i = 0; i < numberOfDataPoints; i++){
+            float x = i;
+            float y = random.nextFloat() * 100;
+            randomData.add(new Entry(x,y));
+        }
+    }
     public StockItem(String symbol, String name, String money, String percentage) {
         this.symbol = symbol;
         this.name = name;
@@ -27,6 +47,14 @@ public class StockItem {
 
     public String getPercentage() {
         return percentage;
+    }
+
+    public float getPreviousValue() {
+        return previousValue;
+    }
+
+    public void setPreviousValue(float previousValue) {
+        this.previousValue = previousValue;
     }
 
 }
