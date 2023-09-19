@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">StockDashboard</string>
-    <string name="time_6M">6TH</string>
-    <string name="time_1D">1N</string>
-    <string name="time_2D">2N</string>
-    <string name="time_5D">5N</string>
-    <string name="time_10D">10N</string>
-    <string name="time_all">TẤT CẢ</string>
+    <string name="time_6M">6M</string>
+    <string name="time_1D">1D</string>
+    <string name="time_2D">2D</string>
+    <string name="time_5D">5D</string>
+    <string name="time_10D">10D</string>
+    <string name="time_all">ALL</string>
 </resources>

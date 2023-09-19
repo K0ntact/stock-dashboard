@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         CandleChartFragment firstFragment = new CandleChartFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.chartContainerView, firstFragment).commit();
 
+
         setContentView(R.layout.activity_main);
     }
 }
