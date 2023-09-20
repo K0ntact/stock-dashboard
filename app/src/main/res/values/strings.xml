@@ -24,4 +24,6 @@
     <string name="float2">179.63</string>
     <string name="float3">177.13</string>
     <string name="close">Close</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign up</string>
 </resources>

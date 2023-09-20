@@ -28,7 +28,7 @@
 
     <View
         android:id="@+id/fnField"
-        android:layout_width="138dp"
+        android:layout_width="164dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -40,7 +40,7 @@
 
     <EditText
         android:id="@+id/first_name"
-        android:layout_width="138dp"
+        android:layout_width="164dp"
         android:layout_height="50dp"
         android:autofillHints=""
         android:background="@null"
@@ -57,7 +57,7 @@
 
     <View
         android:id="@+id/lnField"
-        android:layout_width="99dp"
+        android:layout_width="117dp"
         android:layout_height="50dp"
         android:background="@drawable/lnfield"
         app:layout_constraintBottom_toBottomOf="@+id/fnField"
@@ -66,7 +66,7 @@
 
     <EditText
         android:id="@+id/last_name"
-        android:layout_width="99dp"
+        android:layout_width="117dp"
         android:layout_height="50dp"
         android:autofillHints=""
         android:background="@null"
@@ -83,7 +83,7 @@
 
     <View
         android:id="@+id/usernameField"
-        android:layout_width="246dp"
+        android:layout_width="295dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -96,7 +96,7 @@
 
     <View
         android:id="@+id/pwField"
-        android:layout_width="246dp"
+        android:layout_width="295dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -109,7 +109,7 @@
 
     <View
         android:id="@+id/cfField"
-        android:layout_width="246dp"
+        android:layout_width="295dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -122,7 +122,7 @@
 
     <EditText
         android:id="@+id/cfInput"
-        android:layout_width="246dp"
+        android:layout_width="295dp"
         android:layout_height="50dp"
         android:autofillHints=""
         android:background="@null"
@@ -157,13 +157,13 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="290dp"
+        android:layout_height="238dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:contentDescription="@string/footer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/vector_1"
+        app:srcCompat="@drawable/stock"
         tools:ignore="ImageContrastCheck" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -171,11 +171,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.21" />
+        app:layout_constraintGuide_percent="0.21203831" />
 
     <EditText
         android:id="@+id/passwordInput"
-        android:layout_width="246dp"
+        android:layout_width="295dp"
         android:layout_height="50dp"
         android:autofillHints=""
         android:background="@null"
@@ -194,8 +194,8 @@
         tools:ignore="ContentDescription,RtlSymmetry,TextContrastCheck" />
 
     <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="246dp"
+        android:id="@+id/usernameEditText"
+        android:layout_width="295dp"
         android:layout_height="50dp"
         android:autofillHints=""
         android:background="@null"
