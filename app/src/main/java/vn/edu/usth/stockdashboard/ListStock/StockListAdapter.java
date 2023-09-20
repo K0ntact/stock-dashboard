@@ -1,8 +1,6 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.ListStock;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +19,13 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 
+import vn.edu.usth.stockdashboard.R;
+
 public class StockListAdapter extends ArrayAdapter<StockItem> {
     public StockListAdapter(Context context, ArrayList<StockItem> stockList){
         super(context, 0, stockList);
     }
-    MyStockFragment myStockFragment = new MyStockFragment();
+    ListStockFragment listStockFragment = new ListStockFragment();
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

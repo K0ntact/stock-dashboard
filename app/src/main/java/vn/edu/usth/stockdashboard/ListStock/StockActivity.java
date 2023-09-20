@@ -1,13 +1,15 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.ListStock;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import vn.edu.usth.stockdashboard.R;
+
 public class StockActivity extends AppCompatActivity {
 
-    MyStockFragment myStockFragment = new MyStockFragment();
-    HeaderMyStockFragment headerMyStockFragment = new HeaderMyStockFragment();
+//    ListStockFragment listStockFragment = new ListStockFragment();
+//    HeaderMyStockFragment headerMyStockFragment = new HeaderMyStockFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

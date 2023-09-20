@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242424"
-    tools:context=".StockDetailActivity">
+    tools:context=".DetailStock.StockDetailActivity">
 
     <TextView
         android:id="@+id/stockName"

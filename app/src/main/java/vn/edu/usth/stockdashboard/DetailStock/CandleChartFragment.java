@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.DetailStock;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,6 +16,8 @@ import com.github.mikephil.charting.data.CandleEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import vn.edu.usth.stockdashboard.R;
 
 public class CandleChartFragment extends Fragment {
     private CandleDataSet dataSet;

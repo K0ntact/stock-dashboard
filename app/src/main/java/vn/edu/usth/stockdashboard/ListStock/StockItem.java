@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.ListStock;
 
 import com.github.mikephil.charting.data.Entry;
 
@@ -21,9 +21,8 @@ public class StockItem {
         randomData = new ArrayList<>();
         Random random = new Random();
         for(int i = 0; i < numberOfDataPoints; i++){
-            float x = i;
             float y = random.nextFloat() * 100;
-            randomData.add(new Entry(x,y));
+            randomData.add(new Entry((float) i,y));
         }
     }
     public StockItem(String symbol, String name, String money, String percentage) {

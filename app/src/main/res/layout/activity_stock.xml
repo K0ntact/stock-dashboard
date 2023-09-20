@@ -3,27 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StockActivity"
+    tools:context=".ListStock.StockActivity"
     android:id="@+id/container"
     android:background="@color/black">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <fragment
-        android:id="@+id/headerMyStockFragment"
-        android:name="vn.edu.usth.stockdashboard.HeaderMyStockFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp">
-    </fragment>
-    <!-- Include MyStockFragment -->
-    <fragment
-        android:id="@+id/myStockFragment"
-        android:name="vn.edu.usth.stockdashboard.MyStockFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/headerMyStockFragment"
+            android:name="vn.edu.usth.stockdashboard.ListStock.HeaderMyStockFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Include ListStockFragment -->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/myStockFragment"
+            android:name="vn.edu.usth.stockdashboard.ListStock.ListStockFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
