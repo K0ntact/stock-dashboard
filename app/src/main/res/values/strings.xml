@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">StockDashboard</string>
+    <string name="first_name">First Name</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="footer">Footer</string>
     <string name="time_6M">6M</string>
     <string name="time_1D">1D</string>
     <string name="time_2D">2D</string>
