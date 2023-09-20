@@ -7,6 +7,7 @@
     tools:context=".ListStock.HeaderMyStockFragment"
     android:background="@color/black">
     <TextView
+        android:id="@+id/stockmarketheader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stock Market"
@@ -14,21 +15,20 @@
         android:textAlignment="center"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:id="@+id/stockmarketheader"
         android:layout_marginStart="16dp"/>
     <TextView
+        android:id="@+id/dateTextViewHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/stockmarketheader"
-        android:id="@+id/dateTextViewHeader"
         android:text=""
         android:textSize="18sp"
         android:textColor="@color/grey"
         android:layout_marginStart="16dp"/>
     <EditText
+        android:id="@+id/searchHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/searchHeaderBar"
         android:background="@drawable/round_box_gray"
         android:hint="Search..."
         android:paddingStart="16dp"
