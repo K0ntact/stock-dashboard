@@ -8,14 +8,6 @@
     android:background="#FFFFFF"
     android:clipToOutline="true"
     tools:ignore="UnusedAttribute">
-
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-
-    <!--
-    Font family: Inter
-    Line height: 48sp
-    -->
-
     <TextView
         android:id="@+id/sign_up"
         android:layout_width="340dp"
@@ -56,6 +48,7 @@
         android:inputType="text"
         android:paddingStart="10dp"
         android:textAppearance="@style/placeholder"
+        android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="@+id/fnField"
         app:layout_constraintEnd_toEndOf="@+id/fnField"
         app:layout_constraintStart_toStartOf="@+id/fnField"
@@ -81,6 +74,7 @@
         android:inputType="text"
         android:paddingStart="10dp"
         android:textAppearance="@style/placeholder"
+        android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="@+id/lnField"
         app:layout_constraintEnd_toEndOf="@+id/lnField"
         app:layout_constraintStart_toStartOf="@+id/lnField"
