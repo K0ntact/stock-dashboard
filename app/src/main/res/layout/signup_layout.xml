@@ -1,0 +1,167 @@
+<!-- Auto layout, variables, and unit scale are not yet supported -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/android_sma"
+    android:layout_width="360dp"
+    android:layout_height="640dp"
+    android:clipToOutline="true"
+    android:background="#FFFFFF">
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+
+    <!--
+    Font family: Inter
+    Line height: 48sp
+    -->
+
+    <TextView
+        android:id="@+id/sign_up"
+        android:layout_width="186dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="82dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="501dp"
+        android:gravity="center"
+        android:text="@string/sign_up"
+        android:
+        android:textAppearance="@style/sign_up" />
+
+    <View
+        android:id="@+id/btnshape"
+        android:layout_width="99dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="131dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="421dp"
+        android:background="@drawable/btnground">
+    </View>
+
+
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <View
+        android:id="@+id/cfinput"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="45dp"
+        android:layout_alignParentBottom=""
+        android:layout_marginTop="357dp"
+        />
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <View
+        android:id="@+id/fnfield"
+        android:layout_width="138dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="165dp"
+        android:background="@drawable/fnfield"
+        android:focusable="auto" />
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+
+    <TextView
+        android:id="@+id/first_name"
+        android:layout_width="62dp"
+        android:layout_height="15dp"
+        android:layout_alignStart="@+id/fnfield"
+        android:layout_alignTop="@+id/fnfield"
+        android:layout_alignEnd="@+id/fnfield"
+        android:layout_alignBottom="@+id/fnfield"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="top"
+        android:text="@string/first_name"
+        android:textAppearance="@style/placeholder" />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <View
+        android:id="@+id/lnfield"
+        android:layout_width="99dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="192dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="165dp"
+        android:background="@drawable/lnfield"
+        />
+
+    <TextView
+        android:id="@+id/last_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/lnfield"
+        android:layout_alignTop="@id/lnfield"
+        android:layout_alignEnd="@id/lnfield"
+        android:layout_alignBottom="@id/lnfield"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="19dp"
+        android:text="Last name"
+        android:textAppearance="@style/placeholder" />
+
+</RelativeLayout>
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <View
+        android:id="@+id/userfield"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="229dp"
+        android:background="@drawable/input"
+        />
+
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <View
+        android:id="@+id/pwfield"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="293dp"
+        android:background="@drawable/input"
+        />
+    <View
+        android:id="@+id/cffield"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="357dp"
+        android:background="@drawable/input"
+        />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/vector_1"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="Footer" />
+
+
+    <!--
+    Font family: Inter
+    Line height: 15sp
+    (identical to box height)
+    -->
+
+
+</RelativeLayout>
