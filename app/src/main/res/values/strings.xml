@@ -8,4 +8,8 @@
     <string name="time_all">TẤT CẢ</string>
     <string name="first_name">First Name</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="footer">Footer</string>
 </resources>
