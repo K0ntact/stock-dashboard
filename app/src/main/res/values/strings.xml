@@ -6,4 +6,6 @@
     <string name="time_5D">5N</string>
     <string name="time_10D">10N</string>
     <string name="time_all">TẤT CẢ</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
