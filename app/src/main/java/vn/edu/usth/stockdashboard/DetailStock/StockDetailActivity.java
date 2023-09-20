@@ -14,6 +14,9 @@ import vn.edu.usth.stockdashboard.R;
 
 public class StockDetailActivity extends AppCompatActivity {
     private String stockName;
+    private String companyName;
+    private String money;
+    private String percentage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +25,26 @@ public class StockDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         stockName = intent.getStringExtra("stockName");
+        companyName = intent.getStringExtra("companyName");
+        money = intent.getStringExtra("money");
+        percentage = intent.getStringExtra("percentage");
+
 
         if (stockName != null) {
             TextView stockNameView = findViewById(R.id.stockName);
             stockNameView.setText(stockName);
+        }
+        if (companyName != null) {
+            TextView companyNameView = findViewById(R.id.compName);
+            companyNameView.setText(companyName);
+        }
+        if (money != null) {
+            TextView moneyView = findViewById(R.id.stockPrice);
+            moneyView.setText(money);
+        }
+        if (percentage != null) {
+            TextView percentageView = findViewById(R.id.changPercent);
+            percentageView.setText(percentage);
         }
 
         ViewPager2 viewPager = findViewById(R.id.viewPager2);
@@ -52,16 +71,16 @@ public class StockDetailActivity extends AppCompatActivity {
         TabLayoutMediator mediator = new TabLayoutMediator(dateRange, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("6M");
-                    break;
-                case 1:
                     tab.setText("1D");
                     break;
-                case 2:
+                case 1:
                     tab.setText("2D");
                     break;
-                case 3:
+                case 2:
                     tab.setText("5D");
+                    break;
+                case 3:
+                    tab.setText("6M");
                     break;
                 case 4:
                     tab.setText("ALL");

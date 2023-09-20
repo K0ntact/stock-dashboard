@@ -30,7 +30,7 @@ public class ListStockFragment extends Fragment implements AdapterView.OnItemCli
         entries.add(new StockItem("SBUX", "Starbucks Corporation", "95,28 US$","+0,19%"));
         entries.add(new StockItem("NKE", "NIKE, Inc.", "97,67 US$", " -0,27%"));
         // Add more data points as needed
-        View view = inflater.inflate(R.layout.fragment_my_stock, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_stock, container, false);
         ListView listView = view.findViewById(R.id.listView);
         // Set the item click listener for the ListView
         listView.setOnItemClickListener(this);
@@ -45,6 +45,10 @@ public class ListStockFragment extends Fragment implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Start the MainActivity when an item is clicked
         Intent intent = new Intent(getActivity(), StockDetailActivity.class);
+        intent.putExtra("stockName", entries.get(i).getSymbol());
+        intent.putExtra("companyName", entries.get(i).getName());
+        intent.putExtra("money", entries.get(i).getMoney());
+        intent.putExtra("percentage", entries.get(i).getPercentage());
         startActivity(intent);
     }
 }
