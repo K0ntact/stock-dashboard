@@ -1,14 +1,21 @@
 <resources>
     <string name="app_name">StockDashboard</string>
-    <string name="time_6M">6TH</string>
-    <string name="time_1D">1N</string>
-    <string name="time_2D">2N</string>
-    <string name="time_5D">5N</string>
-    <string name="time_10D">10N</string>
-    <string name="time_all">TẤT CẢ</string>
+    <string name="time_6M">6M</string>
+    <string name="time_1D">1D</string>
+    <string name="time_2D">2D</string>
+    <string name="time_5D">5D</string>
+    <string name="time_10D">10D</string>
+    <string name="time_all">ALL</string>
     <string name="usth">USTH</string>
     <string name="usth_retake_corp">USTH Retake Corp.</string>
-    <string name="up_percent">+12.4%</string>
-    <string name="up_val">+1.69</string>
-    <string name="stock_val">15.30</string>
+    <string name="up_percent">+0.62%</string>
+    <string name="up_val">+1.10</string>
+    <string name="stock_val">179.07</string>
+    <string name="open">Open</string>
+    <string name="highest">Highest</string>
+    <string name="lowest">Lowest</string>
+    <string name="float1">177.52</string>
+    <string name="float2">179.63</string>
+    <string name="float3">177.13</string>
+    <string name="close">Close</string>
 </resources>
