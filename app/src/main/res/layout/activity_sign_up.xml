@@ -28,8 +28,8 @@
 
     <View
         android:id="@+id/fnField"
-        android:layout_width="164dp"
-        android:layout_height="50dp"
+        android:layout_width="194dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/fnfield"
@@ -40,8 +40,8 @@
 
     <EditText
         android:id="@+id/first_name"
-        android:layout_width="164dp"
-        android:layout_height="50dp"
+        android:layout_width="194dp"
+        android:layout_height="60dp"
         android:autofillHints=""
         android:background="@null"
         android:hint="@string/first_name"
@@ -49,6 +49,7 @@
         android:paddingStart="10dp"
         android:textAppearance="@style/placeholder"
         android:textColorHint="#757575"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/fnField"
         app:layout_constraintEnd_toEndOf="@+id/fnField"
         app:layout_constraintStart_toStartOf="@+id/fnField"
@@ -57,8 +58,8 @@
 
     <View
         android:id="@+id/lnField"
-        android:layout_width="117dp"
-        android:layout_height="50dp"
+        android:layout_width="138dp"
+        android:layout_height="60dp"
         android:background="@drawable/lnfield"
         app:layout_constraintBottom_toBottomOf="@+id/fnField"
         app:layout_constraintEnd_toEndOf="@+id/usernameField"
@@ -66,8 +67,8 @@
 
     <EditText
         android:id="@+id/last_name"
-        android:layout_width="117dp"
-        android:layout_height="50dp"
+        android:layout_width="138dp"
+        android:layout_height="60dp"
         android:autofillHints=""
         android:background="@null"
         android:hint="Last name"
@@ -75,6 +76,7 @@
         android:paddingStart="10dp"
         android:textAppearance="@style/placeholder"
         android:textColorHint="#757575"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/lnField"
         app:layout_constraintEnd_toEndOf="@+id/lnField"
         app:layout_constraintStart_toStartOf="@+id/lnField"
@@ -83,8 +85,8 @@
 
     <View
         android:id="@+id/usernameField"
-        android:layout_width="295dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/input"
@@ -96,8 +98,8 @@
 
     <View
         android:id="@+id/pwField"
-        android:layout_width="295dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/input"
@@ -109,12 +111,12 @@
 
     <View
         android:id="@+id/cfField"
-        android:layout_width="295dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/input"
-        app:layout_constraintBottom_toTopOf="@+id/btnshape"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
         app:layout_constraintEnd_toEndOf="@+id/pwField"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/pwField"
@@ -122,8 +124,8 @@
 
     <EditText
         android:id="@+id/cfInput"
-        android:layout_width="295dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
         android:autofillHints=""
         android:background="@null"
         android:hint="@string/confirm_password"
@@ -131,6 +133,7 @@
         android:paddingStart="10dp"
         android:textAppearance="@style/placeholder"
         android:textColorHint="#757575"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cfField"
         app:layout_constraintEnd_toEndOf="@+id/cfField"
         app:layout_constraintStart_toStartOf="@+id/cfField"
@@ -138,9 +141,9 @@
         tools:ignore="ContentDescription,RtlSymmetry,TextContrastCheck" />
 
     <Button
-        android:id="@+id/btnshape"
-        android:layout_width="99dp"
-        android:layout_height="50dp"
+        android:id="@+id/buttonSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:backgroundTint="#0B6EFE"
         android:contentDescription="Sign up"
         android:contextClickable="true"
@@ -175,8 +178,8 @@
 
     <EditText
         android:id="@+id/passwordInput"
-        android:layout_width="295dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
         android:autofillHints=""
         android:background="@null"
         android:ems="10"
@@ -185,6 +188,7 @@
         android:paddingStart="10dp"
         android:textAppearance="@style/placeholder"
         android:textColorHint="#757575"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/pwField"
         app:layout_constraintEnd_toEndOf="@+id/pwField"
         app:layout_constraintHorizontal_bias="0.0"
@@ -195,8 +199,8 @@
 
     <EditText
         android:id="@+id/usernameEditText"
-        android:layout_width="295dp"
-        android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
         android:autofillHints=""
         android:background="@null"
         android:ems="10"
@@ -205,6 +209,7 @@
         android:paddingStart="10dp"
         android:textAppearance="@style/placeholder"
         android:textColorHint="#757575"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/usernameField"
         app:layout_constraintEnd_toEndOf="@+id/usernameField"
         app:layout_constraintStart_toStartOf="@+id/usernameField"
