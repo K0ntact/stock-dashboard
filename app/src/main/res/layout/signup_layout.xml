@@ -1,12 +1,12 @@
 <!-- Auto layout, variables, and unit scale are not yet supported -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/android_sma"
-    android:layout_width="360dp"
-    android:layout_height="640dp"
-    android:clipToOutline="true"
-    android:background="#FFFFFF">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:clipToOutline="true">
 
     <!-- Auto layout, variables, and unit scale are not yet supported -->
 
@@ -17,151 +17,175 @@
 
     <TextView
         android:id="@+id/sign_up"
-        android:layout_width="186dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="82dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginBottom="501dp"
         android:gravity="center"
-        android:text="@string/sign_up"
-        android:
-        android:textAppearance="@style/sign_up" />
+        android:text="Create Account"
+        android:textAppearance="@style/sign_up"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/lnField"
+        app:layout_constraintStart_toStartOf="@+id/fnField"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/btnshape"
-        android:layout_width="99dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="131dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="421dp"
-        android:background="@drawable/btnground">
-    </View>
-
-
-
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-    <View
-        android:id="@+id/cfinput"
-        android:layout_width="246dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="45dp"
-        android:layout_alignParentBottom=""
-        android:layout_marginTop="357dp"
-        />
-
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-    <View
-        android:id="@+id/fnfield"
+        android:id="@+id/fnField"
         android:layout_width="138dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="165dp"
         android:background="@drawable/fnfield"
-        android:focusable="auto" />
+        android:focusable="auto"
+        app:layout_constraintBottom_toTopOf="@+id/usernameField"
+        app:layout_constraintStart_toStartOf="@+id/usernameField"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
 
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
-
-    <TextView
+    <EditText
         android:id="@+id/first_name"
-        android:layout_width="62dp"
-        android:layout_height="15dp"
-        android:layout_alignStart="@+id/fnfield"
-        android:layout_alignTop="@+id/fnfield"
-        android:layout_alignEnd="@+id/fnfield"
-        android:layout_alignBottom="@+id/fnfield"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="top"
+        android:layout_width="138dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:paddingStart="10dp"
         android:text="@string/first_name"
-        android:textAppearance="@style/placeholder" />
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+        android:textAppearance="@style/placeholder"
+        app:layout_constraintBottom_toBottomOf="@+id/fnField"
+        app:layout_constraintEnd_toEndOf="@+id/fnField"
+        app:layout_constraintStart_toStartOf="@+id/fnField"
+        app:layout_constraintTop_toTopOf="@+id/fnField" />
+
     <View
-        android:id="@+id/lnfield"
+        android:id="@+id/lnField"
         android:layout_width="99dp"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="192dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="165dp"
         android:background="@drawable/lnfield"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/fnField"
+        app:layout_constraintEnd_toEndOf="@+id/usernameField"
+        app:layout_constraintTop_toTopOf="@+id/fnField" />
 
-    <TextView
+    <EditText
         android:id="@+id/last_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@id/lnfield"
-        android:layout_alignTop="@id/lnfield"
-        android:layout_alignEnd="@id/lnfield"
-        android:layout_alignBottom="@id/lnfield"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="19dp"
+        android:layout_width="99dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:paddingStart="10dp"
         android:text="Last name"
-        android:textAppearance="@style/placeholder" />
+        android:textAppearance="@style/placeholder"
+        app:layout_constraintBottom_toBottomOf="@+id/lnField"
+        app:layout_constraintEnd_toEndOf="@+id/lnField"
+        app:layout_constraintStart_toStartOf="@+id/lnField"
+        app:layout_constraintTop_toTopOf="@+id/lnField" />
 
-</RelativeLayout>
-
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
     <View
-        android:id="@+id/userfield"
+        android:id="@+id/usernameField"
         android:layout_width="246dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="45dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="229dp"
         android:background="@drawable/input"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/pwField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fnField" />
 
-    <!-- Auto layout, variables, and unit scale are not yet supported -->
     <View
-        android:id="@+id/pwfield"
+        android:id="@+id/pwField"
         android:layout_width="246dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="45dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="293dp"
         android:background="@drawable/input"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/cfField"
+        app:layout_constraintEnd_toEndOf="@+id/usernameField"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/usernameField"
+        app:layout_constraintTop_toBottomOf="@+id/usernameField" />
+
     <View
-        android:id="@+id/cffield"
+        android:id="@+id/cfField"
         android:layout_width="246dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="45dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="357dp"
         android:background="@drawable/input"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/btnshape"
+        app:layout_constraintEnd_toEndOf="@+id/pwField"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/pwField"
+        app:layout_constraintTop_toBottomOf="@+id/pwField" />
+
+    <EditText
+        android:id="@+id/cfInput"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:contentDescription="Confirm Password"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/placeholder"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cfField"
+        app:layout_constraintEnd_toEndOf="@+id/cfField"
+        app:layout_constraintStart_toStartOf="@+id/cfField"
+        app:layout_constraintTop_toTopOf="@+id/cfField" />
+
+    <Button
+        android:id="@+id/btnshape"
+        android:layout_width="99dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:text="Sign up"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cfField" />
 
     <ImageView
         android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="Footer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/vector_1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/vector_1"
-        android:layout_alignParentBottom="true"
-        android:contentDescription="Footer" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.21" />
 
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:contentDescription="Password"
+        android:hint="Password"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="@+id/pwField"
+        app:layout_constraintEnd_toEndOf="@+id/pwField"
+        app:layout_constraintStart_toStartOf="@+id/pwField"
+        app:layout_constraintTop_toTopOf="@+id/pwField" />
 
-    <!--
-    Font family: Inter
-    Line height: 15sp
-    (identical to box height)
-    -->
-
-
-</RelativeLayout>
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:text="Username"
+        android:textAppearance="@style/placeholder"
+        app:layout_constraintBottom_toBottomOf="@+id/usernameField"
+        app:layout_constraintEnd_toEndOf="@+id/usernameField"
+        app:layout_constraintStart_toStartOf="@+id/usernameField"
+        app:layout_constraintTop_toTopOf="@+id/usernameField" />
+</androidx.constraintlayout.widget.ConstraintLayout>
