@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements OnFilterListener {
 
     private ListView listView;
     private ArrayAdapter<String> adapter;
@@ -37,15 +37,17 @@ public class ListFragment extends Fragment {
         originalList.add("Item 4");
         originalList.add("Item 5");
 
-        adapter = new ArrayAdapter<>(requireContext(), android.R.layout,simple_list_item_1,originalList);
+        adapter = new ArrayAdapter<>(requireContext(),R.layout.custom_list_search,originalList);
         listView.setAdapter(adapter);
 
         return view;
     }
-    public void filterList(String query){
+
+    @Override
+    public void onFilter(String query) {
         List<String> filteredList = new ArrayList<>();
-        for(String item: originalList){
-            if (item.toLowerCase().contains(query.toLowerCase())){
+        for (String item: originalList){
+            if(item.toLowerCase().contains(query.toLowerCase())){
                 filteredList.add(item);
             }
         }
@@ -53,5 +55,4 @@ public class ListFragment extends Fragment {
         adapter.addAll(filteredList);
         adapter.notifyDataSetChanged();
     }
-
 }

@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MenuSearchActivity"
     android:background="@color/black">
-    <FrameLayout
+    <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragmentContainer"
-        android:layout_alignParentTop="true"/>
-    <FrameLayout
+        android:layout_alignParentTop="true"
+        android:name="vn.edu.usth.stockdashboard.SearchInputFragment"/>
+    <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listFragmentContainer"
-        android:layout_below="@id/fragmentContainer"/>
+        android:layout_below="@id/fragmentContainer"
+        android:name="vn.edu.usth.stockdashboard.ListFragment"/>
 </RelativeLayout>

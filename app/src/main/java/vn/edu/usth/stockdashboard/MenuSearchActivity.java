@@ -16,11 +16,5 @@ public class MenuSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_search);
-
-        if (savedInstanceState == null){
-            SearchInputFragment searchInputFragment = new SearchInputFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,searchInputFragment).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentContainer,searchInputFragment).commit();
-        }
     }
 }

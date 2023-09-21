@@ -6,13 +6,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchInputFragment extends Fragment {
     private EditText searchEditText;
+    private OnFilterListener filterListener;
     public SearchInputFragment(){
 
     }
@@ -30,9 +35,8 @@ public class SearchInputFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ListFragment listFragment = (ListFragment) getChildFragmentManager().findFragmentById(R.id.listFragmentContainer);
-                if (listFragment != null){
-                    listFragment.filterlist(charSequence.toString());
+                if (filterListener != null){
+                    filterListener.onFilter(charSequence.toString());
                 }
             }
 
@@ -40,8 +44,19 @@ public class SearchInputFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
             }
         });
-
-
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH){
+                    performSearch();
+                    return true;
+                }
+                return false;
+            }
+        });
         return view;
+    }
+    private void performSearch() {
+
     }
 }
