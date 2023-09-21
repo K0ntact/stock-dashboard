@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.CandleStickChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
@@ -82,6 +83,20 @@ public class CandleChartFragment extends Fragment {
 
         // Seinft the CandleData to the CandleStickChart
         candleStickChart.setData(data);
+        // Set the X-axis label count
+        candleStickChart.getXAxis().setLabelCount(entries.size(), true);
+        candleStickChart.getXAxis().setTextColor(Color.WHITE);
+        candleStickChart.getAxisRight().setTextColor(Color.WHITE);
+        XAxis xAxis = candleStickChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        // Turn off legend
+        candleStickChart.getLegend().setEnabled(false);
+        // Set gridline style to dotted line
+        candleStickChart.getXAxis().enableGridDashedLine(10f, 10f, 0f);
+        candleStickChart.getAxisLeft().enableGridDashedLine(10f, 10f, 0f);
+        candleStickChart.getAxisRight().enableGridDashedLine(10f, 10f, 0f);
+
+        // Refresh the chart
         candleStickChart.invalidate();
 
         return view;

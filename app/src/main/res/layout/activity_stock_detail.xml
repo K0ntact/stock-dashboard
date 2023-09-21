@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#242424"
+    android:background="#0d1019"
     tools:context=".DetailStock.StockDetailActivity">
 
     <TextView
@@ -98,7 +98,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#242424"
+        android:background="#232b36"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
