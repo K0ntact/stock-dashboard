@@ -1,29 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListStock.StockActivity"
-    android:id="@+id/container"
-    android:background="@color/black">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/headerMyStockFragment"
-            android:name="vn.edu.usth.stockdashboard.ListStock.HeaderMyStockFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"/>
+    android:background="@color/black"
+    tools:context=".ListStock.StockFragment">
 
-        <!-- Include ListStockFragment -->
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/myStockFragment"
-            android:name="vn.edu.usth.stockdashboard.ListStock.ListStockFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/stockmarketheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/stock_market"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dateTextViewHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stockmarketheader"
+        android:text="@string/date"
+        android:textColor="@color/grey"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/stockmarketheader"
+        app:layout_constraintTop_toBottomOf="@+id/stockmarketheader" />
+
+    <EditText
+        android:id="@+id/searchHeaderBar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/dateTextViewHeader"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="15dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:background="@drawable/round_box_gray"
+        android:hint="@string/search"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextViewHeader" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/listStockFragment"
+        android:name="vn.edu.usth.stockdashboard.ListStock.ListStockFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier7" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="searchHeaderBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
