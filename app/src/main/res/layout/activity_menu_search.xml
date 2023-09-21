@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MenuSearchActivity"
     android:background="@color/black">
-    <EditText
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchMenu"
-        android:hint="Search..."
-        android:textColorHint="@color/grey"
-        android:imeOptions="actionSearch"/>
+        android:id="@+id/fragmentContainer"
+        android:layout_alignParentTop="true"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listFragmentContainer"
+        android:layout_below="@id/fragmentContainer"/>
 </RelativeLayout>

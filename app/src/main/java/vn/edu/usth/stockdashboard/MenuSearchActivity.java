@@ -12,24 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MenuSearchActivity extends AppCompatActivity {
-    private EditText searchMenuText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_search);
 
-        searchMenuText = findViewById(R.id.searchMenu);
-        searchMenuText.requestFocus();
-        searchMenuText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_DONE){
-                    String query = searchMenuText.getText().toString();
-                    Toast.makeText(MenuSearchActivity.this, "Search Query: " + query, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
-            }
-        });
+        if (savedInstanceState == null){
+            SearchInputFragment searchInputFragment = new SearchInputFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,searchInputFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.listFragmentContainer,searchInputFragment).commit();
+        }
     }
 }
