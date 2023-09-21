@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        assert getIntent().getExtras() != null;
-        isLogin = getIntent().getExtras().getBoolean("isLogin");
+        if (getIntent().getExtras() != null)
+            isLogin = getIntent().getExtras().getBoolean("isLogin");
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
