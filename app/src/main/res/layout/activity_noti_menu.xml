@@ -6,10 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".NotiMenuActivity"
     android:background="@color/black">
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/notificationRecyclerView"
-        android:padding="16dp"
-        android:clipToPadding="false"/>
+        android:id="@+id/notificationListView"/>
 </RelativeLayout>

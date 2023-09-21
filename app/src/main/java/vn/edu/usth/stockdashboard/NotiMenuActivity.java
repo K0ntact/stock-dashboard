@@ -2,8 +2,7 @@ package vn.edu.usth.stockdashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.widget.ListView;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -23,9 +22,8 @@ public class NotiMenuActivity extends AppCompatActivity {
         notificationList.add(new NotificationItem("Notification 4","Description 4"));
         notificationList.add(new NotificationItem("Notification 5","Description 5"));
 
-        RecyclerView recyclerView = findViewById(R.id.notificationRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        NotificationAdapter adapter = new NotificationAdapter(notificationList);
-        recyclerView.setAdapter(adapter);
+        ListView listView = findViewById(R.id.notificationListView);
+        NotificationAdapter adapter = new NotificationAdapter(this, notificationList);
+        listView.setAdapter(adapter);
     }
 }
