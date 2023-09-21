@@ -26,7 +26,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:itemTextColor="#52565f"
+        app:itemIconTint="@color/bnv_selector"
+        app:itemTextColor="@color/bnv_selector"
+        app:itemActiveIndicatorStyle="@null"
         app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
