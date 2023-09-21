@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Menutoolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/black"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:title="Account"
+    app:titleMarginStart="150dp"
+    android:elevation="10dp">
+    <!-- Action icons -->
+    <ImageView
+    android:id="@+id/actionRefresh"
+    android:layout_width="50px"
+    android:layout_height="50px"
+    android:src="@drawable/refresh_icon"
+    android:contentDescription="Refresh"
+    android:layout_gravity="end"
+    android:layout_marginEnd="16dp" />
+    <ImageView
+    android:id="@+id/actionSearch"
+    android:layout_width="60px"
+    android:layout_height="60px"
+    android:src="@drawable/search_icon"
+    android:contentDescription="Search"
+    android:layout_gravity="end"
+    android:layout_marginEnd="16dp" />
+    <ImageView
+    android:id="@+id/actionNotification"
+    android:layout_width="50px"
+    android:layout_height="50px"
+    android:src="@drawable/notification_icon"
+    android:contentDescription="Notification"
+    android:layout_gravity="end"
+    android:layout_marginEnd="16dp"/>
+
+</androidx.appcompat.widget.Toolbar>

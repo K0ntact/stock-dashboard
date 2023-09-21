@@ -3,13 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MenuActivity"
     android:background="@color/black"
     android:id="@+id/container">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/Menutoolbar"
+            layout="@layout/toolbar_menu">
+        </include>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@+id/Menutoolbar">
         <fragment
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,5 +30,5 @@
             android:layout_height="wrap_content"
             android:name="vn.edu.usth.stockdashboard.MenuFragment"/>
     </LinearLayout>
-
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

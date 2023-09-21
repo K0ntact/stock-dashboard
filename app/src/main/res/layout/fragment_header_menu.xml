@@ -10,24 +10,36 @@
     android:layout_height="wrap_content"
     android:id="@+id/userNameHeaderMenu"
     android:textSize="24sp"
-    android:textColor="@color/white"
+    android:textColor="@color/MenuName"
     android:text="NGUYEN DUY AN"
     android:textStyle="bold"
-    android:layout_marginStart="16sp"
-    android:layout_marginTop="16sp"/>
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"/>
+
+    <ImageView
+        android:id="@+id/eyeIconOpen"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="19dp"
+        android:layout_toRightOf="@+id/userNameHeaderMenu"
+        android:src="@drawable/eye_icon_open"
+        android:clickable="true"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00123A35"
+        android:text="••••••••"
+        android:textSize="16sp"
         android:id="@+id/IDHeaderMenu"
         android:layout_below="@+id/userNameHeaderMenu"
-        android:layout_marginStart="16sp"
-        android:textColor="@color/grey"/>
+        android:layout_marginStart="16dp"
+        android:textColor="@color/white"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Net asset value (NAV)"
-        android:textColor="@color/white"
+        android:textColor="@color/grey"
         android:layout_below="@+id/IDHeaderMenu"
         android:layout_marginStart="16sp"
         android:layout_marginTop="10sp"
@@ -45,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Portfolio value (VND)"
-        android:textColor="@color/white"
+        android:textColor="@color/grey"
         android:layout_below="@+id/netAssetValue"
         android:layout_marginStart="16sp"
         android:layout_marginTop="10sp"
@@ -69,7 +81,7 @@
         android:layout_toEndOf="@+id/portfolioValueText"
         android:layout_below="@+id/netAssetValue"
         android:text="PL estimate"
-        android:textColor="@color/white" />
+        android:textColor="@color/grey" />
 
     <TextView
         android:id="@+id/plEstimate"
