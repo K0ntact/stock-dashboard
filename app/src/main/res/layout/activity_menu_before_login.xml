@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0d1015"
-    tools:context=".MenuBeforeLogin">
+    tools:context=".MenuBeforeLoginFragment">
 
     <View
         android:id="@+id/view"
@@ -61,7 +61,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="409dp"
-        android:layout_height="60dp"
+        android:layout_height="52dp"
         android:background="#1d242e"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -72,12 +72,13 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/account"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
