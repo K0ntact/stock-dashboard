@@ -36,5 +36,8 @@
         <activity
             android:name=".DetailStock.StockDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".StockbuyActivity"
+            android:exported="true" />
     </application>
 </manifest>
