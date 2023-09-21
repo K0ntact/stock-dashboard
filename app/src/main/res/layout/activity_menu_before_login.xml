@@ -5,7 +5,7 @@
     android:id="@+id/menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#232B36"
+    android:background="#0d1015"
     tools:context=".MenuBeforeLogin">
 
     <View
@@ -36,7 +36,7 @@
         android:id="@+id/loginButton"
         android:layout_width="160dp"
         android:layout_height="60dp"
-        android:text="@string/log_in"
+        android:text="@string/log_in_2"
         android:textSize="20sp"
         app:backgroundTint="#5c84f9"
         app:layout_constraintBottom_toTopOf="@+id/signUpButton"
@@ -48,7 +48,7 @@
         android:id="@+id/signUpButton"
         android:layout_width="160dp"
         android:layout_height="60dp"
-        android:text="@string/sign_up_normal"
+        android:text="@string/sign_up_2"
         android:textSize="20sp"
         app:backgroundTint="#5c84f9"
         app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -60,7 +60,7 @@
         android:id="@+id/toolbar"
         android:layout_width="409dp"
         android:layout_height="60dp"
-        android:background="#333232"
+        android:background="#1d242e"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
         android:layout_height="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/stock_new" />
+        app:srcCompat="@drawable/stock_new_2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
