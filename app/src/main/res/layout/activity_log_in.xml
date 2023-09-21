@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LogInActivity"
-    android:id="@+id/LoginActivity">
-<!--    android:background="#242424">-->
+    android:id="@+id/LoginActivity"
+    android:background="#232B36">
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="drawable/stock.9.png" />
+        android:src="@drawable/stock1" />
 
     <TextView
         android:id="@+id/textView"
@@ -24,9 +25,9 @@
         android:layout_marginTop="40dp"
         android:text="Login Details"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/white"
 
-        android:textSize="30sp"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -42,7 +43,7 @@
         android:ems="10"
         android:inputType="text"
         android:text="Username"
-        android:textColor="#686161"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -54,7 +55,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:text="Password"
-        android:textColor="#686161"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText"
@@ -68,7 +69,7 @@
         android:background="@color/design_default_color_secondary_variant"
         android:text="Login"
         android:textColor="#F6F0F0"
-        android:textColorHighlight="#9C1919"
+
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -80,18 +81,16 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:background="@color/white"
         android:text="Do not have an account? Sign up"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:backgroundTint="@drawable/custom_button"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="italic"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
+        app:backgroundTint = "#232B36"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
