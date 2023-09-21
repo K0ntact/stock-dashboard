@@ -22,13 +22,10 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login Details"
+        android:text="@string/login_details"
         android:textAlignment="center"
         android:textColor="@color/white"
-
-        android:textSize="40dp"
-
-
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextUsername"
         app:layout_constraintEnd_toEndOf="@+id/viewUsername"
         app:layout_constraintStart_toStartOf="@+id/viewUsername"
@@ -67,6 +64,7 @@
         android:layout_width="295dp"
         android:layout_height="50dp"
         android:layout_marginEnd="1dp"
+        android:background="@drawable/input"
         app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
@@ -96,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:background="@drawable/btnground"
-        android:text="Login"
+        android:text="Log in"
 
         android:textColor="#F6F0F0"
         android:textStyle="bold"
@@ -110,7 +108,7 @@
         android:id="@+id/buttonSignup"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="Do not have an account? Sign up"
+        android:text="@string/do_not_have_an_account_sign_up"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"
