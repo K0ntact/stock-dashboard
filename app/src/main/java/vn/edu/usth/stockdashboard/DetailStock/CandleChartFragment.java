@@ -23,14 +23,12 @@ public class CandleChartFragment extends Fragment {
     private CandleDataSet dataSet;
     private CandleData data;
     private CandleStickChart candleStickChart;
-    private String dateRange;
 
     public CandleChartFragment() {
         // Required empty public constructor
     }
 
     public CandleChartFragment(String dateRange) {
-        this.dateRange = dateRange;
     }
 
     @Override

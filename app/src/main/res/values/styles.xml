@@ -20,4 +20,29 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <!-- styles.xml -->
+    <style name="equity">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="total_volum">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#72787F</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="some_id">
+        <item name="android:textSize">50sp</item>
+        <item name="android:textColor">#E7BC28</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="price">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#767B81</item>
+    </style>
+
 </resources>
