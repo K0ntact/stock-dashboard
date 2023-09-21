@@ -38,4 +38,6 @@
     <string name="log_in">Log In</string>
     <string name="sign_up_normal">Sign Up</string>
     <string name="account">Account</string>
+    <string name="log_in_2">Log in</string>
+    <string name="sign_up_2">Sign up</string>
 </resources>
