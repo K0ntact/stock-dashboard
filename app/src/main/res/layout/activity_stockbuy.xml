@@ -155,12 +155,12 @@
         android:id="@+id/some_id"
         android:layout_width="116dp"
         android:layout_height="61dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="92dp"
         android:gravity="top"
         android:text="@string/some_id"
         android:textAppearance="@style/some_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.074"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stockbuy_toolbar"
         tools:ignore="TextSizeCheck" />
@@ -168,21 +168,22 @@
     <EditText
         android:id="@+id/rectangle_2"
         android:layout_width="369dp"
-        android:layout_height="44dp"
+        android:layout_height="60dp"
         android:autofillHints=""
         android:background="@drawable/rectangle_2"
         android:ems="10"
         android:hint="Search Symbol..."
         android:inputType="text"
-        android:paddingStart="30dp"
+        android:paddingStart="58dp"
         android:textAppearance="@style/placeholder"
+        android:textSize="18sp"
         android:textColorHint="#78909C"
         app:layout_constraintBottom_toTopOf="@+id/some_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.452"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stockbuy_toolbar"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.656"
         tools:ignore="HardcodedText,LabelFor,RtlSymmetry" />
 
     <TextView
@@ -195,30 +196,25 @@
         android:text="0.00"
         android:textColor="#E7BC28"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/some_id"
         app:layout_constraintTop_toBottomOf="@+id/rectangle_2"
-        tools:ignore="HardcodedText,TextSizeCheck" /><![CDATA[
-" />
+        tools:ignore="HardcodedText,TextSizeCheck" />
 
-
-
-
-
-    ]]>
 
     <View
         android:id="@+id/clipart7424"
-        android:layout_width="27dp"
-        android:layout_height="28dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/search_icon"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_2"
         app:layout_constraintEnd_toEndOf="@+id/rectangle_2"
-        app:layout_constraintHorizontal_bias="0.011"
+        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="@+id/rectangle_2"
         app:layout_constraintTop_toTopOf="@+id/rectangle_2"
-        app:layout_constraintVertical_bias="0.523" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <TextView
         android:id="@+id/digit3rd"
@@ -228,6 +224,7 @@
         android:text="0%"
         android:textColor="#E7BC28"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/digit2"
@@ -242,6 +239,7 @@
         android:layout_alignParentTop="true"
         android:gravity="top"
         android:text="@string/some_id"
+        android:textStyle="bold"
         android:textColor="#E040FB"
         android:textSize="13sp"
         app:layout_constraintBottom_toTopOf="@+id/ref"
@@ -262,6 +260,7 @@
         android:text="@string/some_id"
         android:textColor="#FFFFFF"
         android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/total_volum"
         app:layout_constraintEnd_toEndOf="@+id/rectangle_1"
         app:layout_constraintStart_toEndOf="@+id/total_volum"
@@ -275,6 +274,7 @@
         android:layout_alignParentTop="true"
         android:gravity="top"
         android:text="0.0"
+        android:textStyle="bold"
         android:textColor="#C5AD54"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/ref"
@@ -295,6 +295,7 @@
         android:text="0.0"
         android:textColor="#0091EA"
         android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
         app:layout_constraintEnd_toEndOf="@+id/rectangle_1"
         app:layout_constraintHorizontal_bias="0.585"
@@ -314,6 +315,7 @@
         android:text="Trading"
         android:textColor="#78909C"
         android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
@@ -364,6 +366,7 @@
         android:layout_marginTop="12dp"
         android:gravity="top"
         android:text="@string/price"
+        android:textStyle="bold"
         android:textAppearance="@style/price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.049"
@@ -399,6 +402,7 @@
         android:layout_marginTop="20dp"
         android:gravity="top"
         android:text="@string/mass"
+        android:textStyle="bold"
         android:textAppearance="@style/price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.056"
@@ -434,6 +438,7 @@
         android:background="@drawable/rectangle_1"
         app:backgroundTint="#08CA98"
         android:text="Place order"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"

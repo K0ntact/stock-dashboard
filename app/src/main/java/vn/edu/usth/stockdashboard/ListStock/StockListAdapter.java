@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -27,6 +28,7 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
     }
     ListStockFragment listStockFragment = new ListStockFragment();
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Inflate the list item layout (you can create a custom layout for it)
