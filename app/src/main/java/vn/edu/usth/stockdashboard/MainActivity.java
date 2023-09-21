@@ -2,7 +2,6 @@ package vn.edu.usth.stockdashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -11,10 +10,14 @@ import vn.edu.usth.stockdashboard.ListStock.StockFragment;
 
 public class MainActivity extends AppCompatActivity{
     BottomNavigationView bottomNavigationView;
+    boolean isLogin = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        assert getIntent().getExtras() != null;
+        isLogin = getIntent().getExtras().getBoolean("isLogin");
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -31,7 +34,16 @@ public class MainActivity extends AppCompatActivity{
                 overridePendingTransition(1, 1);
                 return true;
             }
-            else return id == R.id.menuTab;
+            else {
+//                if (isLogin) {
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuAfterLoginFragment()).commit();
+//                    overridePendingTransition(1, 1);
+//                    return true;
+//                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuBeforeLoginFragment()).commit();
+                overridePendingTransition(1, 1);
+                return true;
+            }
         });
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).commit();
     }
