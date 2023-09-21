@@ -34,4 +34,8 @@
     <string name="price">Price</string>
     <string name="mass">Mass</string>
     <string name="enter_quantity">Enter quantity</string>
+    <string name="hello">Hello !</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up_normal">Sign Up</string>
+    <string name="account">Account</string>
 </resources>

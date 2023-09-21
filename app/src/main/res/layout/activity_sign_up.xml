@@ -5,9 +5,10 @@
     android:id="@+id/android_sma"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#232B36"
     android:clipToOutline="true"
     tools:ignore="UnusedAttribute">
+
     <TextView
         android:id="@+id/sign_up"
         android:layout_width="340dp"
@@ -15,16 +16,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
         android:text="Create Account"
         android:textAppearance="@style/sign_up"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="@+id/lnField"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/fnField"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62"
-        tools:ignore="HardcodedText,TextSizeCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/fnField"
@@ -144,29 +142,29 @@
         android:id="@+id/buttonSignUp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
+        android:background="@drawable/btnground"
         android:backgroundTint="#0B6EFE"
         android:contentDescription="Sign up"
         android:contextClickable="true"
         android:text="Sign up"
-        android:background="@drawable/btnground"
+        app:backgroundTint="#0B6EFE"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cfField"
-        app:backgroundTint="#0B6EFE"
         tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="238dp"
+        android:layout_height="180dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:contentDescription="@string/footer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/stock"
+        app:srcCompat="@drawable/stock_new"
         tools:ignore="ImageContrastCheck" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -174,7 +172,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.21203831" />
+        app:layout_constraintGuide_percent="0.21" />
 
     <EditText
         android:id="@+id/passwordInput"
