@@ -5,7 +5,7 @@
     android:id="@+id/menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="#232B36"
     tools:context=".MenuBeforeLogin">
 
 
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="108dp"
-        android:background="@color/black"
+        android:background="#232B36"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -39,7 +39,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:text="Log In"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            app:backgroundTint = "#5c84f9"/>
 
         <Button
             android:id="@+id/button6"
@@ -48,7 +49,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
             android:text="Sign Up"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            app:backgroundTint = "#5c84f9"/>
     </LinearLayout>
 
     <androidx.appcompat.widget.Toolbar
