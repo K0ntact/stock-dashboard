@@ -1,13 +1,16 @@
 package vn.edu.usth.stockdashboard;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,7 +41,7 @@ public class MenuActivity extends AppCompatActivity {
                     R.anim.zoom_in_enter,
                     R.anim.zoom_in_exit);
                 Intent intent = new Intent(MenuActivity.this, MenuSearchActivity.class);
-                startActivity(intent, options.toBundle());
+                startActivity(intent);
             }
         });
         ImageView actionNotification = toolbar.findViewById(R.id.actionNotification);
