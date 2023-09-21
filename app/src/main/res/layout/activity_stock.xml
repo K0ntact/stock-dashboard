@@ -5,28 +5,39 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1f232c"
+    android:background="#0D1015"
     tools:context=".ListStock.StockFragment">
+
+    <View
+        android:id="@+id/stockmarket_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="#1D242E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/stockmarketheader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="28dp"
         android:text="@string/stock_market"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/stockmarket_toolbar"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/stockmarket_toolbar" />
 
     <EditText
         android:id="@+id/searchHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@+id/dateTextViewHeader"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -40,12 +51,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stockmarketheader" />
+        app:layout_constraintTop_toBottomOf="@+id/stockmarket_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/searchHeaderBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -61,19 +72,18 @@
         android:overScrollMode="never"
         android:scrollIndicators="none"
         android:scrollbarFadeDuration="0"
-        android:scrollbarDefaultDelayBeforeFade="0"
-        >
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/listStockFragment"
-        android:name="vn.edu.usth.stockdashboard.ListStock.ListStockFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier7"
-        app:layout_constraintVertical_bias="0.843" />
+        android:scrollbarDefaultDelayBeforeFade="0">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/listStockFragment"
+            android:name="vn.edu.usth.stockdashboard.ListStock.ListStockFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier7"
+            app:layout_constraintVertical_bias="0.843"
+            tools:layout="@layout/fragment_list_stock" />
     </ScrollView>
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier7"
@@ -85,10 +95,9 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="0dp"
         android:src="@drawable/burger_menu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/stockmarketheader"
+        app:layout_constraintStart_toStartOf="@+id/searchHeaderBar"
+        app:layout_constraintTop_toTopOf="@+id/stockmarketheader" />
 </androidx.constraintlayout.widget.ConstraintLayout>
