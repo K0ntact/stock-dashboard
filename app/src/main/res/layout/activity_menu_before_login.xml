@@ -8,50 +8,53 @@
     android:background="#232B36"
     tools:context=".MenuBeforeLogin">
 
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="108dp"
-        android:background="#232B36"
-        android:orientation="vertical"
+    <View
+        android:id="@+id/view"
+        android:layout_width="350dp"
+        android:layout_height="260dp"
+        android:background="@drawable/round_box_gray_2"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
+        android:layout_marginEnd="101dp"
+        android:text="@string/hello"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Hello !"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp" />
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:text="@string/log_in"
+        android:textSize="20sp"
+        app:backgroundTint="#5c84f9"
+        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+        app:layout_constraintEnd_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="160dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="Log In"
-            android:textSize="20dp"
-            app:backgroundTint = "#5c84f9"/>
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="160dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:text="Sign Up"
-            android:textSize="20dp"
-            app:backgroundTint = "#5c84f9"/>
-    </LinearLayout>
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:text="@string/sign_up_normal"
+        android:textSize="20sp"
+        app:backgroundTint="#5c84f9"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/loginButton"
+        app:layout_constraintStart_toStartOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -69,9 +72,9 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:gravity="center"
-        android:text="Account"
+        android:text="@string/account"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
@@ -80,12 +83,10 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="257dp"
-        android:layout_marginTop="136dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:srcCompat="@drawable/stock3" />
+        app:srcCompat="@drawable/stock" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
