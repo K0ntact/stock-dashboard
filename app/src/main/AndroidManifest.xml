@@ -12,9 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StockDashboard"
         tools:targetApi="31">
-
         <activity
-            android:name=".ListStock.StockActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,20 +21,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".DetailStock.StockDetailActivity"
-            android:exported="false">
-        </activity>
+            android:name=".LogInActivity"
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-        <activity android:name=".LogInActivity"
-            android:exported="false">
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
-
         <activity
             android:name=".SignUpActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
+        <activity
+            android:name=".DetailStock.StockDetailActivity"
+            android:exported="false" />
     </application>
-
 </manifest>
