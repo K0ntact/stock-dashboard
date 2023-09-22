@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import vn.edu.usth.stockdashboard.R;
 import vn.edu.usth.stockdashboard.StockItem;
+import vn.edu.usth.stockdashboard.StockListAdapter;
 
 public class MenuFragment extends Fragment {
     private ArrayList<StockItem> menuEntries = new ArrayList<>();

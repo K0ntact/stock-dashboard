@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import vn.edu.usth.stockdashboard.R;
 import vn.edu.usth.stockdashboard.StockDetailActivity;
 import vn.edu.usth.stockdashboard.StockItem;
+import vn.edu.usth.stockdashboard.StockListAdapter;
 
 
 public class MyStockFragment extends Fragment implements AdapterView.OnItemClickListener {

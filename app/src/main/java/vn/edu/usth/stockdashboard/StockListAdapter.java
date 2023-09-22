@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.MenuAfterLogin;
+package vn.edu.usth.stockdashboard;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 
+import vn.edu.usth.stockdashboard.MenuAfterLogin.MyStockFragment;
 import vn.edu.usth.stockdashboard.R;
 import vn.edu.usth.stockdashboard.StockItem;
 
