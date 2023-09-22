@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+    tools:context=".MenuAfterLogin.ListFragment"
+=======
     tools:context=".Menu.ListFragment"
+>>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
     android:background="@color/black">
     <ListView
         android:layout_width="match_parent"

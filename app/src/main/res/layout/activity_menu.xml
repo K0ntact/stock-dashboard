@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+<<<<<<< HEAD
+    tools:context=".MenuAfterLogin.MenuActivity">
+=======
     tools:context=".Menu.MenuFragment">
+>>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
 
     <include
         android:id="@+id/Menutoolbar"
@@ -14,7 +18,11 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/menuFragment"
+<<<<<<< HEAD
+        android:name="vn.edu.usth.stockdashboard.MenuAfterLogin.MenuFragment"
+=======
         android:name="vn.edu.usth.stockdashboard.Menu.MenuAfterLoginFragment"
+>>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

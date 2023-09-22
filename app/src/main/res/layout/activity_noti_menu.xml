@@ -4,10 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+    tools:context=".MenuAfterLogin.NotiMenuActivity"
+    android:background="@color/black">
+    <include
+        layout="@layout/toolbar_notification"
+        android:id="@+id/toolBarNotification"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/notificationListView"
+        android:divider="@null"
+        android:layout_below="@+id/toolBarNotification"/>
+=======
     tools:context=".Menu.NotiMenuActivity"
     android:background="@color/black">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/notificationListView"/>
+>>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
 </RelativeLayout>
