@@ -187,11 +187,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="15dp"
-<<<<<<< HEAD
-                android:background="@drawable/search_icon_buyst"
-=======
                 android:background="@drawable/search_icon_2"
->>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
                 app:layout_constraintBottom_toBottomOf="@+id/searchbox"
                 app:layout_constraintStart_toStartOf="@+id/searchbox"
                 app:layout_constraintTop_toTopOf="@+id/searchbox" />
