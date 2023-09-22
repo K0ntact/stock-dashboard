@@ -1,7 +1,5 @@
 package vn.edu.usth.stockdashboard.Menu;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
@@ -27,13 +25,13 @@ public class MenuFragment extends Fragment {
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuAfterLoginFragment()).commit();
         }
 
-        Toolbar toolbar = view.findViewById(R.id.Menutoolbar);
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+//        Toolbar toolbar = view.findViewById(R.id.Menutoolbar);
+//        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
 
         //Add the Refresh Button
-        ImageView actionRefresh = toolbar.findViewById(R.id.actionRefresh);
+        ImageView actionRefresh = view.findViewById(R.id.actionRefresh);
         actionRefresh.setOnClickListener(view1 -> Toast.makeText(MenuFragment.this.getActivity(), "Refreshing...", Toast.LENGTH_SHORT).show());
-        ImageView actionSearch = toolbar.findViewById(R.id.actionSearch);
+        ImageView actionSearch = view.findViewById(R.id.actionSearch);
         actionSearch.setOnClickListener(view1 -> {
 //            ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(
 //                MenuFragment.this.getActivity(),
@@ -42,7 +40,7 @@ public class MenuFragment extends Fragment {
             Intent intent = new Intent(MenuFragment.this.getActivity(), MenuSearchActivity.class);
             startActivity(intent);
         });
-        ImageView actionNotification = toolbar.findViewById(R.id.actionNotification);
+        ImageView actionNotification = view.findViewById(R.id.actionNotification);
         actionNotification.setOnClickListener(view1 -> {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(MenuFragment.this.requireActivity(), R.anim.zoom_in_enter, R.anim.zoom_in_exit);
             Intent intent = new Intent(MenuFragment.this.getActivity(), NotiMenuActivity.class);

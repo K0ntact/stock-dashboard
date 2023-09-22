@@ -8,9 +8,63 @@
     android:background="@color/black"
     tools:context=".Menu.MenuFragment">
 
-    <include
-        android:id="@+id/Menutoolbar"
-        layout="@layout/toolbar_menu" />
+    <View
+        android:id="@+id/viewAppBar"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:background="#252D39"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/actionNotification"
+        app:layout_constraintEnd_toEndOf="@id/viewAppBar"
+        app:layout_constraintStart_toStartOf="@id/viewAppBar"
+        app:layout_constraintTop_toTopOf="@+id/actionNotification" />
+
+    <ImageView
+        android:id="@+id/actionRefresh"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Refresh"
+        android:src="@drawable/refresh_icon"
+        app:layout_constraintBottom_toBottomOf="@id/viewAppBar"
+        app:layout_constraintEnd_toEndOf="@+id/viewAppBar"
+        app:layout_constraintTop_toTopOf="@id/viewAppBar" />
+
+    <ImageView
+        android:id="@+id/actionSearch"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Search"
+        android:src="@drawable/search_icon_2"
+        app:layout_constraintBottom_toBottomOf="@+id/actionRefresh"
+        app:layout_constraintEnd_toStartOf="@+id/actionRefresh"
+        app:layout_constraintTop_toTopOf="@+id/actionRefresh" />
+
+    <ImageView
+        android:id="@+id/actionNotification"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Notification"
+        android:src="@drawable/notification_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/actionSearch"
+        app:layout_constraintEnd_toStartOf="@+id/actionSearch"
+        app:layout_constraintTop_toTopOf="@+id/actionSearch" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/menuFragmentContainer"
@@ -18,5 +72,25 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Menutoolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/viewAppBar"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="153dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/hightlight_border"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="5dp"
+        android:text="Logout"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/viewAppBar"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
