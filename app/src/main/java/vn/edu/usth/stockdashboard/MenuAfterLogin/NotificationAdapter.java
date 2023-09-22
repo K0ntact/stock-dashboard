@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
-import org.w3c.dom.Text;
-
 import java.util.List;
+
+import vn.edu.usth.stockdashboard.R;
 
 public class NotificationAdapter extends ArrayAdapter<NotificationItem> {
     private Context context;

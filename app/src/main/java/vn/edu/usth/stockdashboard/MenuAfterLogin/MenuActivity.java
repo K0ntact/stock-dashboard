@@ -1,8 +1,5 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
@@ -10,9 +7,10 @@ import androidx.core.app.ActivityOptionsCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import vn.edu.usth.stockdashboard.R;
 
 public class MenuActivity extends AppCompatActivity {
 

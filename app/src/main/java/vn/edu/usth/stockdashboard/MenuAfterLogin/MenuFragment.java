@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.os.Bundle;
 
@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import vn.edu.usth.stockdashboard.R;
+import vn.edu.usth.stockdashboard.StockItem;
 
 public class MenuFragment extends Fragment {
     private ArrayList<StockItem> menuEntries = new ArrayList<>();

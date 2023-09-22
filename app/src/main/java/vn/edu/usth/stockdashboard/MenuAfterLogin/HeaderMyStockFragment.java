@@ -1,21 +1,18 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import vn.edu.usth.stockdashboard.R;
 
 
 public class HeaderMyStockFragment extends Fragment {

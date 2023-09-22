@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.os.Bundle;
 
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import vn.edu.usth.stockdashboard.R;
 
 public class HeaderMenuFragment extends Fragment {
     private boolean isUserIdVisible = false;

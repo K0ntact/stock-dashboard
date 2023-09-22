@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.os.Bundle;
 
@@ -12,6 +12,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import vn.edu.usth.stockdashboard.R;
 
 
 public class ListFragment extends Fragment implements OnFilterListener {

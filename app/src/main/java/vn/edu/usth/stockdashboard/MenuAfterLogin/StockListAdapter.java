@@ -1,8 +1,6 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +18,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+
+import vn.edu.usth.stockdashboard.R;
+import vn.edu.usth.stockdashboard.StockItem;
 
 public class StockListAdapter extends ArrayAdapter<StockItem> {
     public StockListAdapter(Context context, ArrayList<StockItem> stockList){

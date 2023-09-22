@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.os.Bundle;
 
@@ -13,7 +13,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import vn.edu.usth.stockdashboard.R;
 
 public class SearchInputFragment extends Fragment {
     private EditText searchEditText;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StockActivity"
+    tools:context=".MenuAfterLogin.StockActivity"
     android:id="@+id/container"
     android:background="@color/black">
     <LinearLayout
@@ -12,7 +12,7 @@
         android:orientation="vertical">
     <fragment
         android:id="@+id/headerMyStockFragment"
-        android:name="vn.edu.usth.stockdashboard.HeaderMyStockFragment"
+        android:name="vn.edu.usth.stockdashboard.MenuAfterLogin.HeaderMyStockFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -21,7 +21,7 @@
     <!-- Include MyStockFragment -->
     <fragment
         android:id="@+id/myStockFragment"
-        android:name="vn.edu.usth.stockdashboard.MyStockFragment"
+        android:name="vn.edu.usth.stockdashboard.MenuAfterLogin.MyStockFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"/>

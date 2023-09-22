@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+
+import vn.edu.usth.stockdashboard.R;
+import vn.edu.usth.stockdashboard.StockDetailActivity;
+import vn.edu.usth.stockdashboard.StockItem;
 
 
 public class MyStockFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -41,7 +45,7 @@ public class MyStockFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Start the MainActivity when an item is clicked
-        Intent intent = new Intent(getActivity(),StockDetailActivity.class);
+        Intent intent = new Intent(getActivity(), StockDetailActivity.class);
         startActivity(intent);
     }
 }

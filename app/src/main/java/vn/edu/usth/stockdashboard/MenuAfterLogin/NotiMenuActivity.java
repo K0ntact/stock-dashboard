@@ -1,12 +1,14 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.MenuAfterLogin;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.widget.ListView;
 import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import vn.edu.usth.stockdashboard.R;
 
 public class NotiMenuActivity extends AppCompatActivity {
 

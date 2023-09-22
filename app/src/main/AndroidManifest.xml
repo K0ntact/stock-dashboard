@@ -13,13 +13,13 @@
         android:theme="@style/Theme.StockDashboard"
         tools:targetApi="31">
         <activity
-            android:name=".NotiMenuActivity"
+            android:name=".MenuAfterLogin.NotiMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuSearchActivity"
+            android:name=".MenuAfterLogin.MenuSearchActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuActivity"
+            android:name=".MenuAfterLogin.MenuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
