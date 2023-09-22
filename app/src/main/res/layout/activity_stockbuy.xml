@@ -34,7 +34,7 @@
             <View
                 android:id="@+id/stockbuy_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="#1D242E"
