@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,7 +21,11 @@ import vn.edu.usth.stockdashboard.Menu.MenuFragment;
 
 public class MainActivity extends AppCompatActivity{
     BottomNavigationView bottomNavigationView;
+
     boolean isLogin = false;
+    boolean doubleBackToExitPressedOnce = false;
+    HashMap<String, Fragment> fragmentHashMap = new HashMap<>();
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +39,6 @@ public class MainActivity extends AppCompatActivity{
 
         bottomNavigationView.setSelectedItemId(R.id.listTab);
 
-
-        HashMap<String, Fragment> fragmentHashMap = new HashMap<>();
         fragmentHashMap.put("stockList", new StockFragment());
         fragmentHashMap.put("menuNotLogin", new MenuBeforeLoginFragment());
         Fragment menuFragment = new MenuFragment();
@@ -73,4 +78,52 @@ public class MainActivity extends AppCompatActivity{
         });
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList"))).commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        // If the bottom navigation is not at the first tab, go to the first tab else need to press back twice to exit and pop up a toast
+        if (bottomNavigationView.getSelectedItemId() != R.id.listTab) {
+            bottomNavigationView.setSelectedItemId(R.id.listTab);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList"))).commit();
+            return;
+        }
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getIntent().getExtras() != null)
+            isLogin = getIntent().getExtras().getBoolean("isLogin");
+        if (isLogin) {
+            bottomNavigationView.getMenu().findItem(R.id.menuTab).setTitle("Menu");
+        } else {
+            bottomNavigationView.getMenu().findItem(R.id.menuTab).setTitle("Log In");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
 }
