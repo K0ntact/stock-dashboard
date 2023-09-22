@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/vn/edu/usth/stockdashboard/MenuAfterLogin/MyStockFragment.java
-package vn.edu.usth.stockdashboard.MenuAfterLogin;
-========
 package vn.edu.usth.stockdashboard.ListStock;
->>>>>>>> 357e1cf60db4ff56fa8dab0e29234c500901921a:app/src/main/java/vn/edu/usth/stockdashboard/ListStock/ListStockFragment.java
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,14 +15,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 import vn.edu.usth.stockdashboard.R;
-<<<<<<<< HEAD:app/src/main/java/vn/edu/usth/stockdashboard/MenuAfterLogin/MyStockFragment.java
-import vn.edu.usth.stockdashboard.StockDetailActivity;
-import vn.edu.usth.stockdashboard.StockItem;
-import vn.edu.usth.stockdashboard.StockListAdapter;
-
-========
 import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
->>>>>>>> 357e1cf60db4ff56fa8dab0e29234c500901921a:app/src/main/java/vn/edu/usth/stockdashboard/ListStock/ListStockFragment.java
 
 
 public class ListStockFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -56,13 +45,10 @@ public class ListStockFragment extends Fragment implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Start the MainActivity when an item is clicked
         Intent intent = new Intent(getActivity(), StockDetailActivity.class);
-<<<<<<<< HEAD:app/src/main/java/vn/edu/usth/stockdashboard/MenuAfterLogin/MyStockFragment.java
-========
         intent.putExtra("stockName", entries.get(i).getSymbol());
         intent.putExtra("companyName", entries.get(i).getName());
         intent.putExtra("money", entries.get(i).getMoney());
         intent.putExtra("percentage", entries.get(i).getPercentage());
->>>>>>>> 357e1cf60db4ff56fa8dab0e29234c500901921a:app/src/main/java/vn/edu/usth/stockdashboard/ListStock/ListStockFragment.java
         startActivity(intent);
     }
 }
