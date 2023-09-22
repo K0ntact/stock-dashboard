@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Objects;
 
 import vn.edu.usth.stockdashboard.ListStock.StockFragment;
+import vn.edu.usth.stockdashboard.Menu.MenuBeforeLoginFragment;
 import vn.edu.usth.stockdashboard.Menu.MenuFragment;
 
 public class MainActivity extends AppCompatActivity{
@@ -50,17 +51,16 @@ public class MainActivity extends AppCompatActivity{
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.menuTab:
-                    if (isLogin) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuFragment()).commit();
-                        overridePendingTransition(0, 0);
-                        return true;
-                    }
                     if (getSupportFragmentManager().findFragmentByTag("menuNotLogin") != null && getSupportFragmentManager().findFragmentByTag("menuNotLogin") instanceof MenuBeforeLoginFragment) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("menuNotLogin"))).commit();
                         overridePendingTransition(0, 0);
                         return true;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuBeforeLoginFragment()).addToBackStack("menuNotLogin").commit();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isLogin", isLogin);
+                    MenuFragment menuFragment = new MenuFragment();
+                    menuFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, menuFragment).addToBackStack("menuNotLogin").commit();
                     overridePendingTransition(0, 0);
                     return true;
                 default:

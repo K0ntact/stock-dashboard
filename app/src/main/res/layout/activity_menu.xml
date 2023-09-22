@@ -13,8 +13,8 @@
         layout="@layout/toolbar_menu" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/menuFragment"
-        android:name="vn.edu.usth.stockdashboard.Menu.MenuAfterLoginFragment"
+        android:id="@+id/menuFragmentContainer"
+        android:name="vn.edu.usth.stockdashboard.Menu.MenuBeforeLoginFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
