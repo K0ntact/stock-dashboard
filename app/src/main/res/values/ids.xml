@@ -2,4 +2,5 @@
 <resources>
     <item name="candleChart" type="id" />
     <item name="fragment_container" type="id" />
+    <item name="bottomNavigationView" type="id" />
 </resources>

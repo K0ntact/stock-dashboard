@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Objects;
 
 import vn.edu.usth.stockdashboard.ListStock.StockFragment;
+import vn.edu.usth.stockdashboard.Menu.MenuFragment;
 
 public class MainActivity extends AppCompatActivity{
     BottomNavigationView bottomNavigationView;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity{
                     return true;
                 case R.id.menuTab:
                     if (isLogin) {
-                        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuAfterLoginFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuFragment()).commit();
                         overridePendingTransition(0, 0);
                         return true;
                     }

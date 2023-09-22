@@ -4,18 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".MenuAfterLogin.MenuSearchActivity"
+=======
+    tools:context=".Menu.MenuSearchActivity"
+>>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
     android:background="@color/black">
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragmentContainer"
         android:layout_alignParentTop="true"
+<<<<<<< HEAD
         android:name="vn.edu.usth.stockdashboard.MenuAfterLogin.SearchInputFragment"/>
+=======
+        android:name="vn.edu.usth.stockdashboard.Menu.SearchInputFragment"/>
+>>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listFragmentContainer"
         android:layout_below="@id/fragmentContainer"
+<<<<<<< HEAD
         android:name="vn.edu.usth.stockdashboard.MenuAfterLogin.ListFragment"/>
+=======
+        android:name="vn.edu.usth.stockdashboard.Menu.ListFragment"/>
+>>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
 </RelativeLayout>

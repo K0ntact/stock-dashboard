@@ -3,16 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-    tools:context=".MenuAfterLogin.ListFragment"
-=======
-    tools:context=".Menu.ListFragment"
->>>>>>> 9613fd0b6ca856e049cbe9f6431e49ed19169e77
+    tools:context=".Menu.MyStockFragment"
     android:background="@color/black">
     <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listSearchView"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:layout_height="match_parent">
+    </ListView>
 </FrameLayout>
