@@ -24,14 +24,14 @@
         android:id="@+id/stockmarketheader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:text="@string/stock_market"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/stockmarket_toolbar"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@+id/stockmarket_toolbar"
+        app:layout_constraintStart_toStartOf="@+id/stockmarket_toolbar"
         app:layout_constraintTop_toTopOf="@id/stockmarket_toolbar" />
 
     <EditText
@@ -52,39 +52,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stockmarket_toolbar" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/searchHeaderBar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:scrollbarSize="0dp"
-        android:scrollbarThumbVertical="@android:color/transparent"
-        android:scrollbarTrackVertical="@android:color/transparent"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarStyle="insideOverlay"
-        android:overScrollMode="never"
-        android:scrollIndicators="none"
-        android:scrollbarFadeDuration="0"
-        android:scrollbarDefaultDelayBeforeFade="0">
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/listStockFragment"
-            android:name="vn.edu.usth.stockdashboard.ListStock.ListStockFragment"
+        <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrier7"
-            app:layout_constraintVertical_bias="0.843"
-            tools:layout="@layout/fragment_list_stock" />
-    </ScrollView>
+            app:layout_constraintTop_toBottomOf="@id/barrier7">
+        </ListView>
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier7"
         android:layout_width="wrap_content"
