@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.MenuAfterLogin;
+package vn.edu.usth.stockdashboard.Menu;
 
 import android.os.Bundle;
 
@@ -15,7 +15,7 @@ import vn.edu.usth.stockdashboard.R;
 import vn.edu.usth.stockdashboard.ListStock.StockItem;
 import vn.edu.usth.stockdashboard.ListStock.StockListAdapter;
 
-public class MenuFragment extends Fragment {
+public class MenuAfterLoginFragment extends Fragment {
     private ArrayList<StockItem> menuEntries = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,7 +26,7 @@ public class MenuFragment extends Fragment {
         menuEntries.add(new StockItem("TEST3", "UwU toi k phai Wibu", "69,96 US$","+0,19%"));
         menuEntries.add(new StockItem("TEST4", "HipHop neva dai", "33,33 US$", " -0,27%"));
         // Add more data points as needed
-        View view = inflater.inflate(R.layout.fragment_header_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_after_login, container, false);
         ListView listView = view.findViewById(R.id.listMenuView);
         // Set the item click listener for the ListView
         StockListAdapter adapter = new StockListAdapter(requireContext(), menuEntries);

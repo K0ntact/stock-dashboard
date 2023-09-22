@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuAfterLogin.SearchInputFragment"
+    tools:context=".Menu.SearchInputFragment"
     android:background="@color/black">
     <EditText
         android:layout_width="match_parent"

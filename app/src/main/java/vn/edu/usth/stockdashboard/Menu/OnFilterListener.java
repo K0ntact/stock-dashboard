@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.MenuAfterLogin;
+package vn.edu.usth.stockdashboard.Menu;
 
 public interface OnFilterListener {
     void onFilter(String query);

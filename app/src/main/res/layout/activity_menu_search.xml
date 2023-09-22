@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuAfterLogin.MenuSearchActivity"
+    tools:context=".Menu.MenuSearchActivity"
     android:background="@color/black">
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragmentContainer"
         android:layout_alignParentTop="true"
-        android:name="vn.edu.usth.stockdashboard.MenuAfterLogin.SearchInputFragment"/>
+        android:name="vn.edu.usth.stockdashboard.Menu.SearchInputFragment"/>
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listFragmentContainer"
         android:layout_below="@id/fragmentContainer"
-        android:name="vn.edu.usth.stockdashboard.MenuAfterLogin.ListFragment"/>
+        android:name="vn.edu.usth.stockdashboard.Menu.ListFragment"/>
 </RelativeLayout>

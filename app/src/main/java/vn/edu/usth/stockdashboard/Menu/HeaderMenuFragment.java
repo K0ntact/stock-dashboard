@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.MenuAfterLogin;
+package vn.edu.usth.stockdashboard.Menu;
 
 import android.os.Bundle;
 
@@ -18,22 +18,19 @@ public class HeaderMenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_header_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_after_login, container, false);
         TextView userIdTextView = view.findViewById(R.id.IDHeaderMenu);
         ImageView eyeIconImageView = view.findViewById(R.id.eyeIconOpen);
-        eyeIconImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isUserIdVisible){
-                    String bulletText = getBulletString(userID.length());
-                    userIdTextView.setText(bulletText);
-                    eyeIconImageView.setImageResource(R.drawable.eye_icon_close);
-                } else {
-                    userIdTextView.setText(userID);
-                    eyeIconImageView.setImageResource(R.drawable.eye_icon_open);
-                }
-                isUserIdVisible = !isUserIdVisible;
+        eyeIconImageView.setOnClickListener(view1 -> {
+            if (isUserIdVisible){
+                String bulletText = getBulletString(userID.length());
+                userIdTextView.setText(bulletText);
+                eyeIconImageView.setImageResource(R.drawable.eye_icon_close);
+            } else {
+                userIdTextView.setText(userID);
+                eyeIconImageView.setImageResource(R.drawable.eye_icon_open);
             }
+            isUserIdVisible = !isUserIdVisible;
         });
 
         String bulletText = getBulletString(userID.length());

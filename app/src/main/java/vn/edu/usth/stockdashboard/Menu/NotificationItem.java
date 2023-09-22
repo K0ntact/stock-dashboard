@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.MenuAfterLogin;
+package vn.edu.usth.stockdashboard.Menu;
 
 public class NotificationItem {
     private String title;

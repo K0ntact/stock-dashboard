@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.MenuAfterLogin;
+package vn.edu.usth.stockdashboard.Menu;
 
 import android.os.Bundle;
 
@@ -45,15 +45,12 @@ public class SearchInputFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
             }
         });
-        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_SEARCH){
-                    performSearch();
-                    return true;
-                }
-                return false;
+        searchEditText.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH){
+                performSearch();
+                return true;
             }
+            return false;
         });
         return view;
     }
