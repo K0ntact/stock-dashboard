@@ -48,6 +48,7 @@ public class StockDetailActivity extends AppCompatActivity {
         }
 
         ViewPager2 viewPager = findViewById(R.id.viewPager2);
+        viewPager.setUserInputEnabled(false);
         ChartAdapter chartAdapter = new ChartAdapter(this);
         viewPager.setAdapter(chartAdapter);
 
