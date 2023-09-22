@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,7 +21,10 @@ import vn.edu.usth.stockdashboard.Menu.MenuFragment;
 
 public class MainActivity extends AppCompatActivity{
     BottomNavigationView bottomNavigationView;
+
     boolean isLogin = false;
+    boolean doubleBackToExitPressedOnce = false;
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,4 +79,32 @@ public class MainActivity extends AppCompatActivity{
         });
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList"))).commit();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getIntent().getExtras() != null)
+            isLogin = getIntent().getExtras().getBoolean("isLogin");
+        if (isLogin) {
+            bottomNavigationView.getMenu().findItem(R.id.menuTab).setTitle("Menu");
+        } else {
+            bottomNavigationView.getMenu().findItem(R.id.menuTab).setTitle("Log In");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
 }

@@ -16,6 +16,7 @@ public class LogInActivity extends AppCompatActivity {
         Button buttonLogin = findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(v -> {
             Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("isLogin", true);
             startActivity(intent);
         });
