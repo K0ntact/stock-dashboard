@@ -26,7 +26,6 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
     public StockListAdapter(Context context, ArrayList<StockItem> stockList){
         super(context, 0, stockList);
     }
-    ListStockFragment listStockFragment = new ListStockFragment();
 
     @NonNull
     @Override
