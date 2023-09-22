@@ -19,7 +19,7 @@ import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
 
 
 public class ListStockFragment extends Fragment implements AdapterView.OnItemClickListener {
-    private ArrayList<StockItem> entries = new ArrayList<>();
+    private final ArrayList<StockItem> entries = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,@Nullable Bundle savedInstanceState) {

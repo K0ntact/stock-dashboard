@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 import vn.edu.usth.stockdashboard.ListStock.StockFragment;
 
 public class MainActivity extends AppCompatActivity{
@@ -29,21 +31,36 @@ public class MainActivity extends AppCompatActivity{
             int id = item.getItemId();
             switch (id) {
                 case R.id.listTab:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).commit();
-                    overridePendingTransition(4, 4);
+                    if (getSupportFragmentManager().findFragmentByTag("stockList") != null && getSupportFragmentManager().findFragmentByTag("stockList") instanceof StockFragment) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("stockList"))).commit();
+                        overridePendingTransition(0, 0);
+                        return true;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).addToBackStack("stockList").commit();
+                    overridePendingTransition(0, 0);
                     return true;
                 case R.id.buystockTab:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockBuyFragment()).commit();
-                    overridePendingTransition(4, 4);
+                    if (getSupportFragmentManager().findFragmentByTag("stockBuy") != null && getSupportFragmentManager().findFragmentByTag("stockBuy") instanceof StockBuyFragment) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("stockBuy"))).commit();
+                        overridePendingTransition(0, 0);
+                        return true;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockBuyFragment()).addToBackStack("stockBuy").commit();
+                    overridePendingTransition(0, 0);
                     return true;
                 case R.id.menuTab:
                     if (isLogin) {
                         //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuAfterLoginFragment()).commit();
-                        overridePendingTransition(4, 4);
+                        overridePendingTransition(0, 0);
                         return true;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuBeforeLoginFragment()).commit();
-                    overridePendingTransition(4, 4);
+                    if (getSupportFragmentManager().findFragmentByTag("menuNotLogin") != null && getSupportFragmentManager().findFragmentByTag("menuNotLogin") instanceof MenuBeforeLoginFragment) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("menuNotLogin"))).commit();
+                        overridePendingTransition(0, 0);
+                        return true;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MenuBeforeLoginFragment()).addToBackStack("menuNotLogin").commit();
+                    overridePendingTransition(0, 0);
                     return true;
                 default:
                     return false;

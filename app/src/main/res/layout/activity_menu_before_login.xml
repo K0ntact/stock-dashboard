@@ -38,6 +38,7 @@
         android:layout_height="60dp"
         android:text="@string/log_in_2"
         android:textSize="20sp"
+        android:textColor="@color/white"
         app:backgroundTint="#5c84f9"
         android:background="@drawable/btnground"
         app:layout_constraintBottom_toTopOf="@+id/signUpButton"
@@ -50,6 +51,7 @@
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:text="@string/sign_up_2"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:backgroundTint="#5c84f9"
         android:background="@drawable/btnground"
@@ -81,7 +83,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        tools:ignore="TextSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -89,7 +92,8 @@
         android:layout_height="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/stock_new_2" />
+        app:srcCompat="@drawable/stock_new_2"
+        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
