@@ -6,8 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MenuAfterLogin.NotiMenuActivity"
     android:background="@color/black">
+    <include
+        layout="@layout/toolbar_notification"
+        android:id="@+id/toolBarNotification"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/notificationListView"/>
+        android:id="@+id/notificationListView"
+        android:divider="@null"
+        android:layout_below="@+id/toolBarNotification"/>
 </RelativeLayout>

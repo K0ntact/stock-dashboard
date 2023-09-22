@@ -18,9 +18,14 @@ import vn.edu.usth.stockdashboard.R;
 
 public class SearchInputFragment extends Fragment {
     private EditText searchEditText;
+    private vn.edu.usth.stockdashboard.ListFragment listFragment;
     private OnFilterListener filterListener;
     public SearchInputFragment(){
 
+    }
+    // Setter method to set the reference to ListFragment
+    public void setListFragment(vn.edu.usth.stockdashboard.ListFragment listFragment) {
+        this.listFragment = listFragment;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,9 +41,13 @@ public class SearchInputFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (filterListener != null){
-                    filterListener.onFilter(charSequence.toString());
+                if (i == EditorInfo.IME_ACTION_SEARCH){
+                    String query = searchEditText.getText().toString();
+                    if (filterListener != null){
+                        filterListener.onFilter(query);
+                    }
                 }
+
             }
 
             @Override

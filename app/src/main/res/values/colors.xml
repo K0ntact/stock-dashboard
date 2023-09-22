@@ -6,4 +6,5 @@
     <color name="grey">#AFAFAF</color>
     <color name="positive">#2a6023</color>
     <color name="negative">#a02321</color>
+    <color name="toolbar">#252D39</color>
 </resources>

@@ -34,12 +34,9 @@ public class MenuActivity extends AppCompatActivity {
         actionSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(
-                    MenuActivity.this,
-                    R.anim.zoom_in_enter,
-                    R.anim.zoom_in_exit);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation( MenuActivity.this, R.anim.zoom_in_enter, R.anim.zoom_in_exit);
                 Intent intent = new Intent(MenuActivity.this, MenuSearchActivity.class);
-                startActivity(intent);
+                startActivity(intent, options.toBundle());
             }
         });
         ImageView actionNotification = toolbar.findViewById(R.id.actionNotification);
