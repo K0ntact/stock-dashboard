@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.ListStock;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -19,16 +20,15 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 
-import vn.edu.usth.stockdashboard.MenuAfterLogin.MyStockFragment;
 import vn.edu.usth.stockdashboard.R;
-import vn.edu.usth.stockdashboard.StockItem;
 
 public class StockListAdapter extends ArrayAdapter<StockItem> {
     public StockListAdapter(Context context, ArrayList<StockItem> stockList){
         super(context, 0, stockList);
     }
-    MyStockFragment myStockFragment = new MyStockFragment();
+    ListStockFragment listStockFragment = new ListStockFragment();
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Inflate the list item layout (you can create a custom layout for it)

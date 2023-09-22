@@ -23,7 +23,7 @@
             android:id="@+id/actionSearch"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/search_icon"
+            android:src="@drawable/search_icon_buyst"
             android:contentDescription="Search"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp" />

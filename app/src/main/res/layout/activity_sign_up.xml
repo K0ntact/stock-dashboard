@@ -1,0 +1,222 @@
+<!-- Auto layout, variables, and unit scale are not yet supported -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/android_sma"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#232B36"
+    android:clipToOutline="true"
+    tools:ignore="UnusedAttribute">
+
+    <TextView
+        android:id="@+id/sign_up"
+        android:layout_width="340dp"
+        android:layout_height="65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Create Account"
+        android:textAppearance="@style/sign_up"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/lnField"
+        app:layout_constraintStart_toStartOf="@+id/fnField"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <View
+        android:id="@+id/fnField"
+        android:layout_width="194dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/fnfield"
+        android:focusable="auto"
+        app:layout_constraintBottom_toTopOf="@+id/usernameField"
+        app:layout_constraintStart_toStartOf="@+id/usernameField"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="194dp"
+        android:layout_height="60dp"
+        android:autofillHints=""
+        android:background="@null"
+        android:hint="@string/first_name"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/placeholder"
+        android:textColorHint="#757575"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/fnField"
+        app:layout_constraintEnd_toEndOf="@+id/fnField"
+        app:layout_constraintStart_toStartOf="@+id/fnField"
+        app:layout_constraintTop_toTopOf="@+id/fnField"
+        tools:ignore="RtlSymmetry,TextContrastCheck" />
+
+    <View
+        android:id="@+id/lnField"
+        android:layout_width="138dp"
+        android:layout_height="60dp"
+        android:background="@drawable/lnfield"
+        app:layout_constraintBottom_toBottomOf="@+id/fnField"
+        app:layout_constraintEnd_toEndOf="@+id/usernameField"
+        app:layout_constraintTop_toTopOf="@+id/fnField" />
+
+    <EditText
+        android:id="@+id/last_name"
+        android:layout_width="138dp"
+        android:layout_height="60dp"
+        android:autofillHints=""
+        android:textColor="@color/white"
+        android:background="@null"
+        android:hint="Last name"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/placeholder"
+        android:textColorHint="#757575"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lnField"
+        app:layout_constraintEnd_toEndOf="@+id/lnField"
+        app:layout_constraintStart_toStartOf="@+id/lnField"
+        app:layout_constraintTop_toTopOf="@+id/lnField"
+        tools:ignore="HardcodedText,RtlSymmetry,TextContrastCheck" />
+
+    <View
+        android:id="@+id/usernameField"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/input"
+        app:layout_constraintBottom_toTopOf="@+id/pwField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fnField" />
+
+    <View
+        android:id="@+id/pwField"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/input"
+        app:layout_constraintBottom_toTopOf="@+id/cfField"
+        app:layout_constraintEnd_toEndOf="@+id/usernameField"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/usernameField"
+        app:layout_constraintTop_toBottomOf="@+id/usernameField" />
+
+    <View
+        android:id="@+id/cfField"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/input"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
+        app:layout_constraintEnd_toEndOf="@+id/pwField"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/pwField"
+        app:layout_constraintTop_toBottomOf="@+id/pwField" />
+
+    <EditText
+        android:id="@+id/cfInput"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:autofillHints=""
+        android:background="@null"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/placeholder"
+        android:textColorHint="#757575"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/cfField"
+        app:layout_constraintEnd_toEndOf="@+id/cfField"
+        app:layout_constraintStart_toStartOf="@+id/cfField"
+        app:layout_constraintTop_toTopOf="@+id/cfField"
+        tools:ignore="ContentDescription,RtlSymmetry,TextContrastCheck" />
+
+    <Button
+        android:id="@+id/buttonSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:background="@drawable/btnground"
+        android:backgroundTint="#0B6EFE"
+        android:contentDescription="Sign up"
+        android:contextClickable="true"
+        android:text="Sign up"
+        android:textColor="@color/white"
+        app:backgroundTint="#0B6EFE"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cfField"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/footer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/stock_new"
+        tools:ignore="ImageContrastCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.21" />
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:autofillHints=""
+        android:background="@null"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/placeholder"
+        android:textColor="@color/white"
+        android:textColorHint="#757575"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pwField"
+        app:layout_constraintEnd_toEndOf="@+id/pwField"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/pwField"
+        app:layout_constraintTop_toTopOf="@+id/pwField"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="ContentDescription,RtlSymmetry,TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/usernameEditText"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:autofillHints=""
+        android:background="@null"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textAppearance="@style/placeholder"
+        android:textColor="@color/white"
+        android:textColorHint="#757575"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/usernameField"
+        app:layout_constraintEnd_toEndOf="@+id/usernameField"
+        app:layout_constraintStart_toStartOf="@+id/usernameField"
+        app:layout_constraintTop_toTopOf="@+id/usernameField"
+        tools:ignore="RtlSymmetry,TextContrastCheck" />
+</androidx.constraintlayout.widget.ConstraintLayout>

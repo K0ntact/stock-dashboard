@@ -5,156 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242424"
-    tools:context=".StockDetailActivity">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/stockName"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="VNM"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-
+        android:background="#232b36"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
-
-    <TextView
-        android:id="@+id/compName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VanEck Vietnam EFT"
-        android:textSize="13sp"
-        android:textColor="#a5a4a9"
-
-        app:layout_constraintBaseline_toBaselineOf="@+id/stockName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toEndOf="@+id/stockName" />
-
-    <View
-        android:id="@+id/divider1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#3e3d42"
-        app:layout_constraintBottom_toTopOf="@+id/stockPrice"
-        app:layout_constraintTop_toBottomOf="@+id/stockName" />
-
-    <TextView
-        android:id="@+id/stockPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="15.30"
-        android:textColor="@color/white"
-        android:textSize="33sp"
-        android:textStyle="bold"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stockName"
-        app:layout_constraintVertical_bias="0.028" />
-
-    <TextView
-        android:id="@+id/changeVal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+1.69"
-        android:textColor="#589c51"
-        android:textSize="12sp"
-
-        app:layout_constraintBottom_toTopOf="@+id/changPercent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
-        app:layout_constraintStart_toEndOf="@+id/stockPrice"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/changPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+12.4%"
-        android:textColor="#589c51"
-        android:textSize="12sp"
-
-        app:layout_constraintBaseline_toBaselineOf="@+id/stockPrice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
-        app:layout_constraintStart_toEndOf="@+id/stockPrice" />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#3e3d42"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
-        app:layout_constraintTop_toBottomOf="@id/stockPrice" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#242424"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stockPrice"
-        app:layout_constraintVertical_bias="0.025"
-        app:tabTextColor="#a5a4a9"
-        app:tabIndicatorColor="@color/white">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_6M" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_1D" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_2D" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_5D" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_all" />
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager2"
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
-
-
-    <!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/chartContainerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="450dp"-->
-
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tabLayout"-->
-<!--        app:layout_constraintVertical_bias="0.045" />-->
+        app:itemIconTint="@color/bnv_selector"
+        app:itemTextColor="@color/bnv_selector"
+        app:itemActiveIndicatorStyle="@null"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

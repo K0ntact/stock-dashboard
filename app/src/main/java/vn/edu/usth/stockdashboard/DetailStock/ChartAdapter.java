@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard;
+package vn.edu.usth.stockdashboard.DetailStock;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
