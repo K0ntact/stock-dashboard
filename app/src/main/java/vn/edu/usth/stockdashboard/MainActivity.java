@@ -1,12 +1,15 @@
 package vn.edu.usth.stockdashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import vn.edu.usth.stockdashboard.ListStock.StockFragment;
@@ -29,44 +32,45 @@ public class MainActivity extends AppCompatActivity{
 
         bottomNavigationView.setSelectedItemId(R.id.listTab);
 
+
+        HashMap<String, Fragment> fragmentHashMap = new HashMap<>();
+        fragmentHashMap.put("stockList", new StockFragment());
+        fragmentHashMap.put("menuNotLogin", new MenuBeforeLoginFragment());
+        Fragment menuFragment = new MenuFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isLogin", isLogin);
+        menuFragment.setArguments(bundle);
+        fragmentHashMap.put("menuLogin", menuFragment);
+        fragmentHashMap.put("stockBuy", new StockBuyFragment());
+
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             switch (id) {
                 case R.id.listTab:
-                    if (getSupportFragmentManager().findFragmentByTag("stockList") != null && getSupportFragmentManager().findFragmentByTag("stockList") instanceof StockFragment) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("stockList"))).commit();
-                        overridePendingTransition(0, 0);
-                        return true;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).addToBackStack("stockList").commit();
+                    transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList")));
+                    transaction.commit();
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.buystockTab:
-                    if (getSupportFragmentManager().findFragmentByTag("stockBuy") != null && getSupportFragmentManager().findFragmentByTag("stockBuy") instanceof StockBuyFragment) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("stockBuy"))).commit();
-                        overridePendingTransition(0, 0);
-                        return true;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockBuyFragment()).addToBackStack("stockBuy").commit();
+                    transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockBuy")));
+                    transaction.commit();
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.menuTab:
-                    if (getSupportFragmentManager().findFragmentByTag("menuNotLogin") != null && getSupportFragmentManager().findFragmentByTag("menuNotLogin") instanceof MenuBeforeLoginFragment) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("menuNotLogin"))).commit();
-                        overridePendingTransition(0, 0);
-                        return true;
+                    if (isLogin) {
+                        transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("menuLogin")));
+                    } else {
+                        transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("menuNotLogin")));
                     }
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("isLogin", isLogin);
-                    MenuFragment menuFragment = new MenuFragment();
-                    menuFragment.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, menuFragment).addToBackStack("menuNotLogin").commit();
+                    transaction.commit();
                     overridePendingTransition(0, 0);
                     return true;
                 default:
                     return false;
             }
         });
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList"))).commit();
     }
 }
