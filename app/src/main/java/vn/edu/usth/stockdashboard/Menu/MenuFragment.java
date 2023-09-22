@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import vn.edu.usth.stockdashboard.MainActivity;
 import vn.edu.usth.stockdashboard.R;
 
 public class MenuFragment extends Fragment {
@@ -25,8 +27,12 @@ public class MenuFragment extends Fragment {
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuAfterLoginFragment()).commit();
         }
 
-//        Toolbar toolbar = view.findViewById(R.id.Menutoolbar);
-//        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
+        TextView logout = view.findViewById(R.id.logoutView);
+        logout.setOnClickListener(view1 -> {
+            Intent intent = new Intent(MenuFragment.this.getActivity(), MainActivity.class);
+            intent.putExtra("isLogin", false);
+            startActivity(intent);
+        });
 
         //Add the Refresh Button
         ImageView actionRefresh = view.findViewById(R.id.actionRefresh);
