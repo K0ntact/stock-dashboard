@@ -43,4 +43,5 @@
     <string name="log_in_2">Log in</string>
     <string name="sign_up_2">Sign up</string>
     <string name="my_stocks">My Stocks</string>
+    <string name="box">Box</string>
 </resources>
