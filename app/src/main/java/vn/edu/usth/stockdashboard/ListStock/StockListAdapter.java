@@ -80,11 +80,13 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
         if(aboveArea > belowArea){
             graphColor = getContext().getColor(R.color.positive);
             percentageTextView.setBackgroundResource(R.drawable.rounded_box_green);
+            percentageTextView.setText("+" + percentageTextView.getText());
             addHorizontalDottedLine(lineChart, dottedLineY, getContext().getColor(R.color.positive));
             dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_chart_gradient_positive));
         } else {
             graphColor = getContext().getColor(R.color.negative);
             percentageTextView.setBackgroundResource(R.drawable.round_box_red);
+            percentageTextView.setText("-" + percentageTextView.getText());
             addHorizontalDottedLine(lineChart, dottedLineY, getContext().getColor(R.color.negative));
             dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_chart_gradient_negative));
         }
