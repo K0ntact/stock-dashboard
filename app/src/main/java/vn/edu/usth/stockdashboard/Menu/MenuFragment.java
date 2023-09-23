@@ -29,6 +29,8 @@ public class MenuFragment extends Fragment {
         savedInstanceState = getArguments();
         if (savedInstanceState != null)
             isLogin = savedInstanceState.getBoolean("isLogin");
+
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuBeforeLoginFragment()).commit();
         if (isLogin) {
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.menuFragmentContainer, new MenuAfterLoginFragment());
