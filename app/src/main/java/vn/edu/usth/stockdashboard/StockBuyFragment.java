@@ -12,11 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StockBuyFragment extends Fragment {
+    boolean isLogin = false;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null)
+            isLogin = getArguments().getBoolean("isLogin");
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -50,6 +59,11 @@ public class StockBuyFragment extends Fragment {
         });
 
         placeorderbtn.setOnClickListener(v ->{
+            if (!isLogin) {
+                Toast.makeText(StockBuyFragment.this.requireContext(), "Please login to place order", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             AlertDialog.Builder builder = new AlertDialog.Builder(StockBuyFragment.this.requireContext());
             View s = getLayoutInflater().inflate(R.layout.dialog_style, null);
             TextView content = s.findViewById(R.id.confirmMessage);

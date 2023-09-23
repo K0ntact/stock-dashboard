@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity{
         bundle.putBoolean("isLogin", isLogin);
         menuFragment.setArguments(bundle);
         fragmentHashMap.put("menuLogin", menuFragment);
-        fragmentHashMap.put("stockBuy", new StockBuyFragment());
+
+        Fragment stockBuyFragment = new StockBuyFragment();
+        stockBuyFragment.setArguments(bundle);
+        fragmentHashMap.put("stockBuy", stockBuyFragment);
 
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
