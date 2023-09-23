@@ -1,9 +1,9 @@
 package vn.edu.usth.stockdashboard;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,19 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StockBuyFragment extends Fragment {
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         AtomicInteger tradeState = new AtomicInteger(); // 0 mean buy, 1 mean sell
         View view = inflater.inflate(R.layout.fragment_stockbuy, container, false);
-        Button buybtn = (Button) view.findViewById(R.id.buybtn);
-        Button sellbtn = (Button) view.findViewById(R.id.sellbtn);
-        Button placeorderbtn = (Button) view.findViewById(R.id.placeorder);
+        Button buybtn = view.findViewById(R.id.buybtn);
+        Button sellbtn = view.findViewById(R.id.sellbtn);
+        Button placeorderbtn = view.findViewById(R.id.placeorder);
         buybtn.setOnClickListener(v -> {
             // Get background tint color
             int color = Objects.requireNonNull(buybtn.getBackgroundTintList()).getDefaultColor();
@@ -49,23 +51,36 @@ public class StockBuyFragment extends Fragment {
 
         placeorderbtn.setOnClickListener(v ->{
             AlertDialog.Builder builder = new AlertDialog.Builder(StockBuyFragment.this.requireContext());
-            builder.setTitle(HtmlCompat.fromHtml("<font color='#FFFFFF'>Order Confirm</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
-            String tradeType = tradeState.get() == 0 ? "buy" : "sell";
-            builder.setMessage(HtmlCompat.fromHtml("<font color='#FFFFFF'>Are you sure you want to " + tradeType + " this stock</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
-            builder.setPositiveButton("Confirm", (dialogInterface, i) -> {
-                AlertDialog alertDialog = new AlertDialog.Builder(StockBuyFragment.this.requireContext()).create();
-                alertDialog.setTitle(HtmlCompat.fromHtml("<font color='#FFFFFF'>Order Placed</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
-                alertDialog.setMessage(HtmlCompat.fromHtml("<font color='#FFFFFF'>Your order has been placed</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> dialog.dismiss());
-                Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);
-                alertDialog.show();
-            });
-            builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
-            builder.setCancelable(true);
+            View s = getLayoutInflater().inflate(R.layout.dialog_style, null);
+            TextView content = s.findViewById(R.id.confirmMessage);
+            Button confirm = s.findViewById(R.id.cfbtn);
+            Button cancel = s.findViewById(R.id.cancelbtn);
+            content.setText("Are you sure you want to " + (tradeState.get() == 0 ? "buy" : "sell") + " this stock");
+            builder.setView(s);
             AlertDialog d = builder.create();
             Objects.requireNonNull(d.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);
             d.show();
+            confirm.setOnClickListener(v1 -> {
+                d.dismiss();
+                AlertDialog alertDialog = new AlertDialog.Builder(StockBuyFragment.this.requireContext()).create();
+                View s1 = getLayoutInflater().inflate(R.layout.dialog_style, null);
+                TextView title = s1.findViewById(R.id.titleAlert);
+                TextView content1 = s1.findViewById(R.id.confirmMessage);
+                Button confirm1 = s1.findViewById(R.id.cfbtn);
+                confirm1.setText("OK");
+                confirm1.setTextColor(Color.parseColor("#7186bc"));
+                confirm1.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1f232c")));
+                Button cancel1 = s1.findViewById(R.id.cancelbtn);
+                cancel1.setVisibility(View.GONE);
+                title.setText("Order Placed");
+                content1.setText("Your order has been placed");
+                confirm1.setOnClickListener(v11 -> alertDialog.dismiss());
+                alertDialog.setView(s1);
+                Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);
+                alertDialog.show();
+            });
+
+            cancel.setOnClickListener(v12 -> d.dismiss());
         });
         return view;
     }
