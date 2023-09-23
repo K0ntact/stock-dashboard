@@ -16,5 +16,9 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.StockDashboard" parent="Base.Theme.StockDashboard" />
+    <style name="Theme.StockDashboard" parent="Base.Theme.StockDashboard">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="android:windowBackground">@color/startupBackground</item>
+    </style>
 </resources>

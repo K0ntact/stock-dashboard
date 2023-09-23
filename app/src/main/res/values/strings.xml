@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StockDashboard</string>
+    <string name="app_name">Stonk</string>
     <string name="first_name">First Name</string>
     <string name="sign_up">SIGN UP</string>
     <string name="confirm_password">Confirm Password</string>

@@ -13,4 +13,6 @@
     <color name="lavender">#8692f7</color>
     <color name="toolbar">#252D39</color>
     <color name="MenuName">#118A70</color>
+    <color name="startupBackground">#253f93</color>
+    <color name="primary">#0d1019</color>
 </resources>
