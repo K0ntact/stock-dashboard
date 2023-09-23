@@ -7,9 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".StockBuyFragment"
     android:id="@+id/android_lar"
-    android:clipToOutline="true"
-    android:background="#0D1015"
-    tools:ignore="ExtraText,UnusedAttribute">
+    tools:ignore="ExtraText">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +66,8 @@
                 android:layout_marginTop="100dp"
                 android:background="@drawable/stats_container"
                 app:layout_constraintStart_toStartOf="@+id/buybtn"
-                app:layout_constraintTop_toBottomOf="@+id/searchbox" />
+                app:layout_constraintTop_toBottomOf="@+id/searchbox"
+                android:contentDescription="@string/box" />
 
             <TextView
                 android:id="@+id/total_volum"

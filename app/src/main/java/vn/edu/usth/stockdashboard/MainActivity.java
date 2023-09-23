@@ -2,6 +2,7 @@ package vn.edu.usth.stockdashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
@@ -55,18 +56,22 @@ public class MainActivity extends AppCompatActivity{
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             switch (id) {
                 case R.id.listTab:
+                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList")));
                     transaction.commit();
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.buystockTab:
+                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockBuy")));
                     transaction.commit();
                     overridePendingTransition(0, 0);
                     return true;
                 case R.id.menuTab:
+                    fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     if (isLogin) {
                         transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("menuLogin")));
                     } else {
