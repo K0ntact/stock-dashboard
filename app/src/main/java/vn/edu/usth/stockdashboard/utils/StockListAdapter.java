@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.ListStock;
+package vn.edu.usth.stockdashboard.utils;
 
 import android.content.Context;
 import android.view.LayoutInflater;

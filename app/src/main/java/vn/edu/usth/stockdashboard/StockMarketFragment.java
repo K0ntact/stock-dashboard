@@ -1,4 +1,4 @@
-package vn.edu.usth.stockdashboard.ListStock;
+package vn.edu.usth.stockdashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,8 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
-import vn.edu.usth.stockdashboard.R;
+import vn.edu.usth.stockdashboard.utils.StockItem;
+import vn.edu.usth.stockdashboard.utils.StockListAdapter;
 
 public class StockMarketFragment extends Fragment {
     @Override

@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
 import vn.edu.usth.stockdashboard.R;
-import vn.edu.usth.stockdashboard.ListStock.StockItem;
-import vn.edu.usth.stockdashboard.ListStock.StockListAdapter;
+import vn.edu.usth.stockdashboard.utils.StockItem;
+import vn.edu.usth.stockdashboard.utils.StockListAdapter;
 
 public class MenuAfterLoginFragment extends Fragment {
     @Override
