@@ -5,14 +5,12 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/selectableItemBackground"
     tools:context=".Menu.MenuFragment">
 
     <View
         android:id="@+id/viewAppBar"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +56,6 @@
         android:id="@+id/actionNotification"
         android:layout_width="20dp"
         android:layout_height="30dp"
-        android:layout_gravity="end"
         android:layout_marginEnd="16dp"
         android:contentDescription="Notification"
         android:src="@drawable/notification_icon"
@@ -70,7 +67,6 @@
         android:id="@+id/menuFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewAppBar"
         app:layout_constraintVertical_bias="1.0"
