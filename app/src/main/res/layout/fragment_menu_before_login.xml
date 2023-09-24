@@ -93,7 +93,7 @@
         android:layout_height="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/stock_new_2"
+        app:srcCompat="@drawable/stock_new"
         tools:ignore="ContentDescription" />
 
 

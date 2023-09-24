@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
 import vn.edu.usth.stockdashboard.R;
 
-public class StockFragment extends Fragment {
+public class StockMarketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_stock, container, false);
+        View view = inflater.inflate(R.layout.fragment_stock_market, container, false);
         ListView listView = view.findViewById(R.id.listView);
 
         ArrayList<StockItem> entries = new ArrayList<>();

@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.HashMap;
 import java.util.Objects;
 
-import vn.edu.usth.stockdashboard.ListStock.StockFragment;
+import vn.edu.usth.stockdashboard.ListStock.StockMarketFragment;
 import vn.edu.usth.stockdashboard.Menu.MenuBeforeLoginFragment;
 import vn.edu.usth.stockdashboard.Menu.MenuFragment;
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
 
         bottomNavigationView.setSelectedItemId(R.id.listTab);
 
-        fragmentHashMap.put("stockList", new StockFragment());
+        fragmentHashMap.put("stockList", new StockMarketFragment());
         fragmentHashMap.put("menuNotLogin", new MenuBeforeLoginFragment());
         Fragment menuFragment = new MenuFragment();
         Bundle bundle = new Bundle();

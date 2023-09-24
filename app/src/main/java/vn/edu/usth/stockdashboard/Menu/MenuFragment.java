@@ -25,7 +25,7 @@ public class MenuFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
         savedInstanceState = getArguments();
         if (savedInstanceState != null)
             isLogin = savedInstanceState.getBoolean("isLogin");
