@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import vn.edu.usth.stockdashboard.MainActivity;
 import vn.edu.usth.stockdashboard.R;
 
@@ -72,14 +71,14 @@ public class MenuFragment extends Fragment {
         actionRefresh.setOnClickListener(view1 -> Toast.makeText(MenuFragment.this.getActivity(), "Refreshing...", Toast.LENGTH_SHORT).show());
         ImageView actionSearch = view.findViewById(R.id.actionSearch);
         actionSearch.setOnClickListener(view1 -> {
-//            ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(
-//                MenuFragment.this.getActivity(),
-//                R.anim.zoom_in_enter,
-//                R.anim.zoom_in_exit);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(
+                        MenuFragment.this.requireActivity(),
+                        R.anim.zoom_in_enter,
+                        R.anim.zoom_in_exit);
             Intent intent = new Intent(MenuFragment.this.getActivity(), MenuSearchActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            startActivity(intent, options.toBundle());
         });
         ImageView actionNotification = view.findViewById(R.id.actionNotification);
         actionNotification.setOnClickListener(view1 -> {
