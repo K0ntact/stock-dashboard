@@ -1,17 +1,16 @@
 package vn.edu.usth.stockdashboard;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
 import vn.edu.usth.stockdashboard.utils.StockItem;
 import vn.edu.usth.stockdashboard.utils.StockListAdapter;
 
@@ -20,7 +19,7 @@ public class StockMarketFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stock_market, container, false);
-        ListView listView = view.findViewById(R.id.listView);
+        RecyclerView listView = view.findViewById(R.id.listView);
 
         ArrayList<StockItem> entries = new ArrayList<>();
         entries.add(new StockItem("VNM", "VanEck VietNam ETF", "15,56 US$", "0,19%"));
@@ -37,17 +36,9 @@ public class StockMarketFragment extends Fragment {
         entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited", "117,00 US$", "0,27%"));
         entries.add(new StockItem("V", "Visa Inc.", "226,00 US$", "0,19%"));
         entries.add(new StockItem("WMT", "Walmart Inc.", "142,00 US$", "0,27%"));
-        // Set the item click listener for the ListView
-        listView.setOnItemClickListener(
-                (adapterView, view1, i, l) -> {
-                    Intent intent = new Intent(getActivity(), StockDetailActivity.class);
-                    intent.putExtra("stockName", entries.get(i).getSymbol());
-                    intent.putExtra("companyName", entries.get(i).getName());
-                    intent.putExtra("money", entries.get(i).getMoney());
-                    intent.putExtra("percentage", entries.get(i).getPercentage());
-                    startActivity(intent);
-                });
-        StockListAdapter adapter = new StockListAdapter(requireContext(), entries);
+        StockListAdapter adapter = new StockListAdapter(entries);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
         return view;
     }

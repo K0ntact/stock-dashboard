@@ -5,6 +5,7 @@
     <color name="grey">#AFAFAF</color>
     <color name="positive">#2a6023</color>
     <color name="negative">#a02321</color>
+    <color name="neutral">#E7BC28</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
