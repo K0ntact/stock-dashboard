@@ -18,13 +18,21 @@ import java.util.Objects;
 
 import vn.edu.usth.stockdashboard.Menu.MenuBeforeLoginFragment;
 import vn.edu.usth.stockdashboard.Menu.MenuFragment;
+import vn.edu.usth.stockdashboard.utils.DbQuery;
 
 public class MainActivity extends AppCompatActivity{
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
+    private boolean isLogin;
+    private boolean doubleBackToExitPressedOnce;
+    private final HashMap<String, Fragment> fragmentHashMap;
+    private final DbQuery db;
 
-    boolean isLogin = false;
-    boolean doubleBackToExitPressedOnce = false;
-    HashMap<String, Fragment> fragmentHashMap = new HashMap<>();
+    public MainActivity() {
+        isLogin = false;
+        doubleBackToExitPressedOnce = false;
+        fragmentHashMap = new HashMap<>();
+        db = DbQuery.getInstance();
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override

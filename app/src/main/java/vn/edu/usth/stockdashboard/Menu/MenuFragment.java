@@ -72,10 +72,6 @@ public class MenuFragment extends Fragment {
         actionRefresh.setOnClickListener(view1 -> Toast.makeText(MenuFragment.this.getActivity(), "Refreshing...", Toast.LENGTH_SHORT).show());
         ImageView actionSearch = view.findViewById(R.id.actionSearch);
         actionSearch.setOnClickListener(view1 -> {
-//            ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(
-//                MenuFragment.this.getActivity(),
-//                R.anim.zoom_in_enter,
-//                R.anim.zoom_in_exit);
             Intent intent = new Intent(MenuFragment.this.getActivity(), MenuSearchActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
