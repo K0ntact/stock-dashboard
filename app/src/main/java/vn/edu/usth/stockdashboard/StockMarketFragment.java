@@ -5,17 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
-
 import androidx.fragment.app.Fragment;
-
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.List;
 import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
 import vn.edu.usth.stockdashboard.utils.StockItem;
 import vn.edu.usth.stockdashboard.utils.StockListAdapter;
 
 public class StockMarketFragment extends Fragment {
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listDataChild;
+    private boolean openSlideBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +53,62 @@ public class StockMarketFragment extends Fragment {
                 });
         StockListAdapter adapter = new StockListAdapter(requireContext(), entries);
         listView.setAdapter(adapter);
+
+
+
+        //SLIDE BAR
+        ExpandableListView expandableListView = view.findViewById(R.id.slideBarExpandableView);
+        prepareListData();
+        SlideBarExpandableListAdapter listAdapter = new SlideBarExpandableListAdapter(requireContext(), listDataHeader, listDataChild);
+        expandableListView.setAdapter(listAdapter);
+
+        //IMAGE TO GO TO SLIDE BAR (3 LINES) //WIP\\
+        ImageButton hamburgerButton = view.findViewById(R.id.hamburgerButton);
+            hamburgerButton.setOnClickListener(view12 -> {
+                if (openSlideBar) {
+                    expandableListView.setVisibility(View.GONE);
+                    openSlideBar = false;
+                } else {
+                    expandableListView.setVisibility(View.VISIBLE);
+                    openSlideBar = true;
+                }
+            });
         return view;
+    }
+    private void prepareListData() {
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
+
+        listDataHeader.add("Favorite List");
+        listDataHeader.add("Owned List");
+        listDataHeader.add("Listed List");
+        listDataHeader.add("Industry Portfolio");
+        listDataHeader.add("Derivative List");
+        listDataHeader.add("CW List");
+
+        List<String> industryPortfolio = new ArrayList<>();
+        industryPortfolio.add("Insurance");
+        industryPortfolio.add("Media");
+        industryPortfolio.add("Oil & Gas");
+        industryPortfolio.add("Technology");
+        industryPortfolio.add("Personal & Household Goods");
+        industryPortfolio.add("Gas, Water & Multi-utilities");
+        industryPortfolio.add("Food & Beverage");
+        industryPortfolio.add("Banks");
+        industryPortfolio.add("Real Estate");
+
+        List<String> favoriteList = new ArrayList<>();
+        favoriteList.add("Favorite Number 1");
+        favoriteList.add("Favorite Number 2");
+
+        List<String> listedList = new ArrayList<>();
+        listedList.add("Listed List 1");
+        listedList.add("Listed List 2");
+        listedList.add("Listed List 3");
+
+        listDataChild.put(listDataHeader.get(0), favoriteList);
+        listDataChild.put(listDataHeader.get(2), listedList);
+        listDataChild.put(listDataHeader.get(3), industryPortfolio);
+
     }
 }
