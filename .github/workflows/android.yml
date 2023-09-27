@@ -2,35 +2,37 @@ name: Android CI
 
 on:
   push:
-    branches:
-      - main  # Adjust with your branch name
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: gradle
 
-    - name: Grant execute permissions for gradlew
-      run: chmod +x ./application/gradlew
+    - name: Grant execute permission for gradlew
+      run: chmod +x application/gradlew
 
     - name: Build debug APK
       run: |
         cd application
-        ./gradlew assembleDebug
+        ./gradlew assembleDebug  # Adjust if you need to build a release APK or other variant
+
+    - name: Create Build directory
+      run: mkdir -p build
 
     - name: Move APK to build folder
-      run: |
-        mkdir -p build
-        mv application/app/build/outputs/apk/debug/app-debug.apk build/
+      run: mv application/app/build/outputs/apk/debug/app-debug.apk build/  # Adjust paths as necessary for your project
 
     - name: Upload APK
       uses: actions/upload-artifact@v2
