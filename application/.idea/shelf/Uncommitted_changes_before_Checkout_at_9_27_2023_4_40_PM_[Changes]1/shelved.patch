@@ -1,0 +1,57 @@
+Index: app/src/main/res/layout/activity_log_in.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/LoginActivity\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#232B36\"\r\n    tools:context=\".LogInActivity\">\r\n\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"180dp\"\r\n        android:src=\"@drawable/stock_new\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/login_details\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"40sp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/editTextUsername\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/viewUsername\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/viewUsername\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/guideline2\" />\r\n\r\n    <View\r\n        android:id=\"@+id/viewUsername\"\r\n        android:layout_width=\"295dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:background=\"@drawable/input\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/editTextUsername\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/editTextPassword\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/editTextPassword\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/editTextUsername\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editTextUsername\"\r\n        android:layout_width=\"295dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:background=\"@null\"\r\n        android:ems=\"10\"\r\n        android:hint=\"@string/username\"\r\n        android:inputType=\"text\"\r\n        android:paddingStart=\"10dp\"\r\n        android:paddingEnd=\"10dp\"\r\n        android:textColor=\"@color/white\"\r\n        android:textColorHint=\"#757575\"\r\n        android:textSize=\"16sp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/editTextPassword\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView\" />\r\n\r\n    <View\r\n        android:id=\"@+id/viewPassword\"\r\n        android:layout_width=\"295dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_marginEnd=\"1dp\"\r\n        android:background=\"@drawable/input\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/editTextPassword\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/editTextPassword\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/editTextPassword\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/editTextPassword\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editTextPassword\"\r\n        android:layout_width=\"295dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:background=\"@null\"\r\n        android:ems=\"10\"\r\n        android:hint=\"@string/password\"\r\n        android:inputType=\"textPassword\"\r\n        android:paddingStart=\"10dp\"\r\n        android:paddingEnd=\"10dp\"\r\n        android:textAppearance=\"@style/placeholder\"\r\n        android:textColor=\"@color/white\"\r\n        android:textColorHint=\"#757575\"\r\n        android:textSize=\"16sp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/buttonLogin\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/buttonLogin\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/buttonLogin\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/editTextUsername\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/buttonLogin\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"50dp\"\r\n        android:background=\"@drawable/btnground\"\r\n        android:text=\"Log in\"\r\n\r\n        android:textColor=\"#F6F0F0\"\r\n        android:textStyle=\"bold\"\r\n        app:backgroundTint=\"#0B6EFE\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/buttonSignup\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/buttonSignup\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/buttonSignup\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/editTextPassword\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/buttonSignup\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"50dp\"\r\n        android:text=\"@string/do_not_have_an_account_sign_up\"\r\n        android:textAlignment=\"center\"\r\n        android:textAllCaps=\"false\"\r\n        android:textColor=\"@color/white\"\r\n        android:textStyle=\"italic\"\r\n        app:backgroundTint=\"#232B36\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/imageView\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/buttonLogin\" />\r\n\r\n    <androidx.constraintlayout.widget.Guideline\r\n        android:id=\"@+id/guideline2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        app:layout_constraintGuide_percent=\"0.21\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_log_in.xml b/app/src/main/res/layout/activity_log_in.xml
+--- a/app/src/main/res/layout/activity_log_in.xml	
++++ b/app/src/main/res/layout/activity_log_in.xml	
+@@ -5,7 +5,6 @@
+     android:id="@+id/LoginActivity"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#232B36"
+     tools:context=".LogInActivity">
+ 
+ 
+@@ -16,7 +15,8 @@
+         android:src="@drawable/stock_new"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent" />
++        app:layout_constraintStart_toStartOf="parent"
++        android:contentDescription="Bottom image" />
+ 
+     <TextView
+         android:id="@+id/textView"
+@@ -104,16 +104,16 @@
+         app:layout_constraintStart_toStartOf="@+id/buttonSignup"
+         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+ 
+-    <Button
++    <TextView
+         android:id="@+id/buttonSignup"
+         android:layout_width="wrap_content"
+-        android:layout_height="50dp"
++        android:layout_height="wrap_content"
+         android:text="@string/do_not_have_an_account_sign_up"
+         android:textAlignment="center"
+         android:textAllCaps="false"
+         android:textColor="@color/white"
+         android:textStyle="italic"
+-        app:backgroundTint="#232B36"
++        app:backgroundTint="?android:attr/windowBackground"
+         app:layout_constraintBottom_toTopOf="@+id/imageView"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+@@ -124,6 +124,6 @@
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+-        app:layout_constraintGuide_percent="0.21" />
++        app:layout_constraintGuide_percent="0.21203831" />
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file

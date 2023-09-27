@@ -1,0 +1,108 @@
+Index: app/src/main/java/vn/edu/usth/stockdashboard/Menu/MenuFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package vn.edu.usth.stockdashboard.Menu;\r\n\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.core.app.ActivityOptionsCompat;\r\nimport androidx.core.text.HtmlCompat;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport vn.edu.usth.stockdashboard.MainActivity;\r\nimport vn.edu.usth.stockdashboard.R;\r\n\r\npublic class MenuFragment extends Fragment {\r\n    private boolean isLogin = false;\r\n    @SuppressLint(\"SetTextI18n\")\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_menu, container, false);\r\n        savedInstanceState = getArguments();\r\n        if (savedInstanceState != null)\r\n            isLogin = savedInstanceState.getBoolean(\"isLogin\");\r\n\r\n        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuBeforeLoginFragment()).commit();\r\n        if (isLogin) {\r\n                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();\r\n                transaction.replace(R.id.menuFragmentContainer, new MenuAfterLoginFragment());\r\n                requireActivity().getSupportFragmentManager().popBackStack();\r\n            transaction.commit();\r\n        }\r\n\r\n        TextView logout = view.findViewById(R.id.logoutView);\r\n        logout.setOnClickListener(view1 -> {\r\n\r\n            AlertDialog.Builder builder = new AlertDialog.Builder(MenuFragment.this.requireContext());\r\n\r\n            View s = getLayoutInflater().inflate(R.layout.dialog_style, null);\r\n            TextView title = s.findViewById(R.id.titleAlert);\r\n            title.setText(\"Logout\");\r\n            TextView content = s.findViewById(R.id.confirmMessage);\r\n            content.setText(\"Are you sure to logout?\");\r\n            Button confirm = s.findViewById(R.id.cfbtn);\r\n            confirm.setText(HtmlCompat.fromHtml(\"<b>Logout</b>\", HtmlCompat.FROM_HTML_MODE_COMPACT));\r\n            Button cancel = s.findViewById(R.id.cancelbtn);\r\n            cancel.setText(\"Skip\");\r\n            builder.setView(s);\r\n            AlertDialog d = builder.create();\r\n            d.show();\r\n             confirm.setOnClickListener(v -> {\r\n                 d.dismiss();\r\n                 Intent intent = new Intent(MenuFragment.this.getActivity(), MainActivity.class);\r\n                 intent.putExtra(\"isLogin\", false);\r\n                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);\r\n                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);\r\n                 startActivity(intent);\r\n                 Toast.makeText(MenuFragment.this.requireContext(), \"Logged out!\", Toast.LENGTH_SHORT).show();\r\n             });\r\n             cancel.setOnClickListener(v -> d.dismiss());\r\n        });\r\n\r\n        //Add the Refresh Button\r\n        ImageView actionRefresh = view.findViewById(R.id.actionRefresh);\r\n        actionRefresh.setOnClickListener(view1 -> Toast.makeText(MenuFragment.this.getActivity(), \"Refreshing...\", Toast.LENGTH_SHORT).show());\r\n        ImageView actionSearch = view.findViewById(R.id.actionSearch);\r\n        actionSearch.setOnClickListener(view1 -> {\r\n            Intent intent = new Intent(MenuFragment.this.getActivity(), MenuSearchActivity.class);\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);\r\n            startActivity(intent);\r\n        });\r\n        ImageView actionNotification = view.findViewById(R.id.actionNotification);\r\n        actionNotification.setOnClickListener(view1 -> {\r\n            ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(MenuFragment.this.requireActivity(), R.anim.zoom_in_enter, R.anim.zoom_in_exit);\r\n            Intent intent = new Intent(MenuFragment.this.getActivity(), NotiMenuActivity.class);\r\n            // Clear backstack\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);\r\n            startActivity(intent, options.toBundle());\r\n        });\r\n\r\n        return view;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/vn/edu/usth/stockdashboard/Menu/MenuFragment.java b/app/src/main/java/vn/edu/usth/stockdashboard/Menu/MenuFragment.java
+--- a/app/src/main/java/vn/edu/usth/stockdashboard/Menu/MenuFragment.java	
++++ b/app/src/main/java/vn/edu/usth/stockdashboard/Menu/MenuFragment.java	
+@@ -32,9 +32,9 @@
+ 
+         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuBeforeLoginFragment()).commit();
+         if (isLogin) {
+-                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+-                transaction.replace(R.id.menuFragmentContainer, new MenuAfterLoginFragment());
+-                requireActivity().getSupportFragmentManager().popBackStack();
++            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
++            transaction.replace(R.id.menuFragmentContainer, new MenuAfterLoginFragment());
++            requireActivity().getSupportFragmentManager().popBackStack();
+             transaction.commit();
+         }
+ 
+Index: app/src/main/java/vn/edu/usth/stockdashboard/LogInActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package vn.edu.usth.stockdashboard;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.widget.Button;\r\n\r\npublic class LogInActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_log_in);\r\n\r\n        Button buttonLogin = findViewById(R.id.buttonLogin);\r\n        buttonLogin.setOnClickListener(v -> {\r\n            Intent intent = new Intent(LogInActivity.this, MainActivity.class);\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);\r\n            intent.putExtra(\"isLogin\", true);\r\n            startActivity(intent);\r\n        });\r\n\r\n        Button buttonSignUp = findViewById(R.id.buttonSignup);\r\n        buttonSignUp.setOnClickListener(v -> {\r\n            Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);\r\n            startActivity(intent);\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/vn/edu/usth/stockdashboard/LogInActivity.java b/app/src/main/java/vn/edu/usth/stockdashboard/LogInActivity.java
+--- a/app/src/main/java/vn/edu/usth/stockdashboard/LogInActivity.java	
++++ b/app/src/main/java/vn/edu/usth/stockdashboard/LogInActivity.java	
+@@ -5,6 +5,7 @@
+ import android.content.Intent;
+ import android.os.Bundle;
+ import android.widget.Button;
++import android.widget.TextView;
+ 
+ public class LogInActivity extends AppCompatActivity {
+ 
+@@ -21,7 +22,7 @@
+             startActivity(intent);
+         });
+ 
+-        Button buttonSignUp = findViewById(R.id.buttonSignup);
++        TextView buttonSignUp = findViewById(R.id.buttonSignup);
+         buttonSignUp.setOnClickListener(v -> {
+             Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+Index: app/src/main/res/layout/fragment_menu_before_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/menu\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Menu.MenuBeforeLoginFragment\">\r\n\r\n    <View\r\n        android:id=\"@+id/view\"\r\n        android:layout_width=\"350dp\"\r\n        android:layout_height=\"260dp\"\r\n        android:background=\"@drawable/round_box_gray_2\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/imageView3\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.491\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.707\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView5\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"99dp\"\r\n        android:layout_marginEnd=\"101dp\"\r\n        android:text=\"@string/hello\"\r\n        android:textColor=\"#FFFFFF\"\r\n        android:textSize=\"25sp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/loginButton\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/view\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/view\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/view\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/loginButton\"\r\n        android:layout_width=\"160dp\"\r\n        android:layout_height=\"60dp\"\r\n        android:text=\"@string/log_in_2\"\r\n        android:textSize=\"20sp\"\r\n        android:textColor=\"@color/white\"\r\n        app:backgroundTint=\"#5c84f9\"\r\n        android:background=\"@drawable/btnground\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/signUpButton\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/textView5\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/textView5\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView5\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/signUpButton\"\r\n        android:layout_width=\"160dp\"\r\n        android:layout_height=\"60dp\"\r\n        android:text=\"@string/sign_up_2\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"20sp\"\r\n        app:backgroundTint=\"#5c84f9\"\r\n        android:background=\"@drawable/btnground\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/view\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/loginButton\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/loginButton\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/loginButton\" />\r\n\r\n<!--    <androidx.appcompat.widget.Toolbar-->\r\n<!--        android:id=\"@+id/toolbar\"-->\r\n<!--        android:layout_width=\"409dp\"-->\r\n<!--        android:layout_height=\"52dp\"-->\r\n<!--        android:background=\"#1d242e\"-->\r\n<!--        android:minHeight=\"?attr/actionBarSize\"-->\r\n<!--        android:theme=\"?attr/actionBarTheme\"-->\r\n<!--        app:layout_constraintEnd_toEndOf=\"parent\"-->\r\n<!--        app:layout_constraintStart_toStartOf=\"parent\"-->\r\n<!--        app:layout_constraintTop_toTopOf=\"parent\" />-->\r\n\r\n<!--    <TextView-->\r\n<!--        android:id=\"@+id/textView2\"-->\r\n<!--        android:layout_width=\"100dp\"-->\r\n<!--        android:layout_height=\"wrap_content\"-->\r\n<!--        android:gravity=\"center\"-->\r\n<!--        android:text=\"@string/account\"-->\r\n<!--        android:textColor=\"@color/white\"-->\r\n<!--        android:textSize=\"18sp\"-->\r\n<!--        android:textStyle=\"bold\"-->\r\n<!--        app:layout_constraintBottom_toBottomOf=\"@+id/toolbar\"-->\r\n<!--        app:layout_constraintEnd_toEndOf=\"parent\"-->\r\n<!--        app:layout_constraintStart_toStartOf=\"@+id/toolbar\"-->\r\n<!--        app:layout_constraintTop_toTopOf=\"@+id/toolbar\"-->\r\n<!--        tools:ignore=\"TextSizeCheck\" />-->\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView3\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"180dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:srcCompat=\"@drawable/stock_new\"\r\n        tools:ignore=\"ContentDescription\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_menu_before_login.xml b/app/src/main/res/layout/fragment_menu_before_login.xml
+--- a/app/src/main/res/layout/fragment_menu_before_login.xml	
++++ b/app/src/main/res/layout/fragment_menu_before_login.xml	
+@@ -4,9 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:id="@+id/menu"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    tools:context=".Menu.MenuBeforeLoginFragment">
+-
++    android:layout_height="match_parent">
+     <View
+         android:id="@+id/view"
+         android:layout_width="350dp"
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"grey\">#AFAFAF</color>\r\n    <color name=\"positive\">#2a6023</color>\r\n    <color name=\"negative\">#a02321</color>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"lavender\">#8692f7</color>\r\n    <color name=\"toolbar\">#252D39</color>\r\n    <color name=\"MenuName\">#118A70</color>\r\n    <color name=\"startupBackground\">#232b36</color>\r\n    <color name=\"primary\">#0d1019</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	
++++ b/app/src/main/res/values/colors.xml	
+@@ -15,4 +15,5 @@
+     <color name="MenuName">#118A70</color>
+     <color name="startupBackground">#232b36</color>
+     <color name="primary">#0d1019</color>
++    <color name="primaryDark">#0d1019</color>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/container\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Menu.MenuFragment\">\r\n\r\n    <View\r\n        android:id=\"@+id/viewAppBar\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"60dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Account\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"18sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/actionNotification\"\r\n        app:layout_constraintEnd_toEndOf=\"@id/viewAppBar\"\r\n        app:layout_constraintStart_toStartOf=\"@id/viewAppBar\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/actionNotification\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/actionRefresh\"\r\n        android:layout_width=\"20dp\"\r\n        android:layout_height=\"30dp\"\r\n        android:layout_gravity=\"end\"\r\n        android:layout_marginEnd=\"16dp\"\r\n        android:contentDescription=\"Refresh\"\r\n        android:src=\"@drawable/refresh_icon\"\r\n        app:layout_constraintBottom_toBottomOf=\"@id/viewAppBar\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/viewAppBar\"\r\n        app:layout_constraintTop_toTopOf=\"@id/viewAppBar\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/actionSearch\"\r\n        android:layout_width=\"20dp\"\r\n        android:layout_height=\"30dp\"\r\n        android:layout_gravity=\"end\"\r\n        android:layout_marginEnd=\"16dp\"\r\n        android:contentDescription=\"Search\"\r\n        android:src=\"@drawable/search_icon_2\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/actionRefresh\"\r\n        app:layout_constraintEnd_toStartOf=\"@+id/actionRefresh\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/actionRefresh\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/actionNotification\"\r\n        android:layout_width=\"20dp\"\r\n        android:layout_height=\"30dp\"\r\n        android:layout_marginEnd=\"16dp\"\r\n        android:contentDescription=\"Notification\"\r\n        android:src=\"@drawable/notification_icon\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/actionSearch\"\r\n        app:layout_constraintEnd_toStartOf=\"@+id/actionSearch\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/actionSearch\" />\r\n\r\n    <androidx.fragment.app.FragmentContainerView\r\n        android:id=\"@+id/menuFragmentContainer\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/viewAppBar\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/logoutView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:background=\"@drawable/hightlight_border\"\r\n        android:paddingStart=\"20dp\"\r\n        android:paddingTop=\"5dp\"\r\n        android:paddingEnd=\"20dp\"\r\n        android:paddingBottom=\"5dp\"\r\n        android:text=\"Logout\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"12sp\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/textView2\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/viewAppBar\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/textView2\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_menu.xml b/app/src/main/res/layout/fragment_menu.xml
+--- a/app/src/main/res/layout/fragment_menu.xml	
++++ b/app/src/main/res/layout/fragment_menu.xml	
+@@ -69,8 +69,10 @@
+         android:layout_height="0dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="1.0"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/viewAppBar" />
++        app:layout_constraintTop_toBottomOf="@+id/viewAppBar"
++        app:layout_constraintVertical_bias="1.0" />
+ 
+     <TextView
+         android:id="@+id/logoutView"

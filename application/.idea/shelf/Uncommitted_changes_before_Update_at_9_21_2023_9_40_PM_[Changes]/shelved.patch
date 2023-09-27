@@ -1,0 +1,602 @@
+Index: app/src/main/java/vn/edu/usth/stockdashboard/StockbuyActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/vn/edu/usth/stockdashboard/StockbuyActivity.java b/app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java
+rename from app/src/main/java/vn/edu/usth/stockdashboard/StockbuyActivity.java
+rename to app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java
+--- a/app/src/main/java/vn/edu/usth/stockdashboard/StockbuyActivity.java	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java	(date 1695304877627)
+@@ -1,29 +1,30 @@
+ package vn.edu.usth.stockdashboard;
+ 
+ import androidx.appcompat.app.AlertDialog;
+-import androidx.appcompat.app.AppCompatActivity;
+ import androidx.core.text.HtmlCompat;
++import androidx.fragment.app.Fragment;
+ 
+ import android.content.DialogInterface;
+ import android.content.res.ColorStateList;
+ import android.graphics.Color;
+ import android.os.Bundle;
+-import android.text.Html;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
+ import android.widget.Button;
+ 
+ import java.util.Objects;
+ import java.util.concurrent.atomic.AtomicInteger;
+ 
+-public class StockbuyActivity extends AppCompatActivity {
++public class StockBuyFragment extends Fragment {
+ 
+     @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+         AtomicInteger tradeState = new AtomicInteger(); // 0 mean buy, 1 mean sell
+-        setContentView(R.layout.activity_stockbuy);
+-        Button buybtn = (Button) findViewById(R.id.buybtn);
+-        Button sellbtn = (Button) findViewById(R.id.sellbtn);
+-        Button placeorderbtn = (Button) findViewById(R.id.placeorder);
++        View view = inflater.inflate(R.layout.activity_stockbuy, container, false);
++        Button buybtn = (Button) view.findViewById(R.id.buybtn);
++        Button sellbtn = (Button) view.findViewById(R.id.sellbtn);
++        Button placeorderbtn = (Button) view.findViewById(R.id.placeorder);
+         buybtn.setOnClickListener(v -> {
+             // Get background tint color
+             int color = Objects.requireNonNull(buybtn.getBackgroundTintList()).getDefaultColor();
+@@ -48,14 +49,14 @@
+         });
+ 
+         placeorderbtn.setOnClickListener(v ->{
+-            AlertDialog.Builder builder = new AlertDialog.Builder(StockbuyActivity.this);
++            AlertDialog.Builder builder = new AlertDialog.Builder(StockBuyFragment.this.requireContext());
+             builder.setTitle(HtmlCompat.fromHtml("<font color='#FFFFFF'>Order Confirm</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+             String tradeType = tradeState.get() == 0 ? "buy" : "sell";
+             builder.setMessage(HtmlCompat.fromHtml("<font color='#FFFFFF'>Are you sure you want to " + tradeType + " this stock</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialogInterface, int i) {
+-                    AlertDialog alertDialog = new AlertDialog.Builder(StockbuyActivity.this).create();
++                    AlertDialog alertDialog = new AlertDialog.Builder(StockBuyFragment.this.requireContext()).create();
+                     alertDialog.setTitle(HtmlCompat.fromHtml("<font color='#FFFFFF'>Order Placed</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+                     alertDialog.setMessage(HtmlCompat.fromHtml("<font color='#FFFFFF'>Your order has been placed</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+@@ -70,5 +71,6 @@
+             Objects.requireNonNull(d.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);
+             d.show();
+         });
++        return view;
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/vn/edu/usth/stockdashboard/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package vn.edu.usth.stockdashboard;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\nimport vn.edu.usth.stockdashboard.ListStock.StockFragment;\r\n\r\npublic class MainActivity extends AppCompatActivity{\r\n    BottomNavigationView bottomNavigationView;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n\r\n        bottomNavigationView = findViewById(R.id.bottomNavigationView);\r\n        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {\r\n            int id = item.getItemId();\r\n            if(id == R.id.listTab) {\r\n                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).commit();\r\n                return true;\r\n            } else if (id == R.id.viewListTab) {\r\n                return true;\r\n            }\r\n            else return id == R.id.menuTab;\r\n        });\r\n        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).commit();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/vn/edu/usth/stockdashboard/MainActivity.java b/app/src/main/java/vn/edu/usth/stockdashboard/MainActivity.java
+--- a/app/src/main/java/vn/edu/usth/stockdashboard/MainActivity.java	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/java/vn/edu/usth/stockdashboard/MainActivity.java	(date 1695305869198)
+@@ -2,6 +2,7 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
+ 
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+@@ -16,12 +17,18 @@
+         setContentView(R.layout.activity_main);
+ 
+         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
++
++        bottomNavigationView.setSelectedItemId(R.id.listTab);
++
++        bottomNavigationView.setOnItemSelectedListener(item -> {
+             int id = item.getItemId();
+             if(id == R.id.listTab) {
+                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockFragment()).commit();
++                overridePendingTransition(1, 1);
+                 return true;
+-            } else if (id == R.id.viewListTab) {
++            } else if (id == R.id.buystockTab) {
++                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StockBuyFragment()).commit();
++                overridePendingTransition(1, 1);
+                 return true;
+             }
+             else return id == R.id.menuTab;
+Index: app/src/main/java/vn/edu/usth/stockdashboard/DetailStock/CandleChartFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package vn.edu.usth.stockdashboard.DetailStock;\r\n\r\nimport android.graphics.Color;\r\nimport android.graphics.Paint;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.github.mikephil.charting.charts.CandleStickChart;\r\nimport com.github.mikephil.charting.data.CandleData;\r\nimport com.github.mikephil.charting.data.CandleDataSet;\r\nimport com.github.mikephil.charting.data.CandleEntry;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport vn.edu.usth.stockdashboard.R;\r\n\r\npublic class CandleChartFragment extends Fragment {\r\n    private CandleDataSet dataSet;\r\n    private CandleData data;\r\n    private CandleStickChart candleStickChart;\r\n\r\n    public CandleChartFragment() {\r\n        // Required empty public constructor\r\n    }\r\n\r\n    public CandleChartFragment(String dateRange) {\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        // Inflate the layout for this fragment\r\n        View view = inflater.inflate(R.layout.fragment_candle_chart, container, false);\r\n\r\n        candleStickChart = view.findViewById(R.id.candleChart);\r\n\r\n        // This Description is visible at Bottom Right side\r\n        candleStickChart.getDescription().setText(\"GFG\");\r\n\r\n        //set background color for the chart to black\r\n        candleStickChart.setBackgroundColor(Color.parseColor(\"#06041a\"));\r\n        // Creating a list to store CandleEntry objects\r\n        List<CandleEntry> entries = new ArrayList<>();\r\n\r\n        // Added candlestick dummy data entries here\r\n        // Format will be like entries.add(new CandleEntry(index, high, low, open, close));\r\n        // here f is denoting floating-point number\r\n        entries.add(new CandleEntry(0, 80f, 90f, 70f, 85f));  // Up (green)\r\n        entries.add(new CandleEntry(1, 85f, 95f, 75f, 88f));  // Up (green)\r\n        entries.add(new CandleEntry(2, 88f, 75f, 82f, 85f));  // Down (red)\r\n        entries.add(new CandleEntry(3, 85f, 70f, 78f, 72f));  // Down (red)\r\n        entries.add(new CandleEntry(4, 72f, 68f, 70f, 70f));  // Down (red)\r\n        entries.add(new CandleEntry(5, 70f, 85f, 68f, 82f));  // Up (green)\r\n        entries.add(new CandleEntry(6, 82f, 78f, 80f, 75f));  // Down (red)\r\n        entries.add(new CandleEntry(7, 75f, 70f, 73f, 72f));  // Down (red)\r\n        entries.add(new CandleEntry(8, 72f, 82f, 70f, 80f));  // Up (green)\r\n        entries.add(new CandleEntry(9, 80f, 88f, 75f, 85f));  // Up (green)\r\n        entries.add(new CandleEntry(10, 85f, 92f, 82f, 90f)); // Up (green)\r\n        entries.add(new CandleEntry(11, 90f, 98f, 88f, 95f)); // Up (green)\r\n        entries.add(new CandleEntry(12, 95f, 88f, 90f, 85f)); // Down (red)\r\n        entries.add(new CandleEntry(13, 85f, 78f, 82f, 72f)); // Down (red)\r\n        entries.add(new CandleEntry(14, 72f, 70f, 70f, 68f)); // Down (red)\r\n\r\n        // Created a CandleDataSet from the entries\r\n        dataSet = new CandleDataSet(entries, \"Data\");\r\n\r\n        dataSet.setDrawIcons(false);\r\n        dataSet.setIncreasingColor(Color.GREEN);  // Color for up (green) candlesticks\r\n        dataSet.setIncreasingPaintStyle(Paint.Style.FILL); // Set the paint style to Fill for green candlesticks\r\n        dataSet.setDecreasingColor(Color.RED);    // Color for down (red) candlesticks\r\n        dataSet.setShadowColorSameAsCandle(true); // Using the same color for shadows as the candlesticks\r\n        dataSet.setDrawValues(false);             // Hiding the values on the chart if not needed\r\n\r\n        // Created a CandleData object from the CandleDataSet\r\n        data = new CandleData();\r\n        data.addDataSet(dataSet);\r\n\r\n        // Seinft the CandleData to the CandleStickChart\r\n        candleStickChart.setData(data);\r\n        candleStickChart.invalidate();\r\n\r\n        return view;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/vn/edu/usth/stockdashboard/DetailStock/CandleChartFragment.java b/app/src/main/java/vn/edu/usth/stockdashboard/DetailStock/CandleChartFragment.java
+--- a/app/src/main/java/vn/edu/usth/stockdashboard/DetailStock/CandleChartFragment.java	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/java/vn/edu/usth/stockdashboard/DetailStock/CandleChartFragment.java	(date 1695307205476)
+@@ -10,6 +10,7 @@
+ import androidx.fragment.app.Fragment;
+ 
+ import com.github.mikephil.charting.charts.CandleStickChart;
++import com.github.mikephil.charting.components.XAxis;
+ import com.github.mikephil.charting.data.CandleData;
+ import com.github.mikephil.charting.data.CandleDataSet;
+ import com.github.mikephil.charting.data.CandleEntry;
+@@ -82,6 +83,20 @@
+ 
+         // Seinft the CandleData to the CandleStickChart
+         candleStickChart.setData(data);
++        // Set the X-axis label count
++        candleStickChart.getXAxis().setLabelCount(entries.size(), true);
++        candleStickChart.getXAxis().setTextColor(Color.WHITE);
++        candleStickChart.getAxisRight().setTextColor(Color.WHITE);
++        XAxis xAxis = candleStickChart.getXAxis();
++        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
++        // Turn off legend
++        candleStickChart.getLegend().setEnabled(false);
++        // Set gridline style to dotted line
++        candleStickChart.getXAxis().enableGridDashedLine(10f, 10f, 0f);
++        candleStickChart.getAxisLeft().enableGridDashedLine(10f, 10f, 0f);
++        candleStickChart.getAxisRight().enableGridDashedLine(10f, 10f, 0f);
++
++        // Refresh the chart
+         candleStickChart.invalidate();
+ 
+         return view;
+Index: app/src/main/res/layout/fragment_list_stock.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ListStock.ListStockFragment\"\r\n    android:background=\"@color/black\">\r\n    <ListView\r\n        android:id=\"@+id/listView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n    </ListView>\r\n</FrameLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_list_stock.xml b/app/src/main/res/layout/fragment_list_stock.xml
+--- a/app/src/main/res/layout/fragment_list_stock.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/layout/fragment_list_stock.xml	(date 1695300800774)
+@@ -4,7 +4,7 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     tools:context=".ListStock.ListStockFragment"
+-    android:background="@color/black">
++    android:background="#1f232c">
+     <ListView
+         android:id="@+id/listView"
+         android:layout_width="match_parent"
+Index: app/src/main/res/layout/activity_stockbuy.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".StockbuyActivity\"\r\n    android:id=\"@+id/android_lar\"\r\n    android:clipToOutline=\"true\"\r\n    android:background=\"#0D1015\"\r\n    tools:ignore=\"ExtraText,UnusedAttribute\">\r\n\r\n    <!-- Auto layout, variables, and unit scale are not yet supported -->\r\n\r\n    <!-- Auto layout, variables, and unit scale are not yet supported -->\r\n    <!-- Auto layout, variables, and unit scale are not yet supported -->\r\n\r\n\r\n    <View\r\n        android:id=\"@+id/stockbuy_toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"52dp\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_centerVertical=\"true\"\r\n        android:layout_marginBottom=\"586dp\"\r\n        android:background=\"#1D242E\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/equity\"\r\n        android:layout_width=\"47dp\"\r\n        android:layout_height=\"18dp\"\r\n        android:layout_centerHorizontal=\"true\"\r\n        android:layout_centerVertical=\"true\"\r\n        android:gravity=\"center_horizontal|center_vertical\"\r\n        android:text=\"Equity\"\r\n        android:textAppearance=\"@style/equity\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/stockbuy_toolbar\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/stockbuy_toolbar\"\r\n        app:layout_constraintHorizontal_bias=\"0.501\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/stockbuy_toolbar\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/stockbuy_toolbar\"\r\n        app:layout_constraintVertical_bias=\"0.444\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n    <!-- Auto layout, variables, and unit scale are not yet supported -->\r\n\r\n    <View\r\n        android:id=\"@+id/rectangle_1\"\r\n        android:layout_width=\"206dp\"\r\n        android:layout_height=\"180dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:background=\"@drawable/stats_container\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.103\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/curr_stock_price\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/total_volum\"\r\n        android:layout_width=\"81dp\"\r\n        android:layout_height=\"19dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"Total volume\"\r\n        android:textAppearance=\"@style/total_volum\"\r\n        android:textColor=\"#78909C\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintHorizontal_bias=\"0.16\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintVertical_bias=\"0.155\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/ce\"\r\n        android:layout_width=\"81dp\"\r\n        android:layout_height=\"19dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"CE\"\r\n        android:textAppearance=\"@style/total_volum\"\r\n        android:textColor=\"#78909C\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintHorizontal_bias=\"0.16\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/total_volum\"\r\n        app:layout_constraintVertical_bias=\"0.132\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/ref\"\r\n        android:layout_width=\"81dp\"\r\n        android:layout_height=\"19dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"REF\"\r\n        android:textAppearance=\"@style/total_volum\"\r\n        android:textColor=\"#78909C\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintHorizontal_bias=\"0.16\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/ce\"\r\n        app:layout_constraintVertical_bias=\"0.191\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/ref2\"\r\n        android:layout_width=\"81dp\"\r\n        android:layout_height=\"19dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"FL\"\r\n        android:textAppearance=\"@style/total_volum\"\r\n        android:textColor=\"#78909C\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintHorizontal_bias=\"0.16\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/ref\"\r\n        app:layout_constraintVertical_bias=\"0.333\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <!-- Auto layout, variables, and unit scale are not yet supported -->\r\n\r\n    <TextView\r\n        android:id=\"@+id/curr_stock_price\"\r\n        android:layout_width=\"116dp\"\r\n        android:layout_height=\"61dp\"\r\n        android:layout_marginTop=\"92dp\"\r\n        android:gravity=\"top\"\r\n        android:text=\"@string/some_id\"\r\n        android:textAppearance=\"@style/some_id\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.074\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/stockbuy_toolbar\"\r\n        tools:ignore=\"TextSizeCheck\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/searchbox\"\r\n        android:layout_width=\"369dp\"\r\n        android:layout_height=\"48dp\"\r\n        android:autofillHints=\"\"\r\n        android:background=\"@drawable/rectangle_2\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Search Symbol...\"\r\n        android:inputType=\"text\"\r\n        android:paddingStart=\"58dp\"\r\n        android:textAppearance=\"@style/placeholder\"\r\n        android:textColor=\"@color/white\"\r\n        android:textColorHint=\"#78909C\"\r\n        android:textSize=\"13sp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/curr_stock_price\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.452\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/stockbuy_toolbar\"\r\n        app:layout_constraintVertical_bias=\"0.545\"\r\n        tools:ignore=\"HardcodedText,LabelFor,RtlSymmetry\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/change_val\"\r\n        android:layout_width=\"58dp\"\r\n        android:layout_height=\"30dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"0.00\"\r\n        android:textColor=\"#E7BC28\"\r\n        android:textSize=\"25sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/curr_stock_price\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/searchbox\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n\r\n    <View\r\n        android:id=\"@+id/clipart7424\"\r\n        android:layout_width=\"30dp\"\r\n        android:layout_height=\"30dp\"\r\n        android:background=\"@drawable/search_icon\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/searchbox\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/searchbox\"\r\n        app:layout_constraintHorizontal_bias=\"0.055\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/searchbox\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/searchbox\"\r\n        app:layout_constraintVertical_bias=\"0.4\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/change_percentage\"\r\n        android:layout_width=\"39dp\"\r\n        android:layout_height=\"30dp\"\r\n        android:gravity=\"top\"\r\n        android:text=\"0%\"\r\n        android:textColor=\"#E7BC28\"\r\n        android:textSize=\"25sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/change_val\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/searchbox\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/ce_value\"\r\n        android:layout_width=\"23dp\"\r\n        android:layout_height=\"19dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"@string/some_id\"\r\n        android:textStyle=\"bold\"\r\n        android:textColor=\"#E040FB\"\r\n        android:textSize=\"13sp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/ref\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintHorizontal_bias=\"0.585\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/ce\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/total_volume_value\"\r\n        app:layout_constraintVertical_bias=\"0.483\"\r\n        tools:ignore=\"TextSizeCheck,TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/total_volume_value\"\r\n        android:layout_width=\"9dp\"\r\n        android:layout_height=\"19dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"@string/some_id\"\r\n        android:textColor=\"#FFFFFF\"\r\n        android:textSize=\"13sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/total_volum\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/total_volum\"\r\n        tools:ignore=\"TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/ref_value\"\r\n        android:layout_width=\"23dp\"\r\n        android:layout_height=\"18dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"0.0\"\r\n        android:textStyle=\"bold\"\r\n        android:textColor=\"#C5AD54\"\r\n        android:textSize=\"13sp\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/ref\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintHorizontal_bias=\"0.585\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/ref\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/ce_value\"\r\n        app:layout_constraintVertical_bias=\"0.941\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/fl_value\"\r\n        android:layout_width=\"23dp\"\r\n        android:layout_height=\"19dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:gravity=\"top\"\r\n        android:text=\"0.0\"\r\n        android:textColor=\"#0091EA\"\r\n        android:textSize=\"13sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintHorizontal_bias=\"0.585\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/ref2\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/ref_value\"\r\n        app:layout_constraintVertical_bias=\"0.346\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/trading\"\r\n        android:layout_width=\"52dp\"\r\n        android:layout_height=\"20dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_marginTop=\"12dp\"\r\n        android:gravity=\"top\"\r\n        android:text=\"Trading\"\r\n        android:textColor=\"#78909C\"\r\n        android:textSize=\"13sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.051\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/rectangle_1\"\r\n        tools:ignore=\"HardcodedText,TextSizeCheck\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/buybtn\"\r\n        android:layout_width=\"78dp\"\r\n        android:layout_height=\"48dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:background=\"@drawable/rectangle_4\"\r\n        app:backgroundTint=\"#08CA98\"\r\n        android:text=\"@string/buy\"\r\n        android:textColor=\"@color/white\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.052\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/trading\"\r\n        app:autoSizeTextType=\"uniform\"\r\n       />\r\n\r\n    <Button\r\n        android:id=\"@+id/sellbtn\"\r\n        android:layout_width=\"78dp\"\r\n        android:layout_height=\"48dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:background=\"@drawable/rectangle_5\"\r\n        android:text=\"SELL\"\r\n        app:backgroundTint=\"#161b21\"\r\n        android:textColor=\"@color/white\"\r\n        app:autoSizeTextType=\"uniform\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/buybtn\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/buybtn\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/rectangle_1\"\r\n        app:layout_constraintVertical_bias=\"1.0\"\r\n        tools:ignore=\"HardcodedText\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/price\"\r\n        android:layout_width=\"35dp\"\r\n        android:layout_height=\"20dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_marginTop=\"12dp\"\r\n        android:gravity=\"top\"\r\n        android:text=\"@string/price\"\r\n        android:textStyle=\"bold\"\r\n        android:textAppearance=\"@style/price\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.049\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/buybtn\"\r\n        tools:ignore=\"TextSizeCheck,TextContrastCheck\" />\r\n\r\n    <!-- Auto layout, variables, and unit scale are not yet supported -->\r\n    <EditText\r\n        android:id=\"@+id/price_input\"\r\n        android:layout_width=\"289dp\"\r\n        android:layout_height=\"40dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:autofillHints=\"\"\r\n        android:background=\"@drawable/rectangle_6\"\r\n        android:elevation=\"4dp\"\r\n        android:inputType=\"number\"\r\n        android:textSize=\"13sp \"\r\n        android:textColor=\"@color/white\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.172\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/price\"\r\n        android:paddingStart=\"10dp\"\r\n        tools:ignore=\"RtlSymmetry,SpeakableTextPresentCheck,TouchTargetSizeCheck\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/mass\"\r\n        android:layout_width=\"37dp\"\r\n        android:layout_height=\"20dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:gravity=\"top\"\r\n        android:text=\"@string/mass\"\r\n        android:textStyle=\"bold\"\r\n        android:textAppearance=\"@style/price\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.056\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/price_input\"\r\n        tools:ignore=\"TextSizeCheck,TextContrastCheck\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/mass_input\"\r\n        android:layout_width=\"250dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentTop=\"true\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:background=\"@drawable/rectangle_9\"\r\n        android:elevation=\"4dp\"\r\n        android:hint=\"@string/enter_quantity\"\r\n        android:importantForAutofill=\"no\"\r\n        android:inputType=\"number\"\r\n        android:paddingStart=\"10dp\"\r\n        android:textSize=\"13sp\"\r\n        android:textColor=\"@color/white\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.13\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/mass\"\r\n        tools:ignore=\"RtlSymmetry,TextContrastCheck\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/placeorder\"\r\n        android:layout_width=\"366dp\"\r\n        android:layout_height=\"47dp\"\r\n        android:textColor=\"@color/white\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:background=\"@drawable/rectangle_1\"\r\n        app:backgroundTint=\"#08CA98\"\r\n        android:text=\"Place order\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.488\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/mass_input\"\r\n        app:layout_constraintVertical_bias=\"0.828\"\r\n        tools:ignore=\"HardcodedText,TouchTargetSizeCheck\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_stockbuy.xml b/app/src/main/res/layout/activity_stockbuy.xml
+--- a/app/src/main/res/layout/activity_stockbuy.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/layout/activity_stockbuy.xml	(date 1695305335377)
+@@ -1,21 +1,42 @@
+ <?xml version="1.0" encoding="utf-8"?>
++
+ <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".StockbuyActivity"
++    tools:context=".StockBuyFragment"
+     android:id="@+id/android_lar"
+     android:clipToOutline="true"
+     android:background="#0D1015"
+     tools:ignore="ExtraText,UnusedAttribute">
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        android:fillViewport="true"
++        android:scrollbars="none"
++        android:scrollbarStyle="insideOverlay"
++        android:scrollbarSize="0dp"
++        >
++
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    tools:context=".StockBuyFragment"
++    android:id="@+id/android_lar2"
++    android:clipToOutline="true"
++    android:background="#0D1015"
++    tools:ignore="ExtraText,UnusedAttribute">
+ 
+     <!-- Auto layout, variables, and unit scale are not yet supported -->
+ 
+     <!-- Auto layout, variables, and unit scale are not yet supported -->
+     <!-- Auto layout, variables, and unit scale are not yet supported -->
+ 
+-
+     <View
+         android:id="@+id/stockbuy_toolbar"
+         android:layout_width="match_parent"
+@@ -441,4 +462,8 @@
+         app:layout_constraintTop_toBottomOf="@+id/mass_input"
+         app:layout_constraintVertical_bias="0.828"
+         tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
++    </ScrollView>
++</androidx.constraintlayout.widget.ConstraintLayout>
+Index: app/src/main/res/layout/activity_stock_detail.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#242424\"\r\n    tools:context=\".DetailStock.StockDetailActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/stockName\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/usth\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"25sp\"\r\n        android:textStyle=\"bold\"\r\n\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.045\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.022\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/compName\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/usth_retake_corp\"\r\n        android:textColor=\"#a5a4a9\"\r\n        android:textSize=\"13sp\"\r\n\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/stockName\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.056\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/stockName\" />\r\n\r\n    <View\r\n        android:id=\"@+id/divider1\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"1dp\"\r\n        android:background=\"#3e3d42\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/stockPrice\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/stockName\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/stockPrice\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/stock_val\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"33sp\"\r\n        android:textStyle=\"bold\"\r\n\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.05\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/stockName\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/stockName\"\r\n        app:layout_constraintVertical_bias=\"0.028\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/changeVal\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/up_val\"\r\n        android:textColor=\"#589c51\"\r\n        android:textSize=\"12sp\"\r\n\r\n        app:layout_constraintBottom_toTopOf=\"@+id/changPercent\"\r\n        app:layout_constraintHorizontal_bias=\"0.057\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/changPercent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"1.0\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/changPercent\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/up_percent\"\r\n        android:textColor=\"#589c51\"\r\n        android:textSize=\"12sp\"\r\n\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/stockPrice\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.059\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/stockPrice\" />\r\n\r\n    <View\r\n        android:id=\"@+id/divider2\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"1dp\"\r\n        android:background=\"#3e3d42\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/tabLayout\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/stockPrice\" />\r\n\r\n    <com.google.android.material.tabs.TabLayout\r\n        android:id=\"@+id/tabLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"48dp\"\r\n        android:background=\"#242424\"\r\n\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/stockPrice\"\r\n        app:layout_constraintVertical_bias=\"0.025\"\r\n        app:tabIndicatorColor=\"@color/white\"\r\n        app:tabTextColor=\"#a5a4a9\">\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/time_1D\" />\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/time_2D\" />\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/time_5D\" />\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/time_6M\" />\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"@string/time_all\" />\r\n    </com.google.android.material.tabs.TabLayout>\r\n\r\n    <androidx.viewpager2.widget.ViewPager2\r\n        android:id=\"@+id/viewPager2\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_weight=\"4\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/guideline\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/tabLayout\">\r\n\r\n    </androidx.viewpager2.widget.ViewPager2>\r\n\r\n    <androidx.constraintlayout.widget.Guideline\r\n        android:id=\"@+id/guideline\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        app:layout_constraintGuide_percent=\"0.83\" />\r\n\r\n    <HorizontalScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/guideline\"\r\n        app:layout_constraintVertical_bias=\"0.0\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"match_parent\">\r\n\r\n            <androidx.constraintlayout.widget.Barrier\r\n                android:id=\"@+id/barrier\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                app:barrierDirection=\"end\"\r\n                app:constraint_referenced_ids=\"open,high,close,low\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/open\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"25dp\"\r\n                android:text=\"@string/open\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n                app:layout_constraintBottom_toTopOf=\"@+id/close\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/high\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n\r\n                android:text=\"@string/highest\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n                app:layout_constraintBottom_toTopOf=\"@+id/low\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/close\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/close\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/close\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/close\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n                app:layout_constraintBottom_toTopOf=\"@+id/high\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/open\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/open\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/low\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/lowest\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/high\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/high\" />\r\n\r\n            <androidx.constraintlayout.widget.Barrier\r\n                android:id=\"@+id/barrier2\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                app:barrierDirection=\"end\"\r\n                app:constraint_referenced_ids=\"openVal,highVal,lowVal,closeVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/openVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"15dp\"\r\n                android:text=\"@string/float1\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toTopOf=\"@+id/closeVal\"\r\n                app:layout_constraintStart_toEndOf=\"@id/barrier\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/highVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/float2\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toTopOf=\"@+id/lowVal\"\r\n                app:layout_constraintStart_toStartOf=\"@id/closeVal\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/closeVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/lowVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/float3\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintStart_toStartOf=\"@id/highVal\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/highVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/closeVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"177.97\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toTopOf=\"@+id/highVal\"\r\n                app:layout_constraintStart_toStartOf=\"@id/openVal\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/openVal\" />\r\n\r\n            <androidx.constraintlayout.widget.Barrier\r\n                android:id=\"@+id/barrier3\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                app:barrierDirection=\"end\"\r\n                app:constraint_referenced_ids=\"mktCap,yearHigh,yearLow,esp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/mktCap\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Market Cap\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/yearHigh\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/yearHigh\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/yearHigh\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"52wk High\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/yearLow\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/yearLow\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/mktCap\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/yearLow\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"52wk Low\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/esp\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/esp\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/yearHigh\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/esp\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"35dp\"\r\n                android:text=\"ESP\"\r\n                android:textColor=\"#a5a4a9\"\r\n\r\n                android:textSize=\"16sp\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintStart_toEndOf=\"@id/barrier2\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/yearLow\" />\r\n\r\n            <androidx.constraintlayout.widget.Barrier\r\n                android:id=\"@+id/barrier4\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                app:barrierDirection=\"end\"\r\n                app:constraint_referenced_ids=\"mktCapVal,yearHighVal,yearLowVal,espVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/mktCapVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"2.78 T\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/yearHighVal\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/yearHighVal\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/yearHighVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"197.96\"\r\n                android:textColor=\"@color/white\"\r\n\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toTopOf=\"@+id/yearLowVal\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/yearLowVal\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/mktCapVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/yearLowVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"123.64\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/espVal\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/espVal\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/yearHighVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/espVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"15dp\"\r\n                android:text=\"5.96\"\r\n                android:textColor=\"@color/white\"\r\n\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintStart_toEndOf=\"@id/barrier3\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/yearLowVal\" />\r\n\r\n            <androidx.constraintlayout.widget.Barrier\r\n                android:id=\"@+id/barrier5\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                app:barrierDirection=\"end\"\r\n                app:constraint_referenced_ids=\"peRatio,pegRatio,mvgAvg50d,mvgAvg200d\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/peRatio\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"P/E\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/pegRatio\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/pegRatio\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/pegRatio\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"PEG Ratio\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/mvgAvg50d\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/mvgAvg50d\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/peRatio\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/mvgAvg50d\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"50d Moving Avg\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/mvgAvg200d\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/mvgAvg200d\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/pegRatio\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/mvgAvg200d\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"35dp\"\r\n                android:text=\"200d Moving Avg\"\r\n                android:textColor=\"#a5a4a9\"\r\n                android:textSize=\"16sp\"\r\n\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintStart_toEndOf=\"@id/barrier4\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/mvgAvg50d\" />\r\n\r\n            <androidx.constraintlayout.widget.Barrier\r\n                android:id=\"@+id/barrier6\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                app:barrierDirection=\"end\"\r\n                app:constraint_referenced_ids=\"peRatioVal,pegRatioVal,mvgAvg50dVal,mvgAvg200dVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/peRatioVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"29.86\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/pegRatioVal\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/pegRatioVal\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/pegRatioVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"2.75\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/mvgAvg50dVal\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/mvgAvg50dVal\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/peRatioVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/mvgAvg50dVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"184.47\"\r\n                android:textColor=\"@color/white\"\r\n                android:textStyle=\"bold\"\r\n\r\n                app:layout_constraintBottom_toTopOf=\"@+id/mvgAvg200dVal\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/mvgAvg200dVal\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/pegRatioVal\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/mvgAvg200dVal\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"15dp\"\r\n                android:layout_marginEnd=\"25dp\"\r\n                android:text=\"164.92\"\r\n                android:textColor=\"@color/white\"\r\n\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toStartOf=\"@id/barrier6\"\r\n                app:layout_constraintStart_toEndOf=\"@id/barrier5\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/mvgAvg50dVal\" />\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n    </HorizontalScrollView>\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_stock_detail.xml b/app/src/main/res/layout/activity_stock_detail.xml
+--- a/app/src/main/res/layout/activity_stock_detail.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/layout/activity_stock_detail.xml	(date 1695306266906)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#242424"
++    android:background="#0d1019"
+     tools:context=".DetailStock.StockDetailActivity">
+ 
+     <TextView
+@@ -98,7 +98,7 @@
+         android:id="@+id/tabLayout"
+         android:layout_width="match_parent"
+         android:layout_height="48dp"
+-        android:background="#242424"
++        android:background="#232b36"
+ 
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+Index: app/src/main/res/layout/activity_stock.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/container\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/black\"\r\n    tools:context=\".ListStock.StockFragment\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/stockmarketheader\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:text=\"@string/stock_market\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"32sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/dateTextViewHeader\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/stockmarketheader\"\r\n        android:text=\"@string/date\"\r\n        android:textColor=\"@color/grey\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/stockmarketheader\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/stockmarketheader\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/searchHeaderBar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"48dp\"\r\n        android:layout_below=\"@+id/dateTextViewHeader\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginEnd=\"16dp\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:paddingStart=\"16dp\"\r\n        android:paddingEnd=\"16dp\"\r\n        android:background=\"@drawable/round_box_gray\"\r\n        android:hint=\"@string/search\"\r\n        android:inputType=\"text\"\r\n        android:textColor=\"@color/white\"\r\n        android:textColorHint=\"@color/grey\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/dateTextViewHeader\" />\r\n\r\n    <androidx.fragment.app.FragmentContainerView\r\n        android:id=\"@+id/listStockFragment\"\r\n        android:name=\"vn.edu.usth.stockdashboard.ListStock.ListStockFragment\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/barrier7\" />\r\n\r\n    <androidx.constraintlayout.widget.Barrier\r\n        android:id=\"@+id/barrier7\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:barrierDirection=\"bottom\"\r\n        app:constraint_referenced_ids=\"searchHeaderBar\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_stock.xml b/app/src/main/res/layout/activity_stock.xml
+--- a/app/src/main/res/layout/activity_stock.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/layout/activity_stock.xml	(date 1695306098636)
+@@ -5,66 +5,90 @@
+     android:id="@+id/container"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@color/black"
++    android:background="#1f232c"
+     tools:context=".ListStock.StockFragment">
+ 
+     <TextView
+         android:id="@+id/stockmarketheader"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="16dp"
++        android:layout_marginStart="20dp"
++        android:layout_marginTop="28dp"
+         android:text="@string/stock_market"
+         android:textAlignment="center"
+         android:textColor="@color/white"
+-        android:textSize="32sp"
++        android:textSize="20sp"
+         android:textStyle="bold"
+-        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintStart_toEndOf="@+id/imageView4"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+-    <TextView
+-        android:id="@+id/dateTextViewHeader"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_below="@+id/stockmarketheader"
+-        android:text="@string/date"
+-        android:textColor="@color/grey"
+-        android:textSize="18sp"
+-        app:layout_constraintStart_toStartOf="@+id/stockmarketheader"
+-        app:layout_constraintTop_toBottomOf="@+id/stockmarketheader" />
+-
+     <EditText
+         android:id="@+id/searchHeaderBar"
+         android:layout_width="match_parent"
+         android:layout_height="48dp"
+         android:layout_below="@+id/dateTextViewHeader"
+         android:layout_marginStart="16dp"
++        android:layout_marginTop="16dp"
+         android:layout_marginEnd="16dp"
+-        android:layout_marginTop="15dp"
+-        android:paddingStart="16dp"
+-        android:paddingEnd="16dp"
+         android:background="@drawable/round_box_gray"
+         android:hint="@string/search"
+         android:inputType="text"
++        android:paddingStart="16dp"
++        android:paddingEnd="16dp"
+         android:textColor="@color/white"
+         android:textColorHint="@color/grey"
+         app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/dateTextViewHeader" />
++        app:layout_constraintTop_toBottomOf="@+id/stockmarketheader" />
+ 
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        android:layout_marginTop="16dp"
++        app:layout_constraintTop_toBottomOf="@id/searchHeaderBar"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintVertical_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        android:fillViewport="true"
++        android:scrollbars="none"
++        android:scrollbarSize="0dp"
++        android:scrollbarThumbVertical="@android:color/transparent"
++        android:scrollbarTrackVertical="@android:color/transparent"
++        android:scrollbarAlwaysDrawVerticalTrack="true"
++        android:scrollbarStyle="insideOverlay"
++        android:overScrollMode="never"
++        android:scrollIndicators="none"
++        android:scrollbarFadeDuration="0"
++        android:scrollbarDefaultDelayBeforeFade="0"
++        >
+     <androidx.fragment.app.FragmentContainerView
+         android:id="@+id/listStockFragment"
+         android:name="vn.edu.usth.stockdashboard.ListStock.ListStockFragment"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
++        android:layout_marginTop="20dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@id/barrier7" />
+-
++        app:layout_constraintTop_toBottomOf="@id/barrier7"
++        app:layout_constraintVertical_bias="0.843" />
++    </ScrollView>
+     <androidx.constraintlayout.widget.Barrier
+         android:id="@+id/barrier7"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         app:barrierDirection="bottom"
+         app:constraint_referenced_ids="searchHeaderBar" />
++
++    <ImageView
++        android:id="@+id/imageView4"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="32dp"
++        android:src="@drawable/burger_menu"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/stock_list_items.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/black\">\r\n    <GridLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:columnCount=\"3\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/symbolTextView\"\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_row=\"0\"\r\n            android:layout_column=\"0\"\r\n            android:ellipsize=\"end\"\r\n            android:maxLines=\"1\"\r\n            android:singleLine=\"true\"\r\n            android:textColor=\"@color/white\"\r\n            android:textSize=\"18sp\"\r\n            android:textStyle=\"bold\"\r\n            android:layout_marginStart=\"16sp\"/>\r\n\r\n        <TextView\r\n            android:id=\"@+id/nameTextView\"\r\n            android:layout_width=\"176dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_row=\"1\"\r\n            android:layout_column=\"0\"\r\n            android:ellipsize=\"end\"\r\n            android:maxLines=\"1\"\r\n            android:singleLine=\"true\"\r\n            android:textColor=\"@color/grey\"\r\n            android:textSize=\"14sp\"\r\n            android:layout_marginStart=\"16sp\"/>\r\n\r\n        <com.github.mikephil.charting.charts.LineChart\r\n            android:id=\"@+id/lineChart\"\r\n            android:layout_width=\"85dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:layout_row=\"0\"\r\n            android:layout_column=\"1\"\r\n            android:layout_rowSpan=\"2\"/>\r\n        <TextView\r\n            android:id=\"@+id/moneyTextView\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n\r\n            android:textSize=\"18sp\"\r\n            android:textColor=\"@color/white\"\r\n            android:textStyle=\"bold\"\r\n            android:layout_row=\"0\"\r\n            android:layout_column=\"2\"\r\n            android:layout_gravity=\"end\"\r\n            android:layout_marginLeft=\"-100px\"\r\n            android:layout_marginEnd=\"16sp\"/>\r\n        <TextView\r\n            android:id=\"@+id/percentage\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textSize=\"14sp\"\r\n            android:layout_gravity=\"end\"\r\n            android:background=\"@drawable/rounded_box_green\"\r\n            android:paddingStart=\"6sp\"\r\n            android:paddingEnd=\"6sp\"\r\n            android:textColor=\"@color/white\"\r\n            android:layout_marginEnd=\"16sp\"/>\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"1dp\"\r\n            android:layout_row=\"3\"\r\n            android:layout_columnSpan=\"3\"\r\n            android:background=\"#1C1C1C\"\r\n            android:layout_marginStart=\"16sp\"\r\n            android:layout_marginEnd=\"16sp\"\r\n            android:id=\"@+id/separatorView\"/>\r\n    </GridLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/stock_list_items.xml b/app/src/main/res/layout/stock_list_items.xml
+--- a/app/src/main/res/layout/stock_list_items.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/layout/stock_list_items.xml	(date 1695303095866)
+@@ -1,12 +1,20 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@color/black">
++    android:background="#1f232c">
++
+     <GridLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:columnCount="3">
++        android:columnCount="3"
++        tools:ignore="MissingConstraints,UnknownIdInLayout"
++        xmlns:app="http://schemas.android.com/apk/res-auto"
++        app:layout_constraintTop_toTopOf="@+id/listStockFragment"
++        tools:layout_editor_absoluteX="0dp"
++        tools:layout_editor_absoluteY="2dp"
++        >
+ 
+         <TextView
+             android:id="@+id/symbolTextView"
+@@ -14,13 +22,13 @@
+             android:layout_height="wrap_content"
+             android:layout_row="0"
+             android:layout_column="0"
++            android:layout_marginStart="16sp"
+             android:ellipsize="end"
+             android:maxLines="1"
+             android:singleLine="true"
+             android:textColor="@color/white"
+             android:textSize="18sp"
+-            android:textStyle="bold"
+-            android:layout_marginStart="16sp"/>
++            android:textStyle="bold" />
+ 
+         <TextView
+             android:id="@+id/nameTextView"
+@@ -28,52 +36,55 @@
+             android:layout_height="wrap_content"
+             android:layout_row="1"
+             android:layout_column="0"
++            android:layout_marginStart="16sp"
+             android:ellipsize="end"
+             android:maxLines="1"
+             android:singleLine="true"
+             android:textColor="@color/grey"
+-            android:textSize="14sp"
+-            android:layout_marginStart="16sp"/>
++            android:textSize="14sp" />
+ 
+         <com.github.mikephil.charting.charts.LineChart
+             android:id="@+id/lineChart"
+             android:layout_width="85dp"
+             android:layout_height="50dp"
+             android:layout_row="0"
+-            android:layout_column="1"
+-            android:layout_rowSpan="2"/>
++            android:layout_rowSpan="2"
++            android:layout_column="1" />
++
+         <TextView
+             android:id="@+id/moneyTextView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+ 
+-            android:textSize="18sp"
+-            android:textColor="@color/white"
+-            android:textStyle="bold"
+             android:layout_row="0"
+             android:layout_column="2"
+             android:layout_gravity="end"
+-            android:layout_marginLeft="-100px"
+-            android:layout_marginEnd="16sp"/>
++            android:layout_marginStart="-100px"
++            android:layout_marginEnd="16sp"
++            android:textColor="@color/white"
++            android:textSize="18sp"
++            android:textStyle="bold" />
++
+         <TextView
+             android:id="@+id/percentage"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:textSize="14sp"
+             android:layout_gravity="end"
++            android:layout_marginEnd="16sp"
+             android:background="@drawable/rounded_box_green"
+             android:paddingStart="6sp"
+             android:paddingEnd="6sp"
+             android:textColor="@color/white"
+-            android:layout_marginEnd="16sp"/>
++            android:textSize="14sp" />
++
+         <View
++            android:id="@+id/separatorView"
+             android:layout_width="match_parent"
+             android:layout_height="1dp"
+             android:layout_row="3"
+             android:layout_columnSpan="3"
+-            android:background="#1C1C1C"
+             android:layout_marginStart="16sp"
+             android:layout_marginEnd="16sp"
+-            android:id="@+id/separatorView"/>
++            android:background="#1C1C1C" />
+     </GridLayout>
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#242424\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <FrameLayout\r\n        android:id=\"@+id/fragment_container\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"0dp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/bottomNavigationView\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n    </FrameLayout>\r\n\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/bottomNavigationView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:menu=\"@menu/bottom_nav_menu\"/>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1695303495175)
+@@ -15,16 +15,18 @@
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent">
+-
+     </FrameLayout>
+ 
+     <com.google.android.material.bottomnavigation.BottomNavigationView
+         android:id="@+id/bottomNavigationView"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
++        android:background="#232b36"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:menu="@menu/bottom_nav_menu"/>
++        app:itemTextColor="#52565f"
++        app:menu="@menu/bottom_nav_menu" />
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/menu/bottom_nav_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n\r\n    <item\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:title=\"List\"\r\n        android:icon=\"@drawable/baseline_list_24\"\r\n        android:id=\"@+id/listTab\"/>\r\n    <item\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:title=\"View_List\"\r\n        android:icon=\"@drawable/baseline_view_list_24\"\r\n        android:id=\"@+id/viewListTab\"/>\r\n    <item\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:title=\"Menu\"\r\n        android:icon=\"@drawable/baseline_menu_24\"\r\n        android:id=\"@+id/menuTab\"/>\r\n\r\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/bottom_nav_menu.xml b/app/src/main/res/menu/bottom_nav_menu.xml
+--- a/app/src/main/res/menu/bottom_nav_menu.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/menu/bottom_nav_menu.xml	(date 1695301769607)
+@@ -1,23 +1,28 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<menu xmlns:android="http://schemas.android.com/apk/res/android">
++<menu xmlns:tools="http://schemas.android.com/tools"
++    xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+     <item
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:title="List"
+         android:icon="@drawable/baseline_list_24"
+-        android:id="@+id/listTab"/>
++        android:iconTint="@color/white"
++        android:id="@+id/listTab"
++        tools:ignore="HardcodedText,UnusedAttribute" />
+     <item
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:title="View_List"
++        android:title="Buy Stock"
+         android:icon="@drawable/baseline_view_list_24"
+-        android:id="@+id/viewListTab"/>
++        android:id="@+id/buystockTab"
++        tools:ignore="HardcodedText" />
+     <item
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:title="Menu"
+-        android:icon="@drawable/baseline_menu_24"
+-        android:id="@+id/menuTab"/>
++        android:icon="@drawable/burger_menu"
++        android:id="@+id/menuTab"
++        tools:ignore="HardcodedText" />
+ 
+ </menu>
+\ No newline at end of file
+Index: app/src/main/res/drawable/baseline_menu_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/baseline_menu_24.xml b/app/src/main/res/drawable/burger_menu.xml
+rename from app/src/main/res/drawable/baseline_menu_24.xml
+rename to app/src/main/res/drawable/burger_menu.xml
+--- a/app/src/main/res/drawable/baseline_menu_24.xml	(revision 6f6ed39b8959625004db72da6861f230425e4744)
++++ b/app/src/main/res/drawable/burger_menu.xml	(date 1695300547498)
+@@ -1,4 +1,4 @@
+-<vector android:height="24dp" android:tint="#000000"
++<vector android:height="24dp" android:tint="#FFFFFF"
+     android:viewportHeight="24" android:viewportWidth="24"
+     android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+     <path android:fillColor="@android:color/white" android:pathData="M3,18h18v-2L3,16v2zM3,13h18v-2L3,11v2zM3,6v2h18L21,6L3,6z"/>
