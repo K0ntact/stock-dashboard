@@ -120,7 +120,7 @@
         app:layout_constraintStart_toStartOf="@+id/portfolioValueText"
         app:layout_constraintTop_toBottomOf="@id/barrier" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listMenuView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -130,6 +130,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/myInvestmentText">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

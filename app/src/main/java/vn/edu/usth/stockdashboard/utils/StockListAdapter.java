@@ -1,17 +1,18 @@
 package vn.edu.usth.stockdashboard.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -21,40 +22,51 @@ import com.github.mikephil.charting.data.LineDataSet;
 import java.util.ArrayList;
 
 import vn.edu.usth.stockdashboard.R;
+import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
 
-public class StockListAdapter extends ArrayAdapter<StockItem> {
-    public StockListAdapter(Context context, ArrayList<StockItem> stockList){
-        super(context, 0, stockList);
+public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.ViewHolder> {
+    private ArrayList<StockItem> stockList;
+
+    public StockListAdapter(ArrayList<StockItem> stockList){
+        this.stockList = stockList;
     }
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Inflate the list item layout (you can create a custom layout for it)
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.stock_list_items, parent, false);
-        }
+    public StockListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stock_list_items, parent, false);
+
+        view.setOnClickListener(v -> {
+            TextView stockSymbol = view.findViewById(R.id.symbolTextView);
+            TextView companyName = view.findViewById(R.id.nameTextView);
+            TextView money = view.findViewById(R.id.moneyTextView);
+            TextView percentage = view.findViewById(R.id.percentage);
+            StockItem item = new StockItem(stockSymbol.getText().toString(), companyName.getText().toString(), money.getText().toString(), percentage.getText().toString());
+
+            Intent intent = new Intent(view.getContext(), StockDetailActivity.class);
+            intent.putExtra("stockName", item.getSymbol());
+            intent.putExtra("companyName", item.getName());
+            intent.putExtra("money", item.getMoney());
+            intent.putExtra("percentage", item.getPercentage());
+            view.getContext().startActivity(intent);
+        });
+
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Context context = holder.itemView.getContext();
+        Resources r = context.getResources();
 
         // Get the StockItem at this position
-        StockItem currentItem = getItem(position);
+        StockItem currentItem = stockList.get(position);
 
-        // Populate the views in the list item layout with data from StockItem
-        TextView symbolTextView = convertView.findViewById(R.id.symbolTextView);
-        TextView nameTextView = convertView.findViewById(R.id.nameTextView);
-        LineChart lineChart = convertView.findViewById(R.id.lineChart);
-        TextView moneyTextView = convertView.findViewById(R.id.moneyTextView);
-        TextView percentageTextView = convertView.findViewById(R.id.percentage);
+        holder.symbolTextView.setText(currentItem.getSymbol());
+        holder.nameTextView.setText(currentItem.getName());
+        holder.moneyTextView.setText(currentItem.getMoney());
 
-        symbolTextView.setText(currentItem.getSymbol());
-        nameTextView.setText(currentItem.getName());
-        moneyTextView.setText(currentItem.getMoney());
-        percentageTextView.setText(currentItem.getPercentage());
-
-
-        // Get a reference to the LineChart
-        // LineChart lineChart = convertView.findViewById(R.id.lineChart);
-
-        // Create a LineDataSet with sample data
+        // Generate random data
         if (currentItem.getRandomData() == null) {
             currentItem.generateRandomData(20);
         }
@@ -62,110 +74,92 @@ public class StockListAdapter extends ArrayAdapter<StockItem> {
         ArrayList<Entry> randomData = currentItem.getRandomData();
         LineDataSet dataSet = new LineDataSet(randomData, "Random Data");
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // Smooth line
-
-        float dottedLineY = 45f;
-        float aboveArea = 0f;
-        float belowArea = 0f;
-
-        for (Entry entry: randomData){
-            if(entry.getY() > dottedLineY){
-                aboveArea += entry.getY() - dottedLineY;
-            } else {
-                belowArea += dottedLineY - entry.getY();
-            }
-        }
         dataSet.setDrawFilled(true);
-        int graphColor;
 
-        if(aboveArea > belowArea){
-            graphColor = getContext().getColor(R.color.positive);
-            percentageTextView.setBackgroundResource(R.drawable.rounded_box_green);
-            percentageTextView.setText("+" + percentageTextView.getText());
-            addHorizontalDottedLine(lineChart, dottedLineY, getContext().getColor(R.color.positive));
-            dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_chart_gradient_positive));
+        int graphColor;
+        float lastValue = randomData.get(randomData.size() - 1).getY();
+        float secondLastValue = randomData.get(randomData.size() - 2).getY();
+        float percentageChange = ((lastValue - secondLastValue) / secondLastValue * 100);
+
+        // Update the previousValue field in the StockItem
+        currentItem.setPreviousValue(secondLastValue);
+
+        // Set the percentage text with a plus or minus sign
+        String percentageText;
+        if (percentageChange > 0){
+            percentageText = "+" + String.format("%.2f%%",percentageChange);
+            graphColor = r.getColor(R.color.positive,null);
+            holder.percentageTextView.setBackgroundResource(R.drawable.rounded_box_green);
+            dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_positive));
+        } else if (percentageChange < 0) {
+            percentageText = String.format("%.2f%%",percentageChange);
+            graphColor = r.getColor(R.color.negative,null);
+            holder.percentageTextView.setBackgroundResource(R.drawable.round_box_red);
+            dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_negative));
         } else {
-            graphColor = getContext().getColor(R.color.negative);
-            percentageTextView.setBackgroundResource(R.drawable.round_box_red);
-            percentageTextView.setText("-" + percentageTextView.getText());
-            addHorizontalDottedLine(lineChart, dottedLineY, getContext().getColor(R.color.negative));
-            dataSet.setFillDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_chart_gradient_negative));
+            percentageText = "0.00%";
+            graphColor = r.getColor(R.color.neutral,null);
+            holder.percentageTextView.setBackgroundResource(R.drawable.round_box_yellow);
+            dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_neutral));
         }
+        holder.percentageTextView.setText(percentageText);
 
         dataSet.setColor(graphColor);
         dataSet.setLineWidth(1f); // Line width
         dataSet.setDrawCircles(false); // Do not draw circles on data points
+
         // Create a LineData object and set the dataSet
         LineData lineData = new LineData(dataSet);
-
-        // Configure the LineChart
-        lineChart.setData(lineData);
-        lineChart.getDescription().setEnabled(false); // Disable description label
-        lineChart.getLegend().setEnabled(false); // Disable legend
-        lineChart.setDrawGridBackground(false);
+        holder.lineChart.setData(lineData);
+        holder.lineChart.getDescription().setEnabled(false); // Disable description label
+        holder.lineChart.getLegend().setEnabled(false); // Disable legend
+        holder.lineChart.setDrawGridBackground(false);
         dataSet.setDrawValues(false);
+
         // Disable X-axis
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setDrawAxisLine(false); // Disable X-axis line
-        xAxis.setDrawGridLines(false); // Disable X-axis grid lines
-        xAxis.setDrawLabels(false); // Disable X-axis labels
-        // Disable all user interaction
-        lineChart.setTouchEnabled(false); // Disable touch gestures
-        lineChart.setDragEnabled(false);  // Disable panning
-        lineChart.setScaleEnabled(false); // Disable zooming
-        lineChart.setPinchZoom(false);    // Disable pinch zoom
-        lineChart.setDoubleTapToZoomEnabled(false); // Disable double tap to zoom
-
-        lineChart.setHighlightPerDragEnabled(false); // Disable highlighting on drag
-        lineChart.setHighlightPerTapEnabled(false);  // Disable highlighting on tap
-
-
+        XAxis xAxis = holder.lineChart.getXAxis();
+        xAxis.setEnabled(false);
         // Disable Y-axis (left)
-        YAxis leftYAxis = lineChart.getAxisLeft();
-        leftYAxis.setDrawAxisLine(false); // Disable Y-axis line
-        leftYAxis.setDrawGridLines(false); // Disable Y-axis grid lines
-        leftYAxis.setDrawLabels(false); // Disable Y-axis labels
-
-        // If you want to disable the right Y-axis (if present)
-        YAxis rightYAxis = lineChart.getAxisRight();
-        rightYAxis.setEnabled(false); // Disable the right Y-axis completely
+        YAxis leftYAxis = holder.lineChart.getAxisLeft();
+        leftYAxis.setEnabled(false);
+        // Disable Y-axis (right)
+        YAxis rightYAxis = holder.lineChart.getAxisRight();
+        rightYAxis.setEnabled(false);
+        // Disable all user interaction
+        holder.lineChart.setTouchEnabled(false);
+        holder.lineChart.setDragEnabled(false);
+        holder.lineChart.setScaleEnabled(false);
+        holder.lineChart.setPinchZoom(false);
+        holder.lineChart.setDoubleTapToZoomEnabled(false);
+        holder.lineChart.setHighlightPerDragEnabled(false);
+        holder.lineChart.setHighlightPerTapEnabled(false);
 
         // Invalidate the chart to refresh it
-        lineChart.invalidate();
-        View separatorView = convertView.findViewById(R.id.separatorView);
-
-        if (position == getCount() -1){
-            separatorView.setVisibility(View.GONE);
-        } else {
-            separatorView.setVisibility(View.VISIBLE);
-        }
-        // Check if there are at least two data points
-        if (randomData.size() >= 2){
-            float lastValue = randomData.get(randomData.size() - 1).getY();
-            float secondLastValue = randomData.get(randomData.size() - 2).getY();
-            float percentageChange = ((lastValue - secondLastValue) / secondLastValue * 100);
-
-            // Update the previousValue field in the StockItem
-            currentItem.setPreviousValue(secondLastValue);
-
-            // Set the percentage text with a plus or minus sign
-            String percentageText;
-            if (percentageChange > 0){
-                percentageText = "+" + String.format("%.2f%%",percentageChange);
-            } else if (percentageChange < 0) {
-                percentageText = String.format("%.2f%%",percentageChange);
-            } else {
-                percentageText = "0.00%";
-            }
-
-        }
-        return convertView;
+        holder.lineChart.invalidate();
     }
 
-    private void addHorizontalDottedLine(LineChart lineChart, float yValue, int lineColor){
-        LimitLine horizontalLine = new LimitLine(yValue, "");
-        horizontalLine.setLineWidth(1f);
-        horizontalLine.setLineColor(lineColor);
-        horizontalLine.enableDashedLine(5f,5f,0f);
-        lineChart.getAxisLeft().addLimitLine(horizontalLine);
+    @Override
+    public int getItemCount() {
+        return stockList.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final TextView symbolTextView;
+        private final TextView nameTextView;
+        private final TextView percentageTextView;
+        private LineChart lineChart;
+        private final TextView moneyTextView;
+        private final View separatorView;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            symbolTextView = itemView.findViewById(R.id.symbolTextView);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
+            lineChart = itemView.findViewById(R.id.lineChart);
+            moneyTextView = itemView.findViewById(R.id.moneyTextView);
+            percentageTextView = itemView.findViewById(R.id.percentage);
+            separatorView = itemView.findViewById(R.id.separatorView);
+        }
     }
 }
