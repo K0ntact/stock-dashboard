@@ -1,29 +1,53 @@
 package vn.edu.usth.stockdashboard;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
+import vn.edu.usth.stockdashboard.HelperSideBar.FragmentNavigationManager;
+import vn.edu.usth.stockdashboard.InterfaceSideBar.NavigationManager;
 import vn.edu.usth.stockdashboard.utils.StockItem;
 import vn.edu.usth.stockdashboard.utils.StockListAdapter;
 
 public class StockMarketFragment extends Fragment {
-    private List<String> listDataHeader;
-    private HashMap<String, List<String>> listDataChild;
-    private boolean openSlideBar;
+
+    private DrawerLayout drawerLayout;
+    private String activityTitle;
+
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private String[] items;
+
+    private ExpandableListView expandableListView;
+    private List<String> listTitle;
+    private Map<String,List<String>> listChild;
+    private NavigationManager navigationManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,61 +74,153 @@ public class StockMarketFragment extends Fragment {
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
 
-
-
-        //SLIDE BAR
-        ExpandableListView expandableListView = view.findViewById(R.id.slideBarExpandableView);
-        prepareListData();
-        SlideBarExpandableListAdapter listAdapter = new SlideBarExpandableListAdapter(requireContext(), listDataHeader, listDataChild);
-        expandableListView.setAdapter(listAdapter);
-
-        //IMAGE TO GO TO SLIDE BAR (3 LINES) //WIP\\
-        ImageButton hamburgerButton = view.findViewById(R.id.hamburgerButton);
-            hamburgerButton.setOnClickListener(view12 -> {
-                if (openSlideBar) {
-                    expandableListView.setVisibility(View.GONE);
-                    openSlideBar = false;
-                } else {
-                    expandableListView.setVisibility(View.VISIBLE);
-                    openSlideBar = true;
+        //SIDEBAR
+        drawerLayout = view.findViewById(R.id.drawerLayout);
+        activityTitle = getResources().toString();
+        expandableListView = view.findViewById(R.id.navList);
+        navigationManager = FragmentNavigationManager.getmInstance(this);
+        initItems();
+        View listHeaderView = getLayoutInflater().inflate(R.layout.list_nav_group_slidebar,null,false);
+        expandableListView.addHeaderView(listHeaderView);
+        genData();
+        addDrawerItems();
+        setUpDrawer();
+        if (savedInstanceState == null) selectFirstItemAsDefault();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setTitle("AHIHI NUMBER 3");
+        }
+        ImageView imageView = view.findViewById(R.id.burgerIcon);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout != null) {
+                    if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                    } else {
+                        drawerLayout.openDrawer(GravityCompat.START);
+                    }
                 }
-            });
+            }
+        });
         return view;
     }
-    private void prepareListData() {
-        listDataHeader = new ArrayList<>();
-        listDataChild = new HashMap<>();
 
-        listDataHeader.add("Favorite List");
-        listDataHeader.add("Owned List");
-        listDataHeader.add("Listed List");
-        listDataHeader.add("Industry Portfolio");
-        listDataHeader.add("Derivative List");
-        listDataHeader.add("CW List");
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
 
-        List<String> industryPortfolio = new ArrayList<>();
-        industryPortfolio.add("Insurance");
-        industryPortfolio.add("Media");
-        industryPortfolio.add("Oil & Gas");
-        industryPortfolio.add("Technology");
-        industryPortfolio.add("Personal & Household Goods");
-        industryPortfolio.add("Gas, Water & Multi-utilities");
-        industryPortfolio.add("Food & Beverage");
-        industryPortfolio.add("Banks");
-        industryPortfolio.add("Real Estate");
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
 
-        List<String> favoriteList = new ArrayList<>();
-        favoriteList.add("Favorite Number 1");
-        favoriteList.add("Favorite Number 2");
+    private void selectFirstItemAsDefault() {
+        if (navigationManager != null){
+            String firstItem = listTitle.get(0);
+            navigationManager.showFragment(firstItem);
+            ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+            if (actionBar != null){
+                actionBar.setTitle(firstItem);
+            }
+        }
+    }
 
-        List<String> listedList = new ArrayList<>();
-        listedList.add("Listed List 1");
-        listedList.add("Listed List 2");
-        listedList.add("Listed List 3");
+    private void setUpDrawer() {
+        ExpandableListAdapter expandableListAdapter = new SlideBarExpandableListAdapter(getActivity(), listTitle, listChild);
+        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int i) {
+                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle(listTitle.get(i).toString());
+                }
+            }
+        });
+        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int i) {
+                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle("AHIHI");
+                }
+            }
+        });
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                String selectedItem = ((List)(listChild.get(listTitle.get(i))))
+                        .get(i1).toString();
+                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle(selectedItem);
+                }
 
-        listDataChild.put(listDataHeader.get(0), favoriteList);
-        listDataChild.put(listDataHeader.get(2), listedList);
-        listDataChild.put(listDataHeader.get(3), industryPortfolio);
+                if (items[0].equals(listTitle.get(i)))
+                    navigationManager.showFragment(selectedItem);
+                else throw new IllegalArgumentException("Not Supported Fragment");
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return false;
+            }
+        });
+    }
 
+    private void addDrawerItems() {
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle("AHIHI NUMBER 2");
+                }
+                getActivity().invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+                if (actionBar != null){
+                actionBar.setTitle(activityTitle);
+                requireActivity().invalidateOptionsMenu();
+                }
+            }
+        };
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+    }
+
+    private void genData() {
+        List<String> title = Arrays.asList("Hi there", "This's 1from GenData's function");
+        List<String> child = Arrays.asList("Child","oat con","HipHop");
+
+        listChild = new TreeMap<>();
+        listChild.put(title.get(0),child);
+        listChild.put(title.get(1),child);
+        listTitle = new ArrayList<>(listChild.keySet());
+    }
+
+    private void initItems() {
+        items = new String[]{"Testing ListItem","Oke","Alright"};
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) return true;
+        return super.onOptionsItemSelected(item);
     }
 }

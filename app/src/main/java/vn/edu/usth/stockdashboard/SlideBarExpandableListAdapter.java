@@ -2,6 +2,7 @@ package vn.edu.usth.stockdashboard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,16 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class SlideBarExpandableListAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private final List<String> listDataHeader; // Header titles (categories)
-    private final HashMap<String, List<String>> listDataChild; // Child data (subcategories)
+    private final Map<String, List<String>> listDataChild; // Child data (subcategories)
 
     public SlideBarExpandableListAdapter(Context context, List<String> listDataHeader,
-                                         HashMap<String, List<String>> listDataChild) {
+                                         Map<String, List<String>> listDataChild) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listDataChild;
@@ -65,10 +67,11 @@ public class SlideBarExpandableListAdapter extends BaseExpandableListAdapter {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_nav_group_slidebar, null);
+            convertView = inflater.inflate(R    .layout.list_nav_group_slidebar, null);
         }
 
         TextView lblListHeader = convertView.findViewById(R.id.lblListHeader);
+        lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
 
         return convertView;
