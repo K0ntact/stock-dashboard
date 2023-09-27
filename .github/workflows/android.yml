@@ -24,7 +24,7 @@ jobs:
       run: cd ./application && chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: gradlew build
 
     - name: Put apk to build folder
       run: cp ./application/app/build/outputs/apk/debug/app-debug.apk ./build/app-debug.apk
