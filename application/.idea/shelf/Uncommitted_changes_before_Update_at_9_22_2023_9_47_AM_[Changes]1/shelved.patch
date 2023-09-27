@@ -1,0 +1,31 @@
+Index: app/src/main/res/layout/activity_menu_before_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/menu\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#0d1015\"\r\n    tools:context=\".MenuBeforeLogin\">\r\n\r\n    <View\r\n        android:id=\"@+id/view\"\r\n        android:layout_width=\"350dp\"\r\n        android:layout_height=\"260dp\"\r\n        android:background=\"@drawable/round_box_gray_2\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/imageView3\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/toolbar\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView5\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"99dp\"\r\n        android:layout_marginEnd=\"101dp\"\r\n        android:text=\"@string/hello\"\r\n        android:textColor=\"#FFFFFF\"\r\n        android:textSize=\"25sp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/loginButton\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/view\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/view\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/view\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/loginButton\"\r\n        android:layout_width=\"160dp\"\r\n        android:layout_height=\"60dp\"\r\n        android:text=\"@string/log_in_2\"\r\n        android:textSize=\"20sp\"\r\n        app:backgroundTint=\"#5c84f9\"\r\n        android:background=\"@drawable/btnground\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/signUpButton\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/textView5\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/textView5\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView5\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/signUpButton\"\r\n        android:layout_width=\"160dp\"\r\n        android:layout_height=\"60dp\"\r\n        android:text=\"@string/sign_up_2\"\r\n        android:textSize=\"20sp\"\r\n        app:backgroundTint=\"#5c84f9\"\r\n        android:background=\"@drawable/btnground\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/view\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/loginButton\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/loginButton\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/loginButton\" />\r\n\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/toolbar\"\r\n        android:layout_width=\"409dp\"\r\n        android:layout_height=\"60dp\"\r\n        android:background=\"#1d242e\"\r\n        android:minHeight=\"?attr/actionBarSize\"\r\n        android:theme=\"?attr/actionBarTheme\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView2\"\r\n        android:layout_width=\"100dp\"\r\n        android:layout_height=\"60dp\"\r\n        android:gravity=\"center\"\r\n        android:text=\"@string/account\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"20sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/toolbar\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/toolbar\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView3\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"180dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:srcCompat=\"@drawable/stock_new_2\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_menu_before_login.xml b/app/src/main/res/layout/activity_menu_before_login.xml
+--- a/app/src/main/res/layout/activity_menu_before_login.xml	
++++ b/app/src/main/res/layout/activity_menu_before_login.xml	
+@@ -80,7 +80,8 @@
+         android:textStyle="bold"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="@+id/toolbar"
+-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
++        app:layout_constraintTop_toTopOf="@+id/toolbar"
++        tools:ignore="TextSizeCheck" />
+ 
+     <ImageView
+         android:id="@+id/imageView3"
+@@ -88,7 +89,8 @@
+         android:layout_height="180dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:srcCompat="@drawable/stock_new_2" />
++        app:srcCompat="@drawable/stock_new_2"
++        tools:ignore="ContentDescription" />
+ 
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file

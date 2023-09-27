@@ -1,0 +1,246 @@
+Index: app/src/main/res/drawable/alert_shape.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/alert_shape.xml b/app/src/main/res/drawable/alert_shape.xml
+new file mode 100644
+--- /dev/null	(date 1695439837841)
++++ b/app/src/main/res/drawable/alert_shape.xml	(date 1695439837841)
+@@ -0,0 +1,16 @@
++<?xml version="1.0" encoding="utf-8"?>
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="200dp"
++    android:height="164dp"
++    android:viewportWidth="307"
++    android:viewportHeight="164">
++    <group>
++        <clip-path
++            android:pathData="M4 0H303C305.209 0 307 1.79086 307 4V160C307 162.209 305.209 164 303 164H4C1.79086 164 0 162.209 0 160V4C0 1.79086 1.79086 0 4 0Z"
++            />
++        <path
++            android:pathData="M0 0V164H307V0"
++            android:fillColor="#1F232C"
++            />
++    </group>
++</vector>
+\ No newline at end of file
+Index: app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package vn.edu.usth.stockdashboard;\r\n\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.core.text.HtmlCompat;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport android.content.res.ColorStateList;\r\nimport android.graphics.Color;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\n\r\nimport java.util.Objects;\r\nimport java.util.concurrent.atomic.AtomicInteger;\r\n\r\npublic class StockBuyFragment extends Fragment {\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {\r\n        AtomicInteger tradeState = new AtomicInteger(); // 0 mean buy, 1 mean sell\r\n        View view = inflater.inflate(R.layout.fragment_stockbuy, container, false);\r\n        Button buybtn = (Button) view.findViewById(R.id.buybtn);\r\n        Button sellbtn = (Button) view.findViewById(R.id.sellbtn);\r\n        Button placeorderbtn = (Button) view.findViewById(R.id.placeorder);\r\n        buybtn.setOnClickListener(v -> {\r\n            // Get background tint color\r\n            int color = Objects.requireNonNull(buybtn.getBackgroundTintList()).getDefaultColor();\r\n            // If color is #161b21 then change to #08CA98\r\n            if (color == Color.parseColor(\"#161b21\")) {\r\n                buybtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(\"#08CA98\")));\r\n                sellbtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(\"#161b21\")));\r\n                placeorderbtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(\"#08CA98\")));\r\n                tradeState.set(0);\r\n            }\r\n        });\r\n        sellbtn.setOnClickListener(v -> {\r\n            // Get background tint color\r\n            int color = Objects.requireNonNull(sellbtn.getBackgroundTintList()).getDefaultColor();\r\n            // If color is #161b21 then change to #08CA98\r\n            if (color == Color.parseColor(\"#161b21\")) {\r\n                sellbtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(\"#f04064\")));\r\n                buybtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(\"#161b21\")));\r\n                placeorderbtn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(\"#f04064\")));\r\n                tradeState.set(1);\r\n            }\r\n        });\r\n\r\n        placeorderbtn.setOnClickListener(v ->{\r\n            AlertDialog.Builder builder = new AlertDialog.Builder(StockBuyFragment.this.requireContext());\r\n            builder.setTitle(HtmlCompat.fromHtml(\"<font color='#FFFFFF'>Order Confirm</font>\", HtmlCompat.FROM_HTML_MODE_LEGACY));\r\n            String tradeType = tradeState.get() == 0 ? \"buy\" : \"sell\";\r\n            builder.setMessage(HtmlCompat.fromHtml(\"<font color='#FFFFFF'>Are you sure you want to \" + tradeType + \" this stock</font>\", HtmlCompat.FROM_HTML_MODE_LEGACY));\r\n            builder.setPositiveButton(\"Confirm\", (dialogInterface, i) -> {\r\n                AlertDialog alertDialog = new AlertDialog.Builder(StockBuyFragment.this.requireContext()).create();\r\n                alertDialog.setTitle(HtmlCompat.fromHtml(\"<font color='#FFFFFF'>Order Placed</font>\", HtmlCompat.FROM_HTML_MODE_LEGACY));\r\n                alertDialog.setMessage(HtmlCompat.fromHtml(\"<font color='#FFFFFF'>Your order has been placed</font>\", HtmlCompat.FROM_HTML_MODE_LEGACY));\r\n                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, \"OK\",\r\n                        (dialog, which) -> dialog.dismiss());\r\n                Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);\r\n                alertDialog.show();\r\n            });\r\n            builder.setNegativeButton(\"Cancel\", (dialogInterface, i) -> dialogInterface.dismiss());\r\n            builder.setCancelable(true);\r\n            AlertDialog d = builder.create();\r\n            Objects.requireNonNull(d.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);\r\n            d.show();\r\n        });\r\n        return view;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java b/app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java
+--- a/app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java	(revision fb83ef650f097130a50f5529597ae52762b0b8b1)
++++ b/app/src/main/java/vn/edu/usth/stockdashboard/StockBuyFragment.java	(date 1695439818889)
+@@ -1,9 +1,9 @@
+ package vn.edu.usth.stockdashboard;
+ 
+ import androidx.appcompat.app.AlertDialog;
+-import androidx.core.text.HtmlCompat;
+ import androidx.fragment.app.Fragment;
+ 
++import android.annotation.SuppressLint;
+ import android.content.res.ColorStateList;
+ import android.graphics.Color;
+ import android.os.Bundle;
+@@ -11,12 +11,14 @@
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.Button;
++import android.widget.TextView;
+ 
+ import java.util.Objects;
+ import java.util.concurrent.atomic.AtomicInteger;
+ 
+ public class StockBuyFragment extends Fragment {
+ 
++    @SuppressLint("SetTextI18n")
+     @Override
+     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+         AtomicInteger tradeState = new AtomicInteger(); // 0 mean buy, 1 mean sell
+@@ -49,23 +51,36 @@
+ 
+         placeorderbtn.setOnClickListener(v ->{
+             AlertDialog.Builder builder = new AlertDialog.Builder(StockBuyFragment.this.requireContext());
+-            builder.setTitle(HtmlCompat.fromHtml("<font color='#FFFFFF'>Order Confirm</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+-            String tradeType = tradeState.get() == 0 ? "buy" : "sell";
+-            builder.setMessage(HtmlCompat.fromHtml("<font color='#FFFFFF'>Are you sure you want to " + tradeType + " this stock</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+-            builder.setPositiveButton("Confirm", (dialogInterface, i) -> {
+-                AlertDialog alertDialog = new AlertDialog.Builder(StockBuyFragment.this.requireContext()).create();
+-                alertDialog.setTitle(HtmlCompat.fromHtml("<font color='#FFFFFF'>Order Placed</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+-                alertDialog.setMessage(HtmlCompat.fromHtml("<font color='#FFFFFF'>Your order has been placed</font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+-                        (dialog, which) -> dialog.dismiss());
+-                Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);
+-                alertDialog.show();
+-            });
+-            builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+-            builder.setCancelable(true);
++            View s = getLayoutInflater().inflate(R.layout.dialog_style, null);
++            TextView content = s.findViewById(R.id.confirmMessage);
++            Button confirm = s.findViewById(R.id.cfbtn);
++            Button cancel = s.findViewById(R.id.cancelbtn);
++            content.setText("Are you sure you want to " + (tradeState.get() == 0 ? "buy" : "sell") + " this stock");
++            builder.setView(s);
+             AlertDialog d = builder.create();
+             Objects.requireNonNull(d.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);
+             d.show();
++            confirm.setOnClickListener(v1 -> {
++                d.dismiss();
++                AlertDialog alertDialog = new AlertDialog.Builder(StockBuyFragment.this.requireContext()).create();
++                View s1 = getLayoutInflater().inflate(R.layout.dialog_style, null);
++                TextView title = s1.findViewById(R.id.titleAlert);
++                TextView content1 = s1.findViewById(R.id.confirmMessage);
++                Button confirm1 = s1.findViewById(R.id.cfbtn);
++                confirm1.setText("OK");
++                confirm1.setTextColor(Color.parseColor("#7186bc"));
++                confirm1.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#1f232c")));
++                Button cancel1 = s1.findViewById(R.id.cancelbtn);
++                cancel1.setVisibility(View.GONE);
++                title.setText("Order Placed");
++                content1.setText("Your order has been placed");
++                confirm1.setOnClickListener(v11 -> alertDialog.dismiss());
++                alertDialog.setView(s1);
++                Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawableResource(android.R.color.background_dark);
++                alertDialog.show();
++            });
++
++            cancel.setOnClickListener(v12 -> d.dismiss());
+         });
+         return view;
+     }
+Index: app/src/main/res/layout/dialog_style.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/dialog_style.xml b/app/src/main/res/layout/dialog_style.xml
+new file mode 100644
+--- /dev/null	(date 1695439435513)
++++ b/app/src/main/res/layout/dialog_style.xml	(date 1695439435513)
+@@ -0,0 +1,93 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:id="@+id/alertBox"
++    android:background="#1f232c">
++
++    <TextView
++        android:id="@+id/titleAlert"
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        android:layout_marginTop="24dp"
++        android:gravity="center"
++        android:text="Order Confirm"
++        android:textColor="#6280db"
++        android:textSize="20sp"
++        android:textStyle="bold"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        tools:ignore="HardcodedText" />
++
++    <ImageView
++        android:layout_width="match_parent"
++        android:layout_height="30dp"
++        android:src="@drawable/line"
++        app:layout_constraintStart_toStartOf="@+id/titleAlert"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/titleAlert"
++        android:id="@+id/line1"
++        android:contentDescription="A line in alertbox"
++        tools:ignore="HardcodedText" />
++
++    <TextView
++        android:id="@+id/confirmMessage"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="12dp"
++        android:layout_marginEnd="16dp"
++        android:gravity="center_horizontal"
++        android:text="You are about to buy 1 share of AAPL at $100.00"
++        android:textColor="#ffffff"
++        android:textSize="16sp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/line1"
++        tools:ignore="HardcodedText" />
++
++
++    <Button
++        android:id="@+id/cancelbtn"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="24dp"
++        android:layout_marginBottom="24dp"
++        android:background="@drawable/btnground"
++        android:text="Cancel"
++        android:textColor="#7186bc"
++        android:textSize="16sp"
++        app:backgroundTint="#1f232c"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toStartOf="@+id/cfbtn"
++        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintStart_toStartOf="@+id/confirmMessage"
++        app:layout_constraintTop_toBottomOf="@+id/confirmMessage"
++        app:layout_constraintVertical_bias="1.0"
++        tools:ignore="HardcodedText" />
++
++    <Button
++        android:id="@+id/cfbtn"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="24dp"
++        android:layout_marginBottom="24dp"
++        android:background="@drawable/btnground"
++        android:text="Confirm"
++        android:textColor="#ffffff"
++        android:textSize="16sp"
++        app:backgroundTint="#5c86ff"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="@+id/confirmMessage"
++        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintStart_toStartOf="@+id/confirmMessage"
++        app:layout_constraintTop_toBottomOf="@+id/confirmMessage"
++        app:layout_constraintVertical_bias="0.016"
++        tools:ignore="HardcodedText" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/drawable/line.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/line.xml b/app/src/main/res/drawable/line.xml
+new file mode 100644
+--- /dev/null	(date 1695439865904)
++++ b/app/src/main/res/drawable/line.xml	(date 1695439865904)
+@@ -0,0 +1,17 @@
++<!-- drawable/line_1.xml -->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="200dp"
++    android:height="1dp"
++    android:viewportWidth="308"
++    android:viewportHeight="1">
++    <group>
++        <clip-path
++            android:pathData="M0.5 0.5H307.5H0.5Z"
++            />
++    </group>
++    <path
++        android:pathData="M0.5 0.5H307.5H0.5Z"
++        android:strokeWidth="1"
++        android:strokeColor="#3B444F"
++        />
++</vector>
+\ No newline at end of file
