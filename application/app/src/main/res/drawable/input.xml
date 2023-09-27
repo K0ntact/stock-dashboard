@@ -1,0 +1,20 @@
+<!-- drawable/userfield.xml -->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="246dp"
+    android:height="50dp"
+    android:viewportWidth="246"
+    android:viewportHeight="50"
+    >
+    <group>
+        <clip-path
+            android:pathData="M4 0H242C244.209 0 246 1.79086 246 4V46C246 48.2091 244.209 50 242 50H4C1.79086 50 0 48.2091 0 46V4C0 1.79086 1.79086 0 4 0Z"
+            />
+        <path
+            android:pathData="M4 0H242C244.209 0 246 1.79086 246 4V46C246 48.2091 244.209 50 242 50H4C1.79086 50 0 48.2091 0 46V4C0 1.79086 1.79086 0 4 0Z"
+            android:strokeWidth="2"
+            android:strokeColor="#918888"
+            />
+    </group>
+</vector>
