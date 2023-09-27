@@ -13,7 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: set up JDK 17
+
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
@@ -24,6 +25,21 @@ jobs:
       run: chmod +x gradlew
       working-directory: application
 
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Build debug APK
+      run: ./gradlew assembleDebug 
       working-directory: application
+
+    - name: Create Build directory
+      run: mkdir -p build
+      working-directory: application      
+
+    - name: Move APK to build folder
+      run: mv app/build/outputs/apk/debug/app-debug.apk build/ 
+      working-directory: application      
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-debug.apk
+        path: build/app-debug.apk
+        working-directory: application      
