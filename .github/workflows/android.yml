@@ -25,5 +25,5 @@ jobs:
       working-directory: application
 
     - name: Build with Gradle
-      run: gradlew build
+      run: ./gradlew build
       working-directory: application
