@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0D1015"
     tools:context=".StockMarketFragment">
 
-    <View
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1015">
+
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/stockmarket_toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -17,22 +24,23 @@
         android:background="?android:attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/stockmarketheader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/stock_market"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/stockmarket_toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/stockmarket_toolbar"
-        app:layout_constraintStart_toStartOf="@+id/stockmarket_toolbar"
-        app:layout_constraintTop_toTopOf="@id/stockmarket_toolbar" />
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/stockmarketheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stock_market"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/burger_menu"
+            android:id="@+id/burgerIcon"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <EditText
         android:id="@+id/searchHeaderBar"
@@ -68,13 +76,17 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="searchHeaderBar" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:src="@drawable/burger_menu"
-        app:layout_constraintBottom_toBottomOf="@+id/stockmarketheader"
-        app:layout_constraintStart_toStartOf="@+id/searchHeaderBar"
-        app:layout_constraintTop_toTopOf="@+id/stockmarketheader" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start">
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/navList"
+        android:background="@color/toolbar">
+    </ExpandableListView>
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
