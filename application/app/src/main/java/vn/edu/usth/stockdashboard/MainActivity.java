@@ -1,6 +1,9 @@
 package vn.edu.usth.stockdashboard;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,13 +12,20 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import vn.edu.usth.stockdashboard.InterfaceSideBar.NavigationManager;
 import vn.edu.usth.stockdashboard.Menu.MenuBeforeLoginFragment;
 import vn.edu.usth.stockdashboard.Menu.MenuFragment;
 import vn.edu.usth.stockdashboard.utils.DbQuery;
@@ -140,5 +150,4 @@ public class MainActivity extends AppCompatActivity{
     public void onStop() {
         super.onStop();
     }
-
 }

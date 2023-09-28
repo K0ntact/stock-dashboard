@@ -1,16 +1,26 @@
 import WebSocket, { WebSocketServer, WebSocketClient } from "npm:ws@8.14.2";
 import "https://deno.land/std@0.202.0/dotenv/load.ts";
+import { DataElement, Message } from "./main.d.ts";
 
-const clients: {
-    [key: string]: { webSocket: WebSocketClient; symbol: string[] };
-} = {};
+type Client = {
+    [key: string]: {
+        webSocket: WebSocketClient;
+        symbol: string[];
+    };
+};
+
+const clients: Client = new Object() as Client;
+
+const registeredSymbols = new Set<string>();
 
 if (import.meta.main) {
+    const base = "ws://localhost:8080";
     const localwsServer = new WebSocketServer({ port: 8080 });
-
-    const remoteSocket = new WebSocket(
-        `wss://ws.finnhub.io?token=${Deno.env.get("TOKEN")}`
+    const url = new URL(
+        `?token=${Deno.env.get("TOKEN")}`,
+        "wss://ws.finnhub.io"
     );
+    const remoteSocket = new WebSocket(url.toString());
 
     remoteSocket.on("open", () => {
         console.log("Connected to remote server");
@@ -19,93 +29,84 @@ if (import.meta.main) {
     localwsServer.on(
         "connection",
         (localSocket: WebSocketClient, req: Request) => {
-            let userID = req.url?.split("?uuid=")[1]
-                ? req.url?.split("?uuid=")[1]
-                : 0;
+            let param = new URL(req.url as string, base);
 
-            if (userID === 0) {
+            let userID = param.searchParams.get("uuid");
+
+            if (!userID) {
                 console.log("Invalid user ID");
                 localSocket.close();
                 return;
             }
+
             clients[userID] = {
                 webSocket: localSocket,
                 symbol: [],
             };
-            console.log(
-                "connected: " +
-                    userID +
-                    " in " +
-                    Object.getOwnPropertyNames(clients)
-            );
 
             //console.log(`New client connected: ${JSON.stringify(localSocket, null, 2)}`);
-            localSocket.addEventListener(
-                "message",
-                (message: { data: string }) => {
-                    userID = req.url?.split("?uuid=")[1]
-                        ? req.url?.split("?uuid=")[1]
-                        : 0;
-                    if (userID === 0) {
-                        console.log("Invalid user ID");
-                        localSocket.close();
-                        return;
+            localSocket.addEventListener("message", (message: Message) => {
+                param = new URL(req.url as string, base);
+                userID = param.searchParams.get("uuid");
+
+                if (!userID) {
+                    console.log("Invalid user ID");
+                    localSocket.close();
+                    return;
+                }
+                const data = JSON.parse(message.data);
+                if (data.type === "subscribe") {
+                    if (clients[userID].symbol.indexOf(data.symbol) === -1) {
+                        clients[userID].symbol.push(data.symbol);
+                        if (registeredSymbols.has(data.symbol)) return;
+                        registeredSymbols.add(data.symbol);
                     }
-                    console.log(
-                        `Registering client ${userID} with symbol ${message.data}`
-                    );
+                } else if (data.type === "unsubscribe") {
+                    const index = clients[userID].symbol.indexOf(data.symbol);
+                    if (index !== -1) {
+                        clients[userID].symbol.splice(index, 1);
+                    }
+                } else {
+                    console.log("Invalid message type");
+                    return;
+                }
+
+                if (remoteSocket.readyState === WebSocket.OPEN) {
+                    remoteSocket.send(message.data);
+                }
+            });
+
+            remoteSocket.addEventListener("message", (message: Message) => {
+                // console.log('Received message from remote server:', message.data);
+                if (localSocket.readyState === WebSocket.OPEN) {
+                    const removed_Data_Array: Array<DataElement> = [];
+                    // Send only-subscribed data to only-subscribed clients
                     const data = JSON.parse(message.data);
-                    if (data.type === "subscribe") {
-                        if (
-                            clients[userID].symbol.indexOf(data.symbol) === -1
-                        ) {
-                            clients[userID].symbol.push(data.symbol);
+                    if (data.type !== "trade") return;
+
+                    data.data.forEach((d: DataElement) => {
+                        if (!userID) return;
+                        if (clients[userID].symbol.includes(d.s)) {
+                            removed_Data_Array.push(d);
                         }
-                    } else if (data.type === "unsubscribe") {
-                        const index = clients[userID].symbol.indexOf(
-                            data.symbol
+                    });
+
+                    if (removed_Data_Array.length > 0)
+                        localSocket.send(
+                            JSON.stringify({
+                                ...data,
+                                data: removed_Data_Array,
+                            })
                         );
-                        if (index !== -1) {
-                            clients[userID].symbol.splice(index, 1);
-                        }
-                    } else {
-                        console.log("Invalid message type");
-                        return;
-                    }
-
-                    if (remoteSocket.readyState === WebSocket.OPEN) {
-                        remoteSocket.send(message.data);
-                    }
                 }
-            );
-
-            remoteSocket.addEventListener(
-                "message",
-                (message: { data: string }) => {
-                    // console.log('Received message from remote server:', message.data);
-                    if (localSocket.readyState === WebSocket.OPEN) {
-                        const removed_Data_Array: { s: string }[] = [];
-                        // Send only-subscribed data to only-subscribed clients
-                        const data = JSON.parse(message.data);
-                        data.data.forEach((d: { s: string }) => {
-                            if (clients[userID].symbol.includes(d.s)) {
-                                removed_Data_Array.push(d);
-                            }
-                        });
-                        if (removed_Data_Array.length > 0)
-                            localSocket.send(
-                                JSON.stringify({
-                                    ...data,
-                                    data: removed_Data_Array,
-                                })
-                            );
-                    }
-                }
-            );
+            });
 
             localSocket.on("close", () => {
-                clients[userID].webSocket.close();
+                if (!userID) return;
+                clients[userID].webSocket.close(1000, "Closing from server");
+                clients[userID].webSocket.terminate();
                 console.log(`Client ${userID} disconnected`);
+                delete clients[userID];
             });
 
             remoteSocket.on("close", () => {
