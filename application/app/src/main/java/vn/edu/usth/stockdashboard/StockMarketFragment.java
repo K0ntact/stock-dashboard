@@ -1,6 +1,7 @@
 package vn.edu.usth.stockdashboard;
 
 import android.content.res.Configuration;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +50,7 @@ public class StockMarketFragment extends Fragment {
     private List<String> listTitle;
     private Map<String,List<String>> listChild;
     private NavigationManager navigationManager;
+    private SlideBarExpandableListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,7 +84,17 @@ public class StockMarketFragment extends Fragment {
         expandableListView = view.findViewById(R.id.navList);
         navigationManager = FragmentNavigationManager.getmInstance(this);
         initItems();
-        View listHeaderView = getLayoutInflater().inflate(R.layout.list_nav_group_slidebar,null,false);
+        //Header for sidebar
+        View listHeaderView = getLayoutInflater().inflate(R.layout.slidebar_nav_header,null,false);
+        //back button in header
+        listHeaderView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout != null){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+            }
+        });
         expandableListView.addHeaderView(listHeaderView);
         genData();
         addDrawerItems();
@@ -130,6 +144,7 @@ public class StockMarketFragment extends Fragment {
             }
         }
     }
+
 
     private void setUpDrawer() {
         ExpandableListAdapter expandableListAdapter = new SlideBarExpandableListAdapter(getActivity(), listTitle, listChild);
@@ -199,13 +214,37 @@ public class StockMarketFragment extends Fragment {
     }
 
     private void genData() {
-        List<String> title = Arrays.asList("Hi there", "This's 1from GenData's function");
-        List<String> child = Arrays.asList("Child","oat con","HipHop");
+        List<String> title = Arrays.asList(
+                "Favorite List",
+                "Owned List",
+                "Listed List",
+                "Industry Portfolio",
+                "Derivative List",
+                "CW List"
+        );
+        List<String> childIndustryPortfolio = Arrays.asList(
+                "Insurance",
+                "Media",
+                "Oil & Gas",
+                "Technology",
+                "Personal & Household Goods",
+                "Gas, Water & Multi-utilities",
+                "Food & Beverage",
+                "Banks",
+                "Real Estate"
+        );
+        List<String> nothing = Arrays.asList();
 
         listChild = new TreeMap<>();
-        listChild.put(title.get(0),child);
-        listChild.put(title.get(1),child);
+
+        listChild.put(title.get(0),nothing);
+        listChild.put(title.get(1),nothing);
+        listChild.put(title.get(2),nothing);
+        listChild.put(title.get(3),childIndustryPortfolio);
+        listChild.put(title.get(4),nothing);
+        listChild.put(title.get(5),nothing);
         listTitle = new ArrayList<>(listChild.keySet());
+
     }
 
     private void initItems() {
