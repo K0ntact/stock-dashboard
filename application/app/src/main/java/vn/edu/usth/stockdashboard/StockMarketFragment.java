@@ -149,6 +149,7 @@ public class StockMarketFragment extends Fragment {
     private void setUpDrawer() {
         ExpandableListAdapter expandableListAdapter = new SlideBarExpandableListAdapter(getActivity(), listTitle, listChild);
         expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setGroupIndicator(null); // Set null indicator
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int i) {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -74,6 +75,13 @@ public class SlideBarExpandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
 
+        ImageView indicator = convertView.findViewById(R.id.group_indicator);
+        if (isExpanded) {
+            indicator.setRotation(180); // Set the rotation to change indicator position
+        } else {
+            indicator.setRotation(0);
+        }
+
         return convertView;
     }
 
@@ -97,3 +105,4 @@ public class SlideBarExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 }
+

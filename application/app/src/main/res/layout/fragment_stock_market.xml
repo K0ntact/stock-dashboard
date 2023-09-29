@@ -88,7 +88,8 @@
         android:background="@color/toolbar"
         android:divider="@color/grey"
         android:dividerHeight="1dp"
-        android:childDivider="@color/toolbar">
+        android:childDivider="@color/toolbar"
+        android:transcriptMode="alwaysScroll">
     </ExpandableListView>
 
         <View
@@ -101,13 +102,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="bottom"
             android:gravity="center"
             android:orientation="horizontal"
             android:divider="@color/grey"
             android:showDividers="middle"
-            android:layout_marginBottom="15dp"
             android:background="@color/toolbar">
             <LinearLayout
                 android:layout_width="wrap_content"
