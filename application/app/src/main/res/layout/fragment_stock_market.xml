@@ -90,6 +90,15 @@
         android:dividerHeight="1dp"
         android:childDivider="@color/toolbar">
     </ExpandableListView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:alpha="0.5"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,15 +107,21 @@
             android:orientation="horizontal"
             android:divider="@color/grey"
             android:showDividers="middle"
+            android:layout_marginBottom="15dp"
             android:background="@color/toolbar">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:id="@+id/manageBottomSideBar">
                 <ImageView
                     android:layout_width="36px"
                     android:layout_height="36px"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginTop="0.2dp"
                     android:src="@drawable/three_circle_hamburger"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -115,10 +130,27 @@
                     android:textSize="16sp"
                     android:textColor="@color/grey"/>
             </LinearLayout>
-            <Button
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add WatchList"/>
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:gravity="center"
+                android:id="@+id/addWLtBottomSideBar">
+                <ImageView
+                    android:layout_width="36px"
+                    android:layout_height="36px"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginTop="0.2dp"
+                    android:src="@drawable/plus_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Watchlist"
+                    android:textSize="16sp"
+                    android:textColor="@color/grey"/>
+            </LinearLayout>
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
