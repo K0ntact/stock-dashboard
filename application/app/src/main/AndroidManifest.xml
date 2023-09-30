@@ -14,7 +14,6 @@
         android:roundIcon="@drawable/app_logo_2"
         android:supportsRtl="true"
         android:theme="@style/Theme.StockDashboard"
-        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
         <activity
             android:name=".LogInActivity"

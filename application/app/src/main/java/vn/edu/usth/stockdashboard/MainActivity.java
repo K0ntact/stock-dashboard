@@ -93,10 +93,15 @@ public class MainActivity extends AppCompatActivity{
             }
         });
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList"))).commit();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         Thread thread = new Thread(() -> {
             try {
-                clientEndpoint = new ClientEndpoint(new URI("ws://localhost:8080?uuid=bhhoang"));
+                // If running server on local computer, change IP address to IP address of your computer
+                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.100.144:8080?uuid=bhhoang"));
                 clientEndpoint.connect();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
