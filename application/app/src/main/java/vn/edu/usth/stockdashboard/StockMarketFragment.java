@@ -211,7 +211,7 @@ public class StockMarketFragment extends Fragment {
             }
         };
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
 
     private void genData() {
