@@ -155,5 +155,10 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onStop() {
         super.onStop();
+        try {
+            clientEndpoint.closeBlocking();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
