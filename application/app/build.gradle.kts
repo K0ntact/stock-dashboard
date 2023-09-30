@@ -34,6 +34,9 @@ android {
 dependencies {
     // https://mvnrepository.com/artifact/com.github.PhilJay/MPAndroidChart
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket
+    implementation("org.java-websocket:Java-WebSocket:1.5.4")
+
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
