@@ -29,6 +29,8 @@ if (import.meta.main) {
     localwsServer.on(
         "connection",
         (localSocket: WebSocketClient, req: Request) => {
+            console.log("New client connected");
+            
             let param = new URL(req.url as string, base);
 
             let userID = param.searchParams.get("uuid");
