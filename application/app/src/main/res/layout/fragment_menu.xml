@@ -71,8 +71,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewAppBar"
-        android:name="vn.edu.usth.stockdashboard.Menu.MenuFragment" />
+        app:layout_constraintTop_toBottomOf="@+id/viewAppBar" />
 
     <TextView
         android:id="@+id/logoutView"
