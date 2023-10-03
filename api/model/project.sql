@@ -16,7 +16,7 @@ CREATE TABLE UserStock (
     stock_id INT NOT NULL,
     volume BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES USER(id),
-    FOREIGN KEY (stock_id) REFERENCES STOCK(id),
+    FOREIGN KEY (stock_id) REFERENCES STOCK(id)
 );
 
 CREATE TABLE Stock (
