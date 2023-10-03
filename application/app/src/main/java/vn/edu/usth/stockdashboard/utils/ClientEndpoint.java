@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ClientEndpoint extends WebSocketClient {
+    private List<DataNotify> dataNotifies = new ArrayList<>();
     private HashMap<String, CustomCandleData> stocksData = new HashMap<>();
 
     public ClientEndpoint(URI serverUri, String[] symbols) {
@@ -78,8 +79,8 @@ public class ClientEndpoint extends WebSocketClient {
                     else if (current_price < candleData.low) {
                         candleData.low = current_price;
                     }
+                    candleData.close = current_price;   // Set current price as close price
                 }
-
                 // Print symbol, current price, open, close, high, low, start_time
                 System.out.println("Symbol: " + symbol);
                 System.out.println("Current price: " + current_price);
@@ -96,7 +97,13 @@ public class ClientEndpoint extends WebSocketClient {
                 System.out.println("Local time: " + sdf.format(new Date()));
                 System.out.println("\n");
             }
-        } catch (JSONException e) {
+
+            // Notify all DataNotify objects
+            for (DataNotify dataNotify : dataNotifies) {
+                dataNotify.onNewData(stocksData);
+            }
+        }
+        catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
@@ -107,5 +114,13 @@ public class ClientEndpoint extends WebSocketClient {
 
     public CustomCandleData getCandleData(String symbol) {
         return stocksData.get(symbol);
+    }
+
+    public void addDataNotify(DataNotify dataNotify) {
+        dataNotifies.add(dataNotify);
+    }
+
+    public void removeDataNotify(DataNotify dataNotify) {
+        dataNotifies.remove(dataNotify);
     }
 }
