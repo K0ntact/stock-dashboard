@@ -1,9 +1,6 @@
 package vn.edu.usth.stockdashboard;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,36 +9,30 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import vn.edu.usth.stockdashboard.InterfaceSideBar.NavigationManager;
 import vn.edu.usth.stockdashboard.Menu.MenuBeforeLoginFragment;
 import vn.edu.usth.stockdashboard.Menu.MenuFragment;
-import vn.edu.usth.stockdashboard.utils.DbQuery;
+import vn.edu.usth.stockdashboard.utils.ClientEndpoint;
 
 public class MainActivity extends AppCompatActivity{
     private BottomNavigationView bottomNavigationView;
     private boolean isLogin;
     private boolean doubleBackToExitPressedOnce;
     private final HashMap<String, Fragment> fragmentHashMap;
-    private final DbQuery db;
+    private ClientEndpoint clientEndpoint;
 
-    public MainActivity() {
+    public MainActivity() throws URISyntaxException {
         isLogin = false;
         doubleBackToExitPressedOnce = false;
         fragmentHashMap = new HashMap<>();
-        db = DbQuery.getInstance();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -105,6 +96,21 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Thread thread = new Thread(() -> {
+            try {
+                // If running server on local computer, change IP address to IP address of your computer
+                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.100.144:8080?uuid=bhhoang"));
+                clientEndpoint.connect();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
+    @Override
     public void onBackPressed() {
         // If the bottom navigation is not at the first tab, go to the first tab else need to press back twice to exit and pop up a toast
         if (bottomNavigationView.getSelectedItemId() != R.id.listTab) {
@@ -149,5 +155,10 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onStop() {
         super.onStop();
+        try {
+            clientEndpoint.closeBlocking();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

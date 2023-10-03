@@ -36,8 +36,17 @@ export class DataBase extends Object implements DataBase {
     });
     await this.client.execute(`CREATE DATABASE IF NOT EXISTS ${this.dbName}`);
     await this.client.execute(`USE ${this.dbName}`);
-    const sql = await Deno.readTextFile(this.schemaPath);
-    await this.client.execute(sql);
+    const queries: string[] = [];
+    const decoder = new TextDecoder("utf-8");
+    for (const file of Deno.readDirSync(this.schemaPath)) {
+      if (file.isFile && file.name.endsWith(".sql")) {
+        const data = Deno.readFileSync(`${this.schemaPath}/${file.name}`);
+        queries.push(decoder.decode(data));
+      }
+    }
+    for (const query of queries) {
+      await this.client.execute(query);
+    }
   }
 
   getClient() {
