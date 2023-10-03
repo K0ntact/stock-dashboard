@@ -10,15 +10,6 @@ CREATE TABLE User (
     netassest BIGINT NOT NULL
 );
 
-CREATE TABLE UserStock (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT NOT NULL, 
-    stock_id INT NOT NULL,
-    volume BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES USER(id),
-    FOREIGN KEY (stock_id) REFERENCES STOCK(id)
-);
-
 CREATE TABLE Stock (
     id INT PRIMARY KEY AUTO_INCREMENT, 
     symbol CHAR NOT NULL,
@@ -34,6 +25,15 @@ CREATE TABLE Stock (
     pegratio FLOAT NOT NULL, 
     movingavg50 FLOAT NOT NULL,
     movingavg200 FLOAT NOT NULL
+);
+
+CREATE TABLE UserStock (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL, 
+    stock_id INT NOT NULL,
+    volume BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES USER(id),
+    FOREIGN KEY (stock_id) REFERENCES STOCK(id)
 );
 
 CREATE TABLE Candle (
