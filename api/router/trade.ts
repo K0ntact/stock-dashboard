@@ -18,7 +18,7 @@ const registeredSymbols = new Set<string>();
 
 const url = new URL(`?token=${Deno.env.get("TOKEN")}`, "wss://ws.finnhub.io"); // wss://ws.finnhub.io?token=...
 
-const remoteSocket: WebSocketClient = new StandardWebSocketClient(
+let remoteSocket: WebSocketClient = new StandardWebSocketClient(
     url.toString()
 );
 
@@ -38,7 +38,9 @@ export const tradeEventHandler = (context: Context) => {
     const localSocket = context.upgrade();
     localSocket.onopen = () => {
         console.log("Connected to client " + userID);
-        localSocket.send("Hello from server!");
+        if (localSocket.readyState === WebSocket.OPEN){
+            localSocket.send("Hello from server!");
+        }
     };
     localSocket.addEventListener("message", (message: Message) => {
         if (!userID) {
@@ -88,13 +90,15 @@ export const tradeEventHandler = (context: Context) => {
             }
         });
 
-        if (removed_Data_Array.length > 0)
-            localSocket.send(
-                JSON.stringify({
-                    ...data,
-                    data: removed_Data_Array,
-                })
-            );
+        if (removed_Data_Array.length > 0){
+            if (localSocket.readyState === WebSocket.OPEN)
+                localSocket.send(
+                    JSON.stringify({
+                        ...data,
+                        data: removed_Data_Array,
+                    })
+                );
+        }
     });
 
     localSocket.onclose = () => {
@@ -105,7 +109,10 @@ export const tradeEventHandler = (context: Context) => {
     };
 
     remoteSocket.addListener("close", () => {
-        console.log("Remote server disconnected");
-        localSocket.close();
+        console.log("Remote server disconnected, reconnecting...");
+        remoteSocket = new StandardWebSocketClient(url.toString());
+        remoteSocket.on("open", () => {
+            console.log("Connected to remote server");
+        });
     });
 };
