@@ -37,6 +37,8 @@ export const tradeEventHandler = (context: Context) => {
     }
     const localSocket = context.upgrade();
     localSocket.onopen = () => {
+        if (!userID) return;
+        if (clients[userID]) return console.log("Client already connected");
         console.log("Connected to client " + userID);
         if (localSocket.readyState === WebSocket.OPEN){
             localSocket.send("Hello from server!");
@@ -103,9 +105,13 @@ export const tradeEventHandler = (context: Context) => {
 
     localSocket.onclose = () => {
         if (!userID) return;
-        clients[userID].webSocket.close(1000, "Closing from server");
-        console.log(`Client ${userID} disconnected`);
-        delete clients[userID];
+        if (!clients[userID]) return console.log("RIP client code 1: " + userID);
+        if (typeof clients[userID].webSocket === "undefined") return console.log("RIP client code 2: " + userID); 
+        if(clients[userID].webSocket.readyState === WebSocket.CLOSED){      
+            clients[userID].webSocket.close(1000, "Closing from server");
+            console.log(`Client ${userID} disconnected`);
+            delete clients[userID];
+        }
     };
 
     remoteSocket.addListener("close", () => {
