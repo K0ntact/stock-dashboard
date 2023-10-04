@@ -1,6 +1,5 @@
-import { generate } from "https://deno.land/std@0.203.0/uuid/v1.ts"
 const url = new URL(
-    `/`,
+    `/trade`,
     "ws://localhost:8080"
 );
 url.searchParams.append("uuid", "k0ntact");
