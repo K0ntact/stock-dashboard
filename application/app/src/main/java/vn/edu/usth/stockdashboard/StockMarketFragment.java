@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,7 +66,7 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         entries.add(new StockItem("WMT", "Walmart Inc."));
         entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS"));
         entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
-         adapter = new StockListAdapter(entries);
+        adapter = new StockListAdapter(entries);
     }
 
     @Override
@@ -161,6 +160,12 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         super.onDestroy();
         System.out.println("On Destroy");
         clientEndpoint.close(1000, "Close from client");
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        actionBarDrawerToggle.syncState();
     }
 
     @Override

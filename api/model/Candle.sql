@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS Candle (
+  eid INT AUTO_INCREMENT PRIMARY KEY,
+  timestamp BIGINT NOT NULL,
+  open FLOAT NOT NULL,
+  close FLOAT NOT NULL,
+  high FLOAT NOT NULL,
+  low FLOAT NOT NULL,
+  stock_id INT,
+  FOREIGN KEY (stock_id) REFERENCES Stock(eid)
+);
