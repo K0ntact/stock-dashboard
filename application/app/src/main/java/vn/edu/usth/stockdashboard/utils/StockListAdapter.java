@@ -35,107 +35,13 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
     @Override
     public StockListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stock_list_items, parent, false);
-
-        view.setOnClickListener(v -> {
-            TextView stockSymbol = view.findViewById(R.id.symbolTextView);
-            TextView companyName = view.findViewById(R.id.nameTextView);
-            TextView money = view.findViewById(R.id.moneyTextView);
-            TextView percentage = view.findViewById(R.id.percentage);
-            StockItem item = new StockItem(stockSymbol.getText().toString(), companyName.getText().toString(), money.getText().toString(), percentage.getText().toString());
-
-            Intent intent = new Intent(view.getContext(), StockDetailActivity.class);
-            intent.putExtra("stockName", item.getSymbol());
-            intent.putExtra("companyName", item.getName());
-            intent.putExtra("money", item.getMoney());
-            intent.putExtra("percentage", item.getPercentage());
-            view.getContext().startActivity(intent);
-        });
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Context context = holder.itemView.getContext();
-        Resources r = context.getResources();
-
-        // Get the StockItem at this position
-        StockItem currentItem = stockList.get(position);
-
-        holder.symbolTextView.setText(currentItem.getSymbol());
-        holder.nameTextView.setText(currentItem.getName());
-        holder.moneyTextView.setText(currentItem.getMoney());
-
-        // Generate random data
-        if (currentItem.getRandomData() == null) {
-            currentItem.generateRandomData(20);
-        }
-
-        ArrayList<Entry> randomData = currentItem.getRandomData();
-        LineDataSet dataSet = new LineDataSet(randomData, "Random Data");
-        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // Smooth line
-        dataSet.setDrawFilled(true);
-
-        int graphColor;
-        float lastValue = randomData.get(randomData.size() - 1).getY();
-        float secondLastValue = randomData.get(randomData.size() - 2).getY();
-        float percentageChange = ((lastValue - secondLastValue) / secondLastValue * 100);
-
-        // Update the previousValue field in the StockItem
-        currentItem.setPreviousValue(secondLastValue);
-
-        // Set the percentage text with a plus or minus sign
-        String percentageText;
-        if (percentageChange > 0){
-            percentageText = "+" + String.format("%.2f%%",percentageChange);
-            graphColor = r.getColor(R.color.positive,null);
-            holder.percentageTextView.setBackgroundResource(R.drawable.rounded_box_green);
-            dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_positive));
-        } else if (percentageChange < 0) {
-            percentageText = String.format("%.2f%%",percentageChange);
-            graphColor = r.getColor(R.color.negative,null);
-            holder.percentageTextView.setBackgroundResource(R.drawable.round_box_red);
-            dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_negative));
-        } else {
-            percentageText = "0.00%";
-            graphColor = r.getColor(R.color.neutral,null);
-            holder.percentageTextView.setBackgroundResource(R.drawable.round_box_yellow);
-            dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_neutral));
-        }
-        holder.percentageTextView.setText(percentageText);
-
-        dataSet.setColor(graphColor);
-        dataSet.setLineWidth(1f); // Line width
-        dataSet.setDrawCircles(false); // Do not draw circles on data points
-
-        // Create a LineData object and set the dataSet
-        LineData lineData = new LineData(dataSet);
-        holder.lineChart.setData(lineData);
-        holder.lineChart.getDescription().setEnabled(false); // Disable description label
-        holder.lineChart.getLegend().setEnabled(false); // Disable legend
-        holder.lineChart.setDrawGridBackground(false);
-        dataSet.setDrawValues(false);
-
-        // Disable X-axis
-        XAxis xAxis = holder.lineChart.getXAxis();
-        xAxis.setEnabled(false);
-        // Disable Y-axis (left)
-        YAxis leftYAxis = holder.lineChart.getAxisLeft();
-        leftYAxis.setEnabled(false);
-        // Disable Y-axis (right)
-        YAxis rightYAxis = holder.lineChart.getAxisRight();
-        rightYAxis.setEnabled(false);
-        // Disable all user interaction
-        holder.lineChart.setTouchEnabled(false);
-        holder.lineChart.setDragEnabled(false);
-        holder.lineChart.setScaleEnabled(false);
-        holder.lineChart.setPinchZoom(false);
-        holder.lineChart.setDoubleTapToZoomEnabled(false);
-        holder.lineChart.setHighlightPerDragEnabled(false);
-        holder.lineChart.setHighlightPerTapEnabled(false);
-
-        // Invalidate the chart to refresh it
-        holder.lineChart.invalidate();
+        holder.bindData(stockList.get(position));
+        holder.onClick();
     }
 
     @Override
@@ -147,10 +53,8 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
         private final TextView symbolTextView;
         private final TextView nameTextView;
         private final TextView percentageTextView;
-        private LineChart lineChart;
+        private final LineChart lineChart;
         private final TextView moneyTextView;
-        private final View separatorView;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -159,7 +63,101 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
             lineChart = itemView.findViewById(R.id.lineChart);
             moneyTextView = itemView.findViewById(R.id.moneyTextView);
             percentageTextView = itemView.findViewById(R.id.percentage);
-            separatorView = itemView.findViewById(R.id.separatorView);
+            onClick();
+        }
+
+        private void setupChart(StockItem item) {
+            Context context = itemView.getContext();
+            Resources r = context.getResources();
+
+            // Generate random data if not available
+            if (item.getRandomData() == null) {
+                item.generateRandomData(20); // Consider replacing 20 with a constant or a value from resources
+            }
+
+            ArrayList<Entry> randomData = item.getRandomData();
+            LineDataSet dataSet = new LineDataSet(randomData, "Random Data");
+            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // Smooth line
+            dataSet.setDrawFilled(true);
+
+            int graphColor;
+            float lastValue = randomData.get(randomData.size() - 1).getY();
+            float secondLastValue = randomData.get(randomData.size() - 2).getY();
+            float percentageChange = ((lastValue - secondLastValue) / secondLastValue * 100);
+
+            // Update the previousValue field in the StockItem
+            item.setPreviousValue(secondLastValue);
+
+            // Set the percentage text with a plus or minus sign
+            String percentageText;
+            if (percentageChange > 0){
+                percentageText = "+" + String.format("%.2f%%", percentageChange);
+                graphColor = r.getColor(R.color.positive, null);
+                percentageTextView.setBackgroundResource(R.drawable.rounded_box_green);
+                dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_positive));
+            } else if (percentageChange < 0) {
+                percentageText = String.format("%.2f%%", percentageChange);
+                graphColor = r.getColor(R.color.negative, null);
+                percentageTextView.setBackgroundResource(R.drawable.round_box_red);
+                dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_negative));
+            } else {
+                percentageText = "0.00%";
+                graphColor = r.getColor(R.color.neutral, null);
+                percentageTextView.setBackgroundResource(R.drawable.round_box_yellow);
+                dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_neutral));
+            }
+            percentageTextView.setText(percentageText);
+
+            dataSet.setColor(graphColor);
+            dataSet.setLineWidth(1f); // Line width
+            dataSet.setDrawCircles(false); // Do not draw circles on data points
+
+            // Create a LineData object and set the dataSet
+            LineData lineData = new LineData(dataSet);
+            lineChart.setData(lineData);
+            lineChart.getDescription().setEnabled(false); // Disable description label
+            lineChart.getLegend().setEnabled(false); // Disable legend
+            lineChart.setDrawGridBackground(false);
+            dataSet.setDrawValues(false);
+
+            // Disable X-axis
+            XAxis xAxis = lineChart.getXAxis();
+            xAxis.setEnabled(false);
+            // Disable Y-axis (left)
+            YAxis leftYAxis = lineChart.getAxisLeft();
+            leftYAxis.setEnabled(false);
+            // Disable Y-axis (right)
+            YAxis rightYAxis = lineChart.getAxisRight();
+            rightYAxis.setEnabled(false);
+            // Disable all user interaction
+            lineChart.setTouchEnabled(false);
+            lineChart.setDragEnabled(false);
+            lineChart.setScaleEnabled(false);
+            lineChart.setPinchZoom(false);
+            lineChart.setDoubleTapToZoomEnabled(false);
+            lineChart.setHighlightPerDragEnabled(false);
+            lineChart.setHighlightPerTapEnabled(false);
+
+            // Invalidate the chart to refresh it
+            lineChart.invalidate();
+        }
+
+        public void bindData(StockItem item){
+            symbolTextView.setText(item.getSymbol());
+            nameTextView.setText(item.getName());
+            moneyTextView.setText(item.getMoney());
+            setupChart(item);
+        }
+
+        public void onClick(){
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), StockDetailActivity.class);
+                intent.putExtra("stockName", symbolTextView.getText().toString());
+                intent.putExtra("companyName", nameTextView.getText().toString());
+                intent.putExtra("money", moneyTextView.getText().toString());
+                intent.putExtra("percentage", percentageTextView.getText().toString());
+                itemView.getContext().startActivity(intent);
+            });
         }
     }
 }

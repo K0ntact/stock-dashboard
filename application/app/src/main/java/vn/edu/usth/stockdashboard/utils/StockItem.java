@@ -13,6 +13,14 @@ public class StockItem {
     private ArrayList<Entry> randomData;
     private float previousValue;
 
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
+
     public ArrayList<Entry> getRandomData() {
         return randomData;
     }
@@ -24,6 +32,12 @@ public class StockItem {
             float y = random.nextFloat() * 100;
             randomData.add(new Entry((float) i,y));
         }
+    }
+    public StockItem(String symbol, String name) {
+        this.symbol = symbol;
+        this.name = name;
+        this.money = "0";
+        this.percentage = "0%";
     }
     public StockItem(String symbol, String name, String money, String percentage) {
         this.symbol = symbol;
