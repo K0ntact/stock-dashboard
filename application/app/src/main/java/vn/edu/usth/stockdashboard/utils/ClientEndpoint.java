@@ -1,7 +1,6 @@
 package vn.edu.usth.stockdashboard.utils;
 
 import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,76 +8,32 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class ClientEndpoint extends WebSocketClient {
-    private float open;
+    private List<DataNotify> dataNotifies = new ArrayList<>();
+    private HashMap<String, CustomCandleData> stocksData = new HashMap<>();
 
-    private float close;
-    private float high;
-    private float low;
-    private long start_time = 0;
-
-    public ClientEndpoint(URI serverUri) {
+    public ClientEndpoint(URI serverUri, String[] symbols) {
         super(serverUri);
-    }
-
-    public ClientEndpoint(URI serverUri, Draft protocolDraft) {
-        super(serverUri, protocolDraft);
-    }
-
-    public ClientEndpoint(URI serverUri, Map<String, String> httpHeaders) {
-        super(serverUri, httpHeaders);
+        assert symbols.length > 0;
+        for (String symbol : symbols) {
+            CustomCandleData data = new CustomCandleData();
+            stocksData.put(symbol, data);
+        }
     }
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println("Connected");
-        send("{\"type\":\"subscribe\",\"symbol\":\"BINANCE:ETHUSDT\"}");
+        for (String symbol : stocksData.keySet()) {
+            send("{\"type\":\"subscribe\",\"symbol\":\"" + symbol + "\"}");
+        }
     }
 
     @Override
     public void onMessage(String message) {
-        // {"data":[{"c":null,"p":1675.58,"s":"BINANCE:ETHUSDT","t":1696073626534,"v":0.2082}],"type":"trade"}
-        try {
-            JSONObject jsonObject = new JSONObject(message);
-            JSONArray jsonArray = jsonObject.getJSONArray("data");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject data = jsonArray.getJSONObject(i);
-                float current_price = (float) data.getDouble("p");
-                if (data.getLong("t") - start_time > 1000) {
-                    open = current_price;
-                    close = current_price;
-                    high = current_price;
-                    low = current_price;
-                    start_time = data.getLong("t");
-                } else {
-                    close = current_price;
-                    if (current_price > high) {
-                        high = current_price;
-                    }
-                    else if (current_price < low) {
-                        low = current_price;
-                    }
-                }
-
-                // Convert start_time in timestamp to local time
-                String date = sdf.format(new java.util.Date (start_time));
-                System.out.println("Date: " + date);
-                // Print local time
-                String local_time = sdf.format(new java.util.Date (System.currentTimeMillis()));
-                System.out.println("Local time: " + local_time);
-                System.out.println("Open: " + open);
-                System.out.println("Close: " + close);
-                System.out.println("High: " + high);
-                System.out.println("Low: " + low);
-
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        extractData(message);
     }
 
     @Override
@@ -91,19 +46,81 @@ public class ClientEndpoint extends WebSocketClient {
         System.out.println("Error: " + ex.getMessage());
     }
 
-    public float getOpen() {
-        return open;
+    public void extractData(String message) {
+        try {
+            // {"data":[
+            //          {"c":["1","24","12"],"p":171.465,"s":"AAPL","t":1696250801554,"v":1},
+            //          {"c":null,"p":1731.1,"s":"BINANCE:ETHUSDT","t":1696250801782,"v":0.014},
+            //          {"c":null,"p":1731.1,"s":"BINANCE:ETHUSDT","t":1696250801997,"v":0.0129},
+            //          {"c":null,"p":1731.09,"s":"BINANCE:ETHUSDT","t":1696250802070,"v":1.001}
+            //          ],"type":"trade"}
+            JSONObject jsonObject = new JSONObject(message);
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject data = jsonArray.getJSONObject(i);
+                String symbol = data.getString("s");
+                CustomCandleData candleData = stocksData.get(symbol);
+                float current_price = (float) data.getDouble("p");
+                assert candleData != null;
+                candleData.current_price = current_price;
+                long timestamp = data.getLong("t");
+
+                if (timestamp - candleData.timestamp > 60000) {
+                    // If the time difference is more than 1 minute, reset the values to current price
+                    candleData.open = current_price;
+                    candleData.close = current_price;
+                    candleData.high = current_price;
+                    candleData.low = current_price;
+                    candleData.timestamp = timestamp;
+                } else {
+                    // Else, update the values
+                    if (current_price > candleData.high)
+                        candleData.high = current_price;
+                    else if (current_price < candleData.low) {
+                        candleData.low = current_price;
+                    }
+                    candleData.close = current_price;   // Set current price as close price
+                }
+                // Print symbol, current price, open, close, high, low, start_time
+                System.out.println("Symbol: " + symbol);
+                System.out.println("Current price: " + current_price);
+                System.out.println("Open: " + candleData.open);
+                System.out.println("Close: " + candleData.close);
+                System.out.println("High: " + candleData.high);
+                System.out.println("Low: " + candleData.low);
+
+                // Convert timestamp to date
+                Date date = new Date(candleData.timestamp);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                System.out.println("Start time: " + sdf.format(date));
+                // Print local time
+                System.out.println("Local time: " + sdf.format(new Date()));
+                System.out.println("\n");
+            }
+
+            // Notify all DataNotify objects
+            for (DataNotify dataNotify : dataNotifies) {
+                dataNotify.onNewData(stocksData);
+            }
+        }
+        catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public float getClose() {
-        return close;
+
+    public Set<String> getSymbols() {
+        return stocksData.keySet();
     }
-    public float getHigh() {
-        return high;
+
+    public CustomCandleData getCandleData(String symbol) {
+        return stocksData.get(symbol);
     }
-    public float getLow() {
-        return low;
+
+    public void addDataNotify(DataNotify dataNotify) {
+        dataNotifies.add(dataNotify);
     }
-    public long getStart_time() {
-        return start_time;
+
+    public void removeDataNotify(DataNotify dataNotify) {
+        dataNotifies.remove(dataNotify);
     }
 }

@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity{
     private boolean isLogin;
     private boolean doubleBackToExitPressedOnce;
     private final HashMap<String, Fragment> fragmentHashMap;
-    private ClientEndpoint clientEndpoint;
 
     public MainActivity() throws URISyntaxException {
         isLogin = false;
@@ -98,16 +97,6 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onStart() {
         super.onStart();
-        Thread thread = new Thread(() -> {
-            try {
-                // If running server on local computer, change IP address to IP address of your computer
-                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.100.144:8080?uuid=bhhoang"));
-                clientEndpoint.connect();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
     }
 
     @Override
@@ -155,10 +144,5 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onStop() {
         super.onStop();
-        try {
-            clientEndpoint.closeBlocking();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

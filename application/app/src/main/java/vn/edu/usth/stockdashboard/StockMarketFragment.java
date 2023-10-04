@@ -1,7 +1,6 @@
 package vn.edu.usth.stockdashboard;
 
 import android.content.res.Configuration;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,25 +20,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
 
 import vn.edu.usth.stockdashboard.HelperSideBar.FragmentNavigationManager;
 import vn.edu.usth.stockdashboard.InterfaceSideBar.NavigationManager;
-import vn.edu.usth.stockdashboard.utils.StockItem;
-import vn.edu.usth.stockdashboard.utils.StockListAdapter;
+import vn.edu.usth.stockdashboard.utils.*;
 
-public class StockMarketFragment extends Fragment {
-
+public class StockMarketFragment extends Fragment implements DataNotify {
     private DrawerLayout drawerLayout;
     private String activityTitle;
 
@@ -50,30 +42,61 @@ public class StockMarketFragment extends Fragment {
     private List<String> listTitle;
     private Map<String,List<String>> listChild;
     private NavigationManager navigationManager;
-    private SlideBarExpandableListAdapter adapter;
+//    private SlideBarExpandableListAdapter adapter;
+    private ClientEndpoint clientEndpoint;
+    private final ArrayList<StockItem> entries = new ArrayList<>();
+    private final StockListAdapter adapter = new StockListAdapter(entries);
+
+    public StockMarketFragment() {
+        // Required empty public constructor
+
+//        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
+        entries.add(new StockItem("AAPL", "Apple Inc."));
+        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
+        entries.add(new StockItem("NKE", "NIKE, Inc."));
+        entries.add(new StockItem("TSLA", "Tesla, Inc."));
+        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
+        entries.add(new StockItem("META", "Meta Platforms, Inc."));
+        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
+        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
+        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
+        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
+        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
+        entries.add(new StockItem("V", "Visa Inc."));
+        entries.add(new StockItem("WMT", "Walmart Inc."));
+//        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
+
+        adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        Thread thread = new Thread(() -> {
+            try {
+                // Should query last price from database first,
+                // because with websocket the price only update when there is a new trade,
+                // so for small stock like VNM, the price will stay at 0 for a while.
+                // DB query here
+                // ...
+
+                // If running server on local computer, change IP address to IP address of your computer
+                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080?uuid=bhhoang"), new String[]{"AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"});
+                clientEndpoint.addDataNotify(this);
+                clientEndpoint.connect();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stock_market, container, false);
         RecyclerView listView = view.findViewById(R.id.listView);
-
-        ArrayList<StockItem> entries = new ArrayList<>();
-        entries.add(new StockItem("VNM", "VanEck VietNam ETF", "15,56 US$", "0,19%"));
-        entries.add(new StockItem("AAPL", "Apple Inc.", "178,18 US$", "0,35%")); // Sample data point 3
-        entries.add(new StockItem("SBUX", "Starbucks Corporation", "95,28 US$","0,19%"));
-        entries.add(new StockItem("NKE", "NIKE, Inc.", "97,67 US$", "0,27%"));
-        entries.add(new StockItem("TSLA", "Tesla, Inc.", "709,44 US$", "0,19%"));
-        entries.add(new StockItem("AMZN", "Amazon.com, Inc.", "3.372,20 US$", "0,27%"));
-        entries.add(new StockItem("FB", "Facebook, Inc.", "331,26 US$", "0,19%"));
-        entries.add(new StockItem("GOOGL", "Alphabet Inc.", "2.431,38 US$", "0,27%"));
-        entries.add(new StockItem("MSFT", "Microsoft Corporation", "259,43 US$", "0,19%"));
-        entries.add(new StockItem("NVDA", "NVIDIA Corporation", "191,05 US$", "0,27%"));
-        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc.", "279,50 US$", "0,19%"));
-        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited", "117,00 US$", "0,27%"));
-        entries.add(new StockItem("V", "Visa Inc.", "226,00 US$", "0,19%"));
-        entries.add(new StockItem("WMT", "Walmart Inc.", "142,00 US$", "0,27%"));
-        StockListAdapter adapter = new StockListAdapter(entries);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
@@ -120,6 +143,15 @@ public class StockMarketFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+    public void onDestroy() {
+        super.onDestroy();
+        clientEndpoint.close();
     }
 
     @Override
@@ -205,8 +237,8 @@ public class StockMarketFragment extends Fragment {
                 super.onDrawerClosed(drawerView);
                 ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
                 if (actionBar != null){
-                actionBar.setTitle(activityTitle);
-                requireActivity().invalidateOptionsMenu();
+                    actionBar.setTitle(activityTitle);
+                    requireActivity().invalidateOptionsMenu();
                 }
             }
         };
@@ -262,5 +294,21 @@ public class StockMarketFragment extends Fragment {
         int id = item.getItemId();
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) return true;
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNewData(HashMap<String, CustomCandleData> data) {
+        requireActivity().runOnUiThread(() -> {
+                for (StockItem entry : entries) {
+                    CustomCandleData candleData = data.get(entry.getSymbol());
+                    if (candleData != null) {
+                        // Float to 2 decimal places
+                        entry.setMoney(String.valueOf(candleData.current_price));
+                    }
+                    adapter.notifyItemChanged(entries.indexOf(entry));
+                    System.out.println("Updated");
+                }
+            }
+        );
     }
 }
