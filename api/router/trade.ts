@@ -37,6 +37,8 @@ export const tradeEventHandler = (context: Context) => {
     }
     const localSocket = context.upgrade();
     localSocket.onopen = () => {
+        if (!userID) return;
+        if (clients[userID]) return console.log("Client already connected");
         console.log("Connected to client " + userID);
         if (localSocket.readyState === WebSocket.OPEN){
             localSocket.send("Hello from server!");
