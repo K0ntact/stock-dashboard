@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ClientEndpoint extends WebSocketClient {
@@ -65,16 +64,16 @@ public class ClientEndpoint extends WebSocketClient {
 
                 // Get current timestamp
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - lastUpdate < 100) {
+                if (currentTime - lastUpdate < 50) {
                     // Skip to prevent main thread overload
                     continue;
                 }
+                lastUpdate = currentTime;
 
                 CustomCandleData candleData = stocksData.get(symbol);
                 assert candleData != null;
 
                 long timestamp = data.getLong("t");
-                lastUpdate = timestamp;
                 float current_price = (float) data.getDouble("p");
                 current_price = (float) (Math.round(current_price * 100.0) / 100.0);
                 candleData.current_price = current_price;
@@ -103,12 +102,12 @@ public class ClientEndpoint extends WebSocketClient {
 
                 changeData.put(symbol, candleData);
                 // Print symbol, current price, open, close, high, low, start_time
-//                System.out.println("Symbol: " + symbol);
-//                System.out.println("Current price: " + current_price);
-//                System.out.println("Open: " + candleData.open);
-//                System.out.println("Close: " + candleData.close);
-//                System.out.println("High: " + candleData.high);
-//                System.out.println("Low: " + candleData.low);
+                System.out.println("Symbol: " + symbol);
+                System.out.println("Current price: " + current_price);
+                System.out.println("Open: " + candleData.open);
+                System.out.println("Close: " + candleData.close);
+                System.out.println("High: " + candleData.high);
+                System.out.println("Low: " + candleData.low);
 
 //                // Convert timestamp to date
 //                Date date = new Date(candleData.timestamp);

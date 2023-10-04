@@ -11,12 +11,19 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import vn.edu.usth.stockdashboard.R;
+import vn.edu.usth.stockdashboard.utils.ClientEndpoint;
+import vn.edu.usth.stockdashboard.utils.CustomCandleData;
+import vn.edu.usth.stockdashboard.utils.DataNotify;
 
-public class StockDetailActivity extends AppCompatActivity {
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+
+public class StockDetailActivity extends AppCompatActivity implements DataNotify {
     private String stockName;
-    private String companyName;
-    private String money;
-    private String percentage;
+    private TextView moneyView;
+    private ClientEndpoint clientEndpoint;
+    private Thread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +32,20 @@ public class StockDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         stockName = intent.getStringExtra("stockName");
-        companyName = intent.getStringExtra("companyName");
-        money = intent.getStringExtra("money");
-        percentage = intent.getStringExtra("percentage");
+        String companyName = intent.getStringExtra("companyName");
+        String money = intent.getStringExtra("money");
+        String percentage = intent.getStringExtra("percentage");
 
+        thread = new Thread(() -> {
+            try {
+                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), new String[]{stockName});
+                clientEndpoint.addDataNotify(this);
+                clientEndpoint.connect();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
 
         if (stockName != null) {
             TextView stockNameView = findViewById(R.id.stockName);
@@ -39,7 +56,7 @@ public class StockDetailActivity extends AppCompatActivity {
             companyNameView.setText(companyName);
         }
         if (money != null) {
-            TextView moneyView = findViewById(R.id.stockPrice);
+            moneyView = findViewById(R.id.stockPrice);
             moneyView.setText(money);
         }
         if (percentage != null) {
@@ -89,5 +106,20 @@ public class StockDetailActivity extends AppCompatActivity {
             }
         });
         mediator.attach();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        clientEndpoint.close();
+        thread.interrupt();
+    }
+
+    @Override
+    public void onNewData(HashMap<String, CustomCandleData> data) {
+        runOnUiThread(() -> {
+            CustomCandleData candleData = data.get(stockName);
+            if (candleData != null) moneyView.setText(String.valueOf(candleData.current_price));
+        });
     }
 }

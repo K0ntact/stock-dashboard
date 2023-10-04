@@ -51,26 +51,26 @@ public class StockMarketFragment extends Fragment implements DataNotify {
 
     public StockMarketFragment() {
         entries = new ArrayList<>();
-//        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
-//        entries.add(new StockItem("AAPL", "Apple Inc."));
-//        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
-//        entries.add(new StockItem("NKE", "NIKE, Inc."));
-//        entries.add(new StockItem("TSLA", "Tesla, Inc."));
-//        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
-//        entries.add(new StockItem("META", "Meta Platforms, Inc."));
-//        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
-//        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
-//        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
-//        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
-//        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
-//        entries.add(new StockItem("V", "Visa Inc."));
-//        entries.add(new StockItem("WMT", "Walmart Inc."));
-        entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS"));
-        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
-        entries.add(new StockItem("BINANCE:BNBUSDT", "Binance Coin / TetherUS"));
-        entries.add(new StockItem("BINANCE:ADAUSDT", "Cardano / TetherUS"));
-        entries.add(new StockItem("BINANCE:DOTUSDT", "Polkadot / TetherUS"));
-        entries.add(new StockItem("BINANCE:XRPUSDT", "XRP / TetherUS"));
+        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
+        entries.add(new StockItem("AAPL", "Apple Inc."));
+        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
+        entries.add(new StockItem("NKE", "NIKE, Inc."));
+        entries.add(new StockItem("TSLA", "Tesla, Inc."));
+        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
+        entries.add(new StockItem("META", "Meta Platforms, Inc."));
+        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
+        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
+        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
+        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
+        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
+        entries.add(new StockItem("V", "Visa Inc."));
+        entries.add(new StockItem("WMT", "Walmart Inc."));
+//        entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS"));
+//        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
+//        entries.add(new StockItem("BINANCE:BNBUSDT", "Binance Coin / TetherUS"));
+//        entries.add(new StockItem("BINANCE:ADAUSDT", "Cardano / TetherUS"));
+//        entries.add(new StockItem("BINANCE:DOTUSDT", "Polkadot / TetherUS"));
+//        entries.add(new StockItem("BINANCE:XRPUSDT", "XRP / TetherUS"));
         adapter = new StockListAdapter(entries);
     }
 
@@ -87,9 +87,10 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                 // ...
 
                 // If running server on local computer, change IP address to IP address of your computer
-//                String[] symbols = {"VNM","AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT", "BINANCE:BTCUSDT", "BINANCE:ETHUSDT"};
-                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
-                clientEndpoint = new ClientEndpoint(new URI("ws://146.190.83.69:8080?uuid=bhhoang"), symbols);
+//                String[] symbols = {"VNM","AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"};
+                String[] symbols = {"AAPL"};
+//                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
+                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), symbols);
                 clientEndpoint.addDataNotify(this);
                 clientEndpoint.connect();
             } catch (URISyntaxException e) {
@@ -112,7 +113,6 @@ public class StockMarketFragment extends Fragment implements DataNotify {
 
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
-
         //SIDEBAR
         drawerLayout = view.findViewById(R.id.drawerLayout);
         activityTitle = getResources().toString();
@@ -316,6 +316,7 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                     CustomCandleData candleData = data.get(entry.getSymbol());
                     if (candleData != null) {
                         entry.setMoney(String.valueOf(candleData.current_price));
+                        entry.insertChartData(candleData);
                         adapter.notifyItemChanged(entries.indexOf(entry));
                     }
                 }
