@@ -13,6 +13,7 @@ import java.util.*;
 public class ClientEndpoint extends WebSocketClient {
     private List<DataNotify> dataNotifies = new ArrayList<>();
     private HashMap<String, CustomCandleData> stocksData = new HashMap<>();
+    private long lastUpdate = 0L;
 
     public ClientEndpoint(URI serverUri, String[] symbols) {
         super(serverUri);
@@ -38,6 +39,7 @@ public class ClientEndpoint extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
+        // Close the connection
         System.out.println("Disconnected");
     }
 
@@ -56,14 +58,27 @@ public class ClientEndpoint extends WebSocketClient {
             //          ],"type":"trade"}
             JSONObject jsonObject = new JSONObject(message);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
+            HashMap<String, CustomCandleData> changeData = new HashMap<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject data = jsonArray.getJSONObject(i);
                 String symbol = data.getString("s");
-                CustomCandleData candleData = stocksData.get(symbol);
-                float current_price = (float) data.getDouble("p");
-                assert candleData != null;
-                candleData.current_price = current_price;
                 long timestamp = data.getLong("t");
+                if (timestamp - lastUpdate < 300) {
+                    // Skip to prevent main thread overload
+                    continue;
+                }
+                CustomCandleData candleData = stocksData.get(symbol);
+                assert candleData != null;
+
+                lastUpdate = timestamp;
+                float current_price = (float) data.getDouble("p");
+                current_price = (float) (Math.round(current_price * 100.0) / 100.0);
+                candleData.current_price = current_price;
+
+                if (current_price == candleData.close) {
+                    // Skip if the current price is the same as the close price (of the last update)
+                    continue;
+                }
 
                 if (timestamp - candleData.timestamp > 60000) {
                     // If the time difference is more than 1 minute, reset the values to current price
@@ -81,26 +96,28 @@ public class ClientEndpoint extends WebSocketClient {
                     }
                     candleData.close = current_price;   // Set current price as close price
                 }
-                // Print symbol, current price, open, close, high, low, start_time
-                System.out.println("Symbol: " + symbol);
-                System.out.println("Current price: " + current_price);
-                System.out.println("Open: " + candleData.open);
-                System.out.println("Close: " + candleData.close);
-                System.out.println("High: " + candleData.high);
-                System.out.println("Low: " + candleData.low);
 
-                // Convert timestamp to date
-                Date date = new Date(candleData.timestamp);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                System.out.println("Start time: " + sdf.format(date));
-                // Print local time
-                System.out.println("Local time: " + sdf.format(new Date()));
-                System.out.println("\n");
+                changeData.put(symbol, candleData);
+                // Print symbol, current price, open, close, high, low, start_time
+//                System.out.println("Symbol: " + symbol);
+//                System.out.println("Current price: " + current_price);
+//                System.out.println("Open: " + candleData.open);
+//                System.out.println("Close: " + candleData.close);
+//                System.out.println("High: " + candleData.high);
+//                System.out.println("Low: " + candleData.low);
+
+//                // Convert timestamp to date
+//                Date date = new Date(candleData.timestamp);
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                System.out.println("Start time: " + sdf.format(date));
+//                // Print local time
+//                System.out.println("Local time: " + sdf.format(new Date()));
+//                System.out.println("\n");
             }
 
             // Notify all DataNotify objects
             for (DataNotify dataNotify : dataNotifies) {
-                dataNotify.onNewData(stocksData);
+                dataNotify.onNewData(changeData);
             }
         }
         catch (JSONException e) {

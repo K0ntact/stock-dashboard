@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,9 +45,30 @@ public class StockMarketFragment extends Fragment implements DataNotify {
     private NavigationManager navigationManager;
 //    private SlideBarExpandableListAdapter adapter;
     private ClientEndpoint clientEndpoint;
-    private final ArrayList<StockItem> entries = new ArrayList<>();
-    private final StockListAdapter adapter = new StockListAdapter(entries);
+    private final ArrayList<StockItem> entries;
+    private final StockListAdapter adapter;
 
+
+    public StockMarketFragment() {
+        entries = new ArrayList<>();
+        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
+        entries.add(new StockItem("AAPL", "Apple Inc."));
+        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
+        entries.add(new StockItem("NKE", "NIKE, Inc."));
+        entries.add(new StockItem("TSLA", "Tesla, Inc."));
+        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
+        entries.add(new StockItem("META", "Meta Platforms, Inc."));
+        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
+        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
+        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
+        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
+        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
+        entries.add(new StockItem("V", "Visa Inc."));
+        entries.add(new StockItem("WMT", "Walmart Inc."));
+        entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS"));
+        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
+         adapter = new StockListAdapter(entries);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +83,8 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                 // ...
 
                 // If running server on local computer, change IP address to IP address of your computer
-                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080?uuid=bhhoang"), new String[]{"AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"});
+                String[] symbols = {"VNM","AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT", "BINANCE:BTCUSDT", "BINANCE:ETHUSDT"};
+                clientEndpoint = new ClientEndpoint(new URI("ws://146.190.83.69:8080?uuid=bhhoang"), symbols);
                 clientEndpoint.addDataNotify(this);
                 clientEndpoint.connect();
             } catch (URISyntaxException e) {
@@ -69,24 +92,6 @@ public class StockMarketFragment extends Fragment implements DataNotify {
             }
         });
         thread.start();
-
-//        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
-        entries.add(new StockItem("AAPL", "Apple Inc."));
-        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
-        entries.add(new StockItem("NKE", "NIKE, Inc."));
-        entries.add(new StockItem("TSLA", "Tesla, Inc."));
-        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
-        entries.add(new StockItem("META", "Meta Platforms, Inc."));
-        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
-        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
-        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
-        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
-        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
-        entries.add(new StockItem("V", "Visa Inc."));
-        entries.add(new StockItem("WMT", "Walmart Inc."));
-//        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
-
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -96,6 +101,11 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         View view = inflater.inflate(R.layout.fragment_stock_market, container, false);
         RecyclerView listView = view.findViewById(R.id.listView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        listView.setHasFixedSize(true);
+        listView.setItemViewCacheSize(20);
+//        listView.setDrawingCacheEnabled(true);
+//        listView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
 
@@ -149,13 +159,8 @@ public class StockMarketFragment extends Fragment implements DataNotify {
     }
     public void onDestroy() {
         super.onDestroy();
-        clientEndpoint.close();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        actionBarDrawerToggle.syncState();
+        System.out.println("On Destroy");
+        clientEndpoint.close(1000, "Close from client");
     }
 
     @Override
@@ -300,11 +305,9 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                 for (StockItem entry : entries) {
                     CustomCandleData candleData = data.get(entry.getSymbol());
                     if (candleData != null) {
-                        // Float to 2 decimal places
                         entry.setMoney(String.valueOf(candleData.current_price));
+                        adapter.notifyItemChanged(entries.indexOf(entry));
                     }
-                    adapter.notifyItemChanged(entries.indexOf(entry));
-                    System.out.println("Updated");
                 }
             }
         );
