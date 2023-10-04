@@ -62,14 +62,18 @@ public class ClientEndpoint extends WebSocketClient {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject data = jsonArray.getJSONObject(i);
                 String symbol = data.getString("s");
-                long timestamp = data.getLong("t");
-                if (timestamp - lastUpdate < 300) {
+
+                // Get current timestamp
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastUpdate < 100) {
                     // Skip to prevent main thread overload
                     continue;
                 }
+
                 CustomCandleData candleData = stocksData.get(symbol);
                 assert candleData != null;
 
+                long timestamp = data.getLong("t");
                 lastUpdate = timestamp;
                 float current_price = (float) data.getDouble("p");
                 current_price = (float) (Math.round(current_price * 100.0) / 100.0);

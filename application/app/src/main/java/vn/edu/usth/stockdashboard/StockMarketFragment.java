@@ -27,6 +27,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import vn.edu.usth.stockdashboard.HelperSideBar.FragmentNavigationManager;
 import vn.edu.usth.stockdashboard.InterfaceSideBar.NavigationManager;
 import vn.edu.usth.stockdashboard.utils.*;
@@ -50,22 +51,26 @@ public class StockMarketFragment extends Fragment implements DataNotify {
 
     public StockMarketFragment() {
         entries = new ArrayList<>();
-        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
-        entries.add(new StockItem("AAPL", "Apple Inc."));
-        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
-        entries.add(new StockItem("NKE", "NIKE, Inc."));
-        entries.add(new StockItem("TSLA", "Tesla, Inc."));
-        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
-        entries.add(new StockItem("META", "Meta Platforms, Inc."));
-        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
-        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
-        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
-        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
-        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
-        entries.add(new StockItem("V", "Visa Inc."));
-        entries.add(new StockItem("WMT", "Walmart Inc."));
+//        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
+//        entries.add(new StockItem("AAPL", "Apple Inc."));
+//        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
+//        entries.add(new StockItem("NKE", "NIKE, Inc."));
+//        entries.add(new StockItem("TSLA", "Tesla, Inc."));
+//        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
+//        entries.add(new StockItem("META", "Meta Platforms, Inc."));
+//        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
+//        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
+//        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
+//        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
+//        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
+//        entries.add(new StockItem("V", "Visa Inc."));
+//        entries.add(new StockItem("WMT", "Walmart Inc."));
         entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS"));
         entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
+        entries.add(new StockItem("BINANCE:BNBUSDT", "Binance Coin / TetherUS"));
+        entries.add(new StockItem("BINANCE:ADAUSDT", "Cardano / TetherUS"));
+        entries.add(new StockItem("BINANCE:DOTUSDT", "Polkadot / TetherUS"));
+        entries.add(new StockItem("BINANCE:XRPUSDT", "XRP / TetherUS"));
         adapter = new StockListAdapter(entries);
     }
 
@@ -82,7 +87,8 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                 // ...
 
                 // If running server on local computer, change IP address to IP address of your computer
-                String[] symbols = {"VNM","AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT", "BINANCE:BTCUSDT", "BINANCE:ETHUSDT"};
+//                String[] symbols = {"VNM","AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT", "BINANCE:BTCUSDT", "BINANCE:ETHUSDT"};
+                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
                 clientEndpoint = new ClientEndpoint(new URI("ws://146.190.83.69:8080?uuid=bhhoang"), symbols);
                 clientEndpoint.addDataNotify(this);
                 clientEndpoint.connect();
@@ -102,8 +108,7 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         listView.setHasFixedSize(true);
         listView.setItemViewCacheSize(20);
-//        listView.setDrawingCacheEnabled(true);
-//        listView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        ((SimpleItemAnimator) Objects.requireNonNull(listView.getItemAnimator())).setSupportsChangeAnimations(false);
 
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
