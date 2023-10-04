@@ -11,83 +11,114 @@ import { Client } from "https://deno.land/x/mysql@v2.12.1/mod.ts";
  * @returns A promise that resolves to a connected and initialized MySQL client.
  */
 export class DataBase extends Object implements DataBase {
-  private dbName : string;
-  private schemaPath : string;
-  private hostname : string;
-  private username : string;
-  private password : string;
-  private client : Client;
+    private dbName: string;
+    private schemaPath: string;
+    private hostname: string;
+    private username: string;
+    private password: string;
+    private client: Client;
 
-  constructor(dbName : string, schemaPath : string, hostname : string, username : string, password : string) {
-  super();
-    this.dbName = dbName;
-    this.schemaPath = schemaPath;
-    this.hostname = hostname;
-    this.username = username;
-    this.password = password;
-    this.client = new Client();
-  }
-
-  async init() {
-    await this.client.connect({
-      hostname: this.hostname,
-      username: this.username,
-      password: this.password,
-    });
-    await this.client.execute(`CREATE DATABASE IF NOT EXISTS ${this.dbName}`);
-    await this.client.execute(`USE ${this.dbName}`);
-    const queries: string[] = [];
-    const decoder = new TextDecoder("utf-8");
-    for (const file of Deno.readDirSync(this.schemaPath)) {
-      if (file.isFile && file.name.endsWith(".sql")) {
-        const data = Deno.readFileSync(`${this.schemaPath}/${file.name}`);
-        queries.push(decoder.decode(data));
-      }
+    constructor(
+        dbName: string,
+        schemaPath: string,
+        hostname: string,
+        username: string,
+        password: string
+    ) {
+        super();
+        this.dbName = dbName;
+        this.schemaPath = schemaPath;
+        this.hostname = hostname;
+        this.username = username;
+        this.password = password;
+        this.client = new Client();
     }
-    for (const query of queries) {
-      await this.client.execute(query);
+
+    async init() {
+        try {
+            await this.client.connect({
+                hostname: this.hostname,
+                username: this.username,
+                password: this.password,
+            });
+            await this.client.execute(
+                `CREATE DATABASE IF NOT EXISTS ${this.dbName}`
+            );
+            this.client.close();
+            await this.client.connect({
+                hostname: this.hostname,
+                username: this.username,
+                password: this.password,
+                db: this.dbName,
+            });
+            const queries: string[] = [];
+            const decoder = new TextDecoder("utf-8");
+            for (const file of Deno.readDirSync(this.schemaPath)) {
+                if (file.isFile && file.name.endsWith(".sql")) {
+                    const data = Deno.readFileSync(
+                        `${this.schemaPath}/${file.name}`
+                    );
+                    queries.push(decoder.decode(data));
+                }
+            }
+            const failedQueries: string[] = [];
+            for (const query of queries) {
+                try {
+                    await this.client.execute(query);
+                } catch (_error) {
+                    failedQueries.push(query);
+                }
+            }
+            while (failedQueries.length > 0) {
+                const query = failedQueries.shift();
+                try {
+                    await this.client.execute(query!);
+                } catch (_error) {
+                    failedQueries.push(query!);
+                }
+            }
+        } catch (_error) {
+            console.log("Error initializing database");
+        }
     }
-  }
 
-  getClient() {
-    return this.client;
-  }
-
-  async close() {
-    await this.client.close();
-  }
-
-  async query(sql : string): Promise<boolean> {
-    return await this.client.query(sql);
-  }
-
-  async execute(sql : string): Promise<boolean> {
-    try{
-      await this.client.execute(sql);
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
+    getClient() {
+        return this.client;
     }
-  }
-  public get db_name() : string {
-    return this.dbName;
-  }
 
-  public get schema_path() : string {
-    return this.schemaPath;
-  }
+    async close() {
+        await this.client.close();
+    }
 
-  public get host() : string {
-    return this.hostname;
-  }
+    async query(sql: string): Promise<boolean> {
+        return await this.client.query(sql);
+    }
 
-  public get user() : string {
-    return this.username;
-  }
+    async execute(sql: string): Promise<boolean> {
+        try {
+            await this.client.execute(sql);
+            return true;
+        } catch (_error) {
+            return false;
+        }
+    }
+    public get db_name(): string {
+        return this.dbName;
+    }
 
-  public get pass() : string {
-    return this.password;
-  }
-  
+    public get schema_path(): string {
+        return this.schemaPath;
+    }
+
+    public get host(): string {
+        return this.hostname;
+    }
+
+    public get user(): string {
+        return this.username;
+    }
+
+    public get pass(): string {
+        return this.password;
+    }
 }

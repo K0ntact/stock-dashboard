@@ -55,7 +55,6 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
         private final TextView percentageTextView;
         private final LineChart lineChart;
         private final TextView moneyTextView;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
