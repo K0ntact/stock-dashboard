@@ -31,7 +31,11 @@ if (import.meta.main) {
     });
 
     router.get("/trade", (context) => {
-        tradeEventHandler(context);
+        try {
+            tradeEventHandler(context);
+        } catch (error) {
+            console.log(error);
+        }
     });
 
     app.use(router.routes());
