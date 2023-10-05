@@ -81,9 +81,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left|start">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingTop="20dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/toolbar"
+            android:gravity="start"
+            android:id="@+id/navSideBarHeader">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pngaaa_1"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginStart="5dp"
+                android:paddingStart="10dp"
+                android:id="@+id/backButtonSideBar"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Watchlist"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/navSideBarHeader"
+        android:layout_above="@id/FooterViewSideBar"
         android:id="@+id/navList"
         android:background="@color/toolbar"
         android:divider="@color/grey"
@@ -98,6 +128,7 @@
             android:background="@color/grey"
             android:layout_gravity="bottom"
             android:layout_marginBottom="50dp"
+            android:layout_below="@+id/navList"
             android:alpha="0.5"/>
 
         <LinearLayout
@@ -106,6 +137,8 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/FooterViewSideBar"
             android:divider="@color/grey"
             android:showDividers="middle"
             android:background="@color/toolbar">
@@ -152,6 +185,7 @@
                     android:textColor="@color/grey"/>
             </LinearLayout>
         </LinearLayout>
+        </RelativeLayout>
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

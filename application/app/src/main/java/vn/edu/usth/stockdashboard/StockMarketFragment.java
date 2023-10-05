@@ -107,18 +107,14 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         expandableListView = view.findViewById(R.id.navList);
         navigationManager = FragmentNavigationManager.getmInstance(this);
         initItems();
-        //Header for sidebar
-        View listHeaderView = getLayoutInflater().inflate(R.layout.slidebar_nav_header,null,false);
-        //back button in header
-        listHeaderView.setOnClickListener(new View.OnClickListener() {
+        //back button for Side Bar
+        ImageView backButton = view.findViewById(R.id.backButtonSideBar);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (drawerLayout != null){
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                }
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
-        expandableListView.addHeaderView(listHeaderView);
         genData();
         addDrawerItems();
         setUpDrawer();
