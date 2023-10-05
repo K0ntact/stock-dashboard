@@ -7,8 +7,3 @@ socket.addEventListener('open', function (_event) {
 socket.addEventListener('message', function (event) {
    console.log(event.data);
 })
-
-Deno.addSignalListener("SIGINT", () => {
-    socket.close(1000, "Closing from client side");
-    Deno.exit();
-});

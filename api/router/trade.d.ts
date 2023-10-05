@@ -10,3 +10,10 @@ export type Message = {
     data : string;
     type?: string
 }
+
+type Client = {
+    [key: string]: {
+        webSocket: WebSocket;
+        symbol: string[];
+    };
+};
