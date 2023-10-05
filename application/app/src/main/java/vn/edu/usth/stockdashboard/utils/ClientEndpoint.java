@@ -39,12 +39,12 @@ public class ClientEndpoint extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         // Close the connection
-        System.out.println("Disconnected");
+        System.out.println("Disconnected. Code: " + code + ", reason: " + reason);
     }
 
     @Override
     public void onError(Exception ex) {
-        System.out.println("Error: " + ex.getMessage());
+        System.err.println("Error: " + ex.getMessage());
     }
 
     public void extractData(String message) {
@@ -62,16 +62,12 @@ public class ClientEndpoint extends WebSocketClient {
                 JSONObject data = jsonArray.getJSONObject(i);
                 String symbol = data.getString("s");
 
-                // Get current timestamp
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - lastUpdate < 50) {
-                    // Skip to prevent main thread overload
-                    continue;
-                }
+                if (currentTime - lastUpdate < 50) continue;
                 lastUpdate = currentTime;
 
                 CustomCandleData candleData = stocksData.get(symbol);
-                assert candleData != null;
+                if (candleData == null) continue;
 
                 long timestamp = data.getLong("t");
                 float current_price = (float) data.getDouble("p");
@@ -83,7 +79,7 @@ public class ClientEndpoint extends WebSocketClient {
                     continue;
                 }
 
-                if (timestamp - candleData.timestamp > 60000) {
+                if (timestamp - candleData.timestamp > 1000) {
                     // If the time difference is more than 1 minute, reset the values to current price
                     candleData.open = current_price;
                     candleData.close = current_price;
@@ -100,14 +96,22 @@ public class ClientEndpoint extends WebSocketClient {
                     candleData.close = current_price;   // Set current price as close price
                 }
 
-                changeData.put(symbol, candleData);
+                // Create new separate object to avoid reference
+                CustomCandleData newCandleData = new CustomCandleData();
+                newCandleData.open = candleData.open;
+                newCandleData.close = candleData.close;
+                newCandleData.high = candleData.high;
+                newCandleData.low = candleData.low;
+                newCandleData.timestamp = candleData.timestamp;
+                newCandleData.current_price = candleData.current_price;
+                changeData.put(symbol, newCandleData);
                 // Print symbol, current price, open, close, high, low, start_time
-                System.out.println("Symbol: " + symbol);
-                System.out.println("Current price: " + current_price);
-                System.out.println("Open: " + candleData.open);
-                System.out.println("Close: " + candleData.close);
-                System.out.println("High: " + candleData.high);
-                System.out.println("Low: " + candleData.low);
+//                System.out.println("Symbol: " + symbol);
+//                System.out.println("Current price: " + current_price);
+//                System.out.println("Open: " + candleData.open);
+//                System.out.println("Close: " + candleData.close);
+//                System.out.println("High: " + candleData.high);
+//                System.out.println("Low: " + candleData.low);
 
 //                // Convert timestamp to date
 //                Date date = new Date(candleData.timestamp);

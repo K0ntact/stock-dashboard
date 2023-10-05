@@ -89,14 +89,14 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
             Resources r = context.getResources();
 
             ArrayList<CustomCandleData> candleData = item.getChartData();
-            System.out.println(candleData);
             if (candleData.isEmpty()) {
                 System.out.println("No candle data");
                 return;
             }
             ArrayList<Entry> entries = new ArrayList<>();
             for (CustomCandleData data : candleData) {
-                entries.add(toEntry(data));
+                int position = candleData.indexOf(data);
+                entries.add(new Entry(position, data.current_price));
             }
 //
             LineDataSet dataSet = new LineDataSet(entries, "Random Data");
@@ -158,10 +158,6 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
                 intent.putExtra("percentage", percentageTextView.getText().toString());
                 itemView.getContext().startActivity(intent);
             });
-        }
-
-        public Entry toEntry(CustomCandleData data) {
-            return new Entry(data.timestamp, data.current_price);
         }
     }
 }

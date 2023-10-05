@@ -23,8 +23,20 @@ public class StockItem {
     }
 
     public void insertChartData(CustomCandleData data) {
-        chartData.add(data);
-    }
+        if (chartData.size() > 20) {
+            chartData.remove(0);
+        }
+
+        // If the data is newer than the last data, add it to the list
+        if (chartData.isEmpty() || chartData.get(chartData.size() - 1).timestamp < data.timestamp) {
+            chartData.add(data);
+            System.out.println("Added new data");
+        }
+//      If the data has the same timestamp as the last data, replace it
+        else if (chartData.get(chartData.size() - 1).timestamp == data.timestamp) {
+            chartData.set(chartData.size() - 1, data);
+        }
+}
 
     public StockItem(String symbol, String name) {
         this.symbol = symbol;
