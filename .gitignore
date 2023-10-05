@@ -31,3 +31,4 @@ google-services.json
 *.hprof
 
 application/build/
+api/deno.lock

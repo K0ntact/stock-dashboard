@@ -1,17 +1,14 @@
 package vn.edu.usth.stockdashboard.utils;
 
-import com.github.mikephil.charting.data.Entry;
-
 import java.util.ArrayList;
-import java.util.Random;
 
 public class StockItem {
     private String symbol;
     private String name;
     private String money;
     private String percentage;
-    private ArrayList<Entry> randomData;
-    private float previousValue;
+    private ArrayList<CustomCandleData> chartData;
+    private float closePrice = 10f;
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
@@ -21,29 +18,39 @@ public class StockItem {
         this.money = money;
     }
 
-    public ArrayList<Entry> getRandomData() {
-        return randomData;
+    public ArrayList<CustomCandleData> getChartData() {
+        return chartData;
     }
 
-    public void generateRandomData(int numberOfDataPoints){
-        randomData = new ArrayList<>();
-        Random random = new Random();
-        for(int i = 0; i < numberOfDataPoints; i++){
-            float y = random.nextFloat() * 100;
-            randomData.add(new Entry((float) i,y));
+    public void insertChartData(CustomCandleData data) {
+        if (chartData.size() > 20) {
+            chartData.remove(0);
         }
-    }
+
+        // If the data is newer than the last data, add it to the list
+        if (chartData.isEmpty() || chartData.get(chartData.size() - 1).timestamp < data.timestamp) {
+            chartData.add(data);
+            System.out.println("Added new data");
+        }
+//      If the data has the same timestamp as the last data, replace it
+        else if (chartData.get(chartData.size() - 1).timestamp == data.timestamp) {
+            chartData.set(chartData.size() - 1, data);
+        }
+}
+
     public StockItem(String symbol, String name) {
         this.symbol = symbol;
         this.name = name;
         this.money = "0";
         this.percentage = "0%";
+        this.chartData = new ArrayList<>();
     }
     public StockItem(String symbol, String name, String money, String percentage) {
         this.symbol = symbol;
         this.name = name;
         this.money = money;
         this.percentage = percentage;
+        this.chartData = new ArrayList<>();
     }
 
     public String getSymbol() {
@@ -62,12 +69,11 @@ public class StockItem {
         return percentage;
     }
 
-    public float getPreviousValue() {
-        return previousValue;
+    public float getClosePrice() {
+        return closePrice;
     }
 
-    public void setPreviousValue(float previousValue) {
-        this.previousValue = previousValue;
+    public void setClosePrice(float closePrice) {
+        this.closePrice = closePrice;
     }
-
 }

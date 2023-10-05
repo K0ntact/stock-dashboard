@@ -27,6 +27,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import vn.edu.usth.stockdashboard.HelperSideBar.FragmentNavigationManager;
 import vn.edu.usth.stockdashboard.InterfaceSideBar.NavigationManager;
 import vn.edu.usth.stockdashboard.utils.*;
@@ -44,13 +45,13 @@ public class StockMarketFragment extends Fragment implements DataNotify {
     private NavigationManager navigationManager;
 //    private SlideBarExpandableListAdapter adapter;
     private ClientEndpoint clientEndpoint;
-    private final ArrayList<StockItem> entries = new ArrayList<>();
-    private final StockListAdapter adapter = new StockListAdapter(entries);
+    private final ArrayList<StockItem> entries;
+    private final StockListAdapter adapter;
+
 
     public StockMarketFragment() {
-        // Required empty public constructor
-
-//        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
+        entries = new ArrayList<>();
+        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
         entries.add(new StockItem("AAPL", "Apple Inc."));
         entries.add(new StockItem("SBUX", "Starbucks Corporation"));
         entries.add(new StockItem("NKE", "NIKE, Inc."));
@@ -64,10 +65,15 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
         entries.add(new StockItem("V", "Visa Inc."));
         entries.add(new StockItem("WMT", "Walmart Inc."));
+//        entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS"));
 //        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
-
-        adapter.notifyDataSetChanged();
+//        entries.add(new StockItem("BINANCE:BNBUSDT", "Binance Coin / TetherUS"));
+//        entries.add(new StockItem("BINANCE:ADAUSDT", "Cardano / TetherUS"));
+//        entries.add(new StockItem("BINANCE:DOTUSDT", "Polkadot / TetherUS"));
+//        entries.add(new StockItem("BINANCE:XRPUSDT", "XRP / TetherUS"));
+        adapter = new StockListAdapter(entries);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +87,10 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                 // ...
 
                 // If running server on local computer, change IP address to IP address of your computer
-                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080?uuid=bhhoang"), new String[]{"AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"});
+//                String[] symbols = {"VNM","AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"};
+                String[] symbols = {"AAPL"};
+//                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
+                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), symbols);
                 clientEndpoint.addDataNotify(this);
                 clientEndpoint.connect();
             } catch (URISyntaxException e) {
@@ -98,9 +107,12 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         View view = inflater.inflate(R.layout.fragment_stock_market, container, false);
         RecyclerView listView = view.findViewById(R.id.listView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        listView.setHasFixedSize(true);
+        listView.setItemViewCacheSize(20);
+        ((SimpleItemAnimator) Objects.requireNonNull(listView.getItemAnimator())).setSupportsChangeAnimations(false);
+
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
-
         //SIDEBAR
         drawerLayout = view.findViewById(R.id.drawerLayout);
         activityTitle = getResources().toString();
@@ -151,7 +163,8 @@ public class StockMarketFragment extends Fragment implements DataNotify {
     }
     public void onDestroy() {
         super.onDestroy();
-        clientEndpoint.close();
+        System.out.println("On Destroy");
+        clientEndpoint.close(1000, "Close from client");
     }
 
     @Override
@@ -302,11 +315,10 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                 for (StockItem entry : entries) {
                     CustomCandleData candleData = data.get(entry.getSymbol());
                     if (candleData != null) {
-                        // Float to 2 decimal places
                         entry.setMoney(String.valueOf(candleData.current_price));
+                        entry.insertChartData(candleData);
+                        adapter.notifyItemChanged(entries.indexOf(entry));
                     }
-                    adapter.notifyItemChanged(entries.indexOf(entry));
-                    System.out.println("Updated");
                 }
             }
         );

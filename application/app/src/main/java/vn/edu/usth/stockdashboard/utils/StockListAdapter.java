@@ -27,6 +27,7 @@ import vn.edu.usth.stockdashboard.DetailStock.StockDetailActivity;
 public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.ViewHolder> {
     private ArrayList<StockItem> stockList;
 
+
     public StockListAdapter(ArrayList<StockItem> stockList){
         this.stockList = stockList;
     }
@@ -41,7 +42,6 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindData(stockList.get(position));
-        holder.onClick();
     }
 
     @Override
@@ -55,14 +55,32 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
         private final TextView percentageTextView;
         private final LineChart lineChart;
         private final TextView moneyTextView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             symbolTextView = itemView.findViewById(R.id.symbolTextView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
-            lineChart = itemView.findViewById(R.id.lineChart);
             moneyTextView = itemView.findViewById(R.id.moneyTextView);
             percentageTextView = itemView.findViewById(R.id.percentage);
+
+            lineChart = itemView.findViewById(R.id.lineChart);
+            lineChart.getDescription().setEnabled(false);   // Disable description label
+            lineChart.getLegend().setEnabled(false);        // Disable legend
+            lineChart.setDrawGridBackground(false);
+            XAxis xAxis = lineChart.getXAxis();             // Disable X-axis
+            xAxis.setEnabled(false);
+            YAxis leftYAxis = lineChart.getAxisLeft();      // Disable Y-axis (left)
+            leftYAxis.setEnabled(false);
+            YAxis rightYAxis = lineChart.getAxisRight();    // Disable Y-axis (right)
+            rightYAxis.setEnabled(false);
+            lineChart.setTouchEnabled(false);               // Disable all user interaction
+            lineChart.setDragEnabled(false);
+            lineChart.setScaleEnabled(false);
+            lineChart.setPinchZoom(false);
+            lineChart.setDoubleTapToZoomEnabled(false);
+            lineChart.setHighlightPerDragEnabled(false);
+            lineChart.setHighlightPerTapEnabled(false);
             onClick();
         }
 
@@ -70,32 +88,35 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
             Context context = itemView.getContext();
             Resources r = context.getResources();
 
-            // Generate random data if not available
-            if (item.getRandomData() == null) {
-                item.generateRandomData(20); // Consider replacing 20 with a constant or a value from resources
+            ArrayList<CustomCandleData> candleData = item.getChartData();
+            if (candleData.isEmpty()) {
+                System.out.println("No candle data");
+                return;
             }
-
-            ArrayList<Entry> randomData = item.getRandomData();
-            LineDataSet dataSet = new LineDataSet(randomData, "Random Data");
+            ArrayList<Entry> entries = new ArrayList<>();
+            for (CustomCandleData data : candleData) {
+                int position = candleData.indexOf(data);
+                entries.add(new Entry(position, data.current_price));
+            }
+//
+            LineDataSet dataSet = new LineDataSet(entries, "Random Data");
             dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // Smooth line
             dataSet.setDrawFilled(true);
-
+//
             int graphColor;
-            float lastValue = randomData.get(randomData.size() - 1).getY();
-            float secondLastValue = randomData.get(randomData.size() - 2).getY();
-            float percentageChange = ((lastValue - secondLastValue) / secondLastValue * 100);
+            float currentPrice = candleData.get(candleData.size() - 1).current_price;
+            float closePrice = item.getClosePrice();
+            float percentageChange = (currentPrice - closePrice) / closePrice * 100;
 
-            // Update the previousValue field in the StockItem
-            item.setPreviousValue(secondLastValue);
-
-            // Set the percentage text with a plus or minus sign
+//             Set the percentage text with a plus or minus sign
             String percentageText;
             if (percentageChange > 0){
                 percentageText = "+" + String.format("%.2f%%", percentageChange);
                 graphColor = r.getColor(R.color.positive, null);
                 percentageTextView.setBackgroundResource(R.drawable.rounded_box_green);
                 dataSet.setFillDrawable(ContextCompat.getDrawable(context, R.drawable.line_chart_gradient_positive));
-            } else if (percentageChange < 0) {
+            }
+            else if (percentageChange < 0) {
                 percentageText = String.format("%.2f%%", percentageChange);
                 graphColor = r.getColor(R.color.negative, null);
                 percentageTextView.setBackgroundResource(R.drawable.round_box_red);
@@ -115,28 +136,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
             // Create a LineData object and set the dataSet
             LineData lineData = new LineData(dataSet);
             lineChart.setData(lineData);
-            lineChart.getDescription().setEnabled(false); // Disable description label
-            lineChart.getLegend().setEnabled(false); // Disable legend
-            lineChart.setDrawGridBackground(false);
             dataSet.setDrawValues(false);
-
-            // Disable X-axis
-            XAxis xAxis = lineChart.getXAxis();
-            xAxis.setEnabled(false);
-            // Disable Y-axis (left)
-            YAxis leftYAxis = lineChart.getAxisLeft();
-            leftYAxis.setEnabled(false);
-            // Disable Y-axis (right)
-            YAxis rightYAxis = lineChart.getAxisRight();
-            rightYAxis.setEnabled(false);
-            // Disable all user interaction
-            lineChart.setTouchEnabled(false);
-            lineChart.setDragEnabled(false);
-            lineChart.setScaleEnabled(false);
-            lineChart.setPinchZoom(false);
-            lineChart.setDoubleTapToZoomEnabled(false);
-            lineChart.setHighlightPerDragEnabled(false);
-            lineChart.setHighlightPerTapEnabled(false);
 
             // Invalidate the chart to refresh it
             lineChart.invalidate();
