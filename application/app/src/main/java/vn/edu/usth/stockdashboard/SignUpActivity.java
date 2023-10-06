@@ -15,7 +15,7 @@ public class SignUpActivity extends AppCompatActivity {
         Button signUp = findViewById(R.id.buttonSignUp);
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-            intent.putExtra("isLogin", true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
     }

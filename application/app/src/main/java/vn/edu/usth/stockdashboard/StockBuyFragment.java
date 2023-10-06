@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class StockBuyFragment extends Fragment {
         Button buybtn = view.findViewById(R.id.buybtn);
         Button sellbtn = view.findViewById(R.id.sellbtn);
         Button placeorderbtn = view.findViewById(R.id.placeorder);
+        Button searchBtn = view.findViewById(R.id.searchbox);
         buybtn.setOnClickListener(v -> {
             // Get background tint color
             int color = Objects.requireNonNull(buybtn.getBackgroundTintList()).getDefaultColor();
@@ -95,6 +97,14 @@ public class StockBuyFragment extends Fragment {
             });
 
             cancel.setOnClickListener(v12 -> d.dismiss());
+        });
+
+        searchBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(StockBuyFragment.this.requireContext(), SearchActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("buyStock", true);
+            intent.putExtra("isLogin", isLogin);
+            startActivity(intent);
         });
         return view;
     }
