@@ -25,10 +25,15 @@ if (import.meta.main) {
         console.log("Register");
         const body = context.request.body();
         const value = await body.value;
-        const { firstname, lastname, username, password } = value;
-        const netassest = 20000;
+        console.log(value);
+        
+        const { firstname, lastname, username, password, netassest } = value;
+        console.log(firstname, lastname, username, password, netassest);
+    
         // const pwdhash = hash(password);
-        const query = `INSERT INTO users (firstname, lastname, username, pwdhash, netassest) VALUES ('${firstname}, ${lastname}, ${username}', '${password}, ${netassest}')`;
+        const query = `INSERT INTO users (firstname, lastname, username, pwdhash, netassest) VALUES ('${firstname}', '${lastname}', '${username}', '${password}', '${netassest}')`;
+        console.log(query);
+        
         const result = await db.query(query);
         if (result) {
             context.response.body = "OK";
@@ -44,12 +49,12 @@ if (import.meta.main) {
         const { username, password } = value;
         // const pwdhash = hash(password);
         const query = `SELECT * FROM users WHERE username='${username}' AND pwdhash='${password}'`;
-        const result = await db.query(query);
-        if (result) {
-            context.response.body = "OK";
+        const result = await db.execute(query);
+        if (result != null) {
+            context.response.body = result;
         }
         else {
-            context.response.body = "FAIL";
+            context.response.body = null;
         }
     });
 
