@@ -1,4 +1,4 @@
-import { Client } from "https://deno.land/x/mysql@v2.12.1/mod.ts";
+import { Client, ExecuteResult } from "https://deno.land/x/mysql@v2.12.1/mod.ts";
 
 /**
  * Initialize the database by creating a client, connecting to the server,
@@ -32,6 +32,20 @@ export class DataBase extends Object implements DataBase {
         this.username = username;
         this.password = password;
         this.client = new Client();
+    }
+
+    async connect() {
+        try {
+            await this.client.connect({
+                hostname: this.hostname,
+                username: this.username,
+                password: this.password,
+                db: this.dbName,
+            });
+            console.log("Connected to database");
+        } catch (_error) {
+            console.log("Error connecting to database");
+        }
     }
 
     async init() {
@@ -94,13 +108,8 @@ export class DataBase extends Object implements DataBase {
         return await this.client.query(sql);
     }
 
-    async execute(sql: string): Promise<boolean> {
-        try {
-            await this.client.execute(sql);
-            return true;
-        } catch (_error) {
-            return false;
-        }
+    async execute(sql: string): Promise<ExecuteResult> {
+        return await this.client.execute(sql);
     }
     public get db_name(): string {
         return this.dbName;
