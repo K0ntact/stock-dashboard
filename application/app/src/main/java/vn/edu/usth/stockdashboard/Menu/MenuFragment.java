@@ -32,9 +32,17 @@ public class MenuFragment extends Fragment {
 
         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuBeforeLoginFragment()).commit();
         if (isLogin) {
-                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.menuFragmentContainer, new MenuAfterLoginFragment());
-                requireActivity().getSupportFragmentManager().popBackStack();
+            String userdata = savedInstanceState.getString("userdata");
+
+            MenuAfterLoginFragment menuAfterLoginFragment = new MenuAfterLoginFragment();
+            if (userdata != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("userdata", userdata);
+                menuAfterLoginFragment.setArguments(bundle);
+            }
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.menuFragmentContainer, menuAfterLoginFragment);
+            requireActivity().getSupportFragmentManager().popBackStack();
             transaction.commit();
         }
 

@@ -17,6 +17,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import vn.edu.usth.stockdashboard.R;
 import vn.edu.usth.stockdashboard.utils.*;
 
@@ -64,6 +67,27 @@ public class MenuAfterLoginFragment extends Fragment implements WSDataNotify {
                              Bundle savedInstanceState) {
         // Add more data points as needed
         View view = inflater.inflate(R.layout.fragment_menu_after_login, container, false);
+
+        if (getArguments() != null) {
+            String userdata = getArguments().getString("userdata");
+            if (userdata != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(userdata);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    String firstname = jsonObject.getString("firstname");
+                    String lastname = jsonObject.getString("lastname");
+                    String fullname = firstname + " " + lastname;
+                    String netassest = jsonObject.getString("netassest");
+                    TextView usernameView = view.findViewById(R.id.userNameHeaderMenu);
+                    usernameView.setText(fullname);
+                    TextView netassestView = view.findViewById(R.id.netAssetValue);
+                    netassestView.setText(netassest + "$");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
         RecyclerView listView = view.findViewById(R.id.listMenuView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         listView.setLayoutManager(layoutManager);

@@ -55,6 +55,7 @@ public class LogInActivity extends AppCompatActivity implements RestDataNotify {
                 Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LogInActivity.this, MainActivity.class);
                 intent.putExtra("isLogin", true);
+                intent.putExtra("userdata", response);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }

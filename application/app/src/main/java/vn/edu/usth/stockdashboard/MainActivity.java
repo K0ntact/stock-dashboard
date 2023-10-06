@@ -13,14 +13,12 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Objects;
 
 import vn.edu.usth.stockdashboard.Menu.MenuBeforeLoginFragment;
 import vn.edu.usth.stockdashboard.Menu.MenuFragment;
-import vn.edu.usth.stockdashboard.utils.ClientEndpoint;
 
 public class MainActivity extends AppCompatActivity{
     private BottomNavigationView bottomNavigationView;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity{
     private boolean doubleBackToExitPressedOnce;
     private final HashMap<String, Fragment> fragmentHashMap;
 
-    public MainActivity() throws URISyntaxException {
+    public MainActivity() {
         isLogin = false;
         doubleBackToExitPressedOnce = false;
         fragmentHashMap = new HashMap<>();
@@ -40,8 +38,13 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (getIntent().getExtras() != null)
+        String userdata = null;
+
+        if (getIntent().getExtras() != null) {
             isLogin = getIntent().getExtras().getBoolean("isLogin");
+            if (getIntent().getExtras().getString("userdata") != null)
+                userdata = getIntent().getExtras().getString("userdata");
+        }
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity{
         Fragment menuFragment = new MenuFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean("isLogin", isLogin);
+        bundle.putString("userdata", userdata);
         menuFragment.setArguments(bundle);
         fragmentHashMap.put("menuLogin", menuFragment);
 
