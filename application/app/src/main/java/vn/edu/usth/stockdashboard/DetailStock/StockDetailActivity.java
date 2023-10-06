@@ -11,18 +11,20 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import vn.edu.usth.stockdashboard.R;
-import vn.edu.usth.stockdashboard.utils.ClientEndpoint;
+import vn.edu.usth.stockdashboard.utils.WSEndpoint;
 import vn.edu.usth.stockdashboard.utils.CustomCandleData;
-import vn.edu.usth.stockdashboard.utils.DataNotify;
+import vn.edu.usth.stockdashboard.utils.WSDataNotify;
+import vn.edu.usth.stockdashboard.utils.DbQuery;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
-public class StockDetailActivity extends AppCompatActivity implements DataNotify {
+public class StockDetailActivity extends AppCompatActivity implements WSDataNotify {
     private String stockName;
     private TextView moneyView;
-    private ClientEndpoint clientEndpoint;
+    private WSEndpoint wsEndpoint;
     private Thread thread;
 
     @Override
@@ -32,9 +34,6 @@ public class StockDetailActivity extends AppCompatActivity implements DataNotify
 
         Intent intent = getIntent();
         stockName = intent.getStringExtra("stockName");
-        String companyName = intent.getStringExtra("companyName");
-        String money = intent.getStringExtra("money");
-        String percentage = intent.getStringExtra("percentage");
 
         thread = new Thread(() -> {
             try {
@@ -43,6 +42,12 @@ public class StockDetailActivity extends AppCompatActivity implements DataNotify
                 clientEndpoint.connect();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
+//                WSEndpoint = new WSEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), new String[]{stockName});
+                wsEndpoint = new WSEndpoint(new URI("ws://192.168.1.155:8080/trade?uuid=bhhoang"), new String[]{stockName});
+                wsEndpoint.addDataNotify(this);
+                wsEndpoint.connect();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
         thread.start();
@@ -51,22 +56,11 @@ public class StockDetailActivity extends AppCompatActivity implements DataNotify
             TextView stockNameView = findViewById(R.id.stockName);
             stockNameView.setText(stockName);
         }
-        if (companyName != null) {
-            TextView companyNameView = findViewById(R.id.compName);
-            companyNameView.setText(companyName);
-        }
-        if (money != null) {
-            moneyView = findViewById(R.id.stockPrice);
-            moneyView.setText(money);
-        }
-        if (percentage != null) {
-            TextView percentageView = findViewById(R.id.changPercent);
-            percentageView.setText(percentage);
-        }
 
         ViewPager2 viewPager = findViewById(R.id.viewPager2);
         viewPager.setUserInputEnabled(false);
         ChartAdapter chartAdapter = new ChartAdapter(this);
+        chartAdapter.setSymbol(stockName);
         viewPager.setAdapter(chartAdapter);
 
         TabLayout dateRange = findViewById(R.id.tabLayout);
@@ -111,7 +105,7 @@ public class StockDetailActivity extends AppCompatActivity implements DataNotify
     @Override
     public void onDestroy() {
         super.onDestroy();
-        clientEndpoint.close();
+        wsEndpoint.close(1000, "Close from client");
         thread.interrupt();
     }
 
@@ -119,7 +113,9 @@ public class StockDetailActivity extends AppCompatActivity implements DataNotify
     public void onNewData(HashMap<String, CustomCandleData> data) {
         runOnUiThread(() -> {
             CustomCandleData candleData = data.get(stockName);
-            if (candleData != null) moneyView.setText(String.valueOf(candleData.current_price));
+            if (candleData == null) return;
+            moneyView.setText(String.valueOf(candleData.current_price));
+
         });
     }
 }

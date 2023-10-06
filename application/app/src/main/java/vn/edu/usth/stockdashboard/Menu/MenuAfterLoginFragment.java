@@ -20,11 +20,11 @@ import java.util.HashMap;
 import vn.edu.usth.stockdashboard.R;
 import vn.edu.usth.stockdashboard.utils.*;
 
-public class MenuAfterLoginFragment extends Fragment implements DataNotify {
+public class MenuAfterLoginFragment extends Fragment implements WSDataNotify {
     private boolean isUserIdVisible = false;
     private final String userID = "1A537GH6";
 
-    private ClientEndpoint clientEndpoint;
+    private WSEndpoint wsEndpoint;
     private final ArrayList<StockItem> entries;
     private final StockListAdapter adapter;
 
@@ -47,11 +47,11 @@ public class MenuAfterLoginFragment extends Fragment implements DataNotify {
                 String[] symbols = {"AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"};
 //                String[] symbols = {"BINANCE:BTCUSDT"};
 //                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
-//                clientEndpoint = new ClientEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), symbols);
-                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), symbols);
-                clientEndpoint.setInterval(3000);
-                clientEndpoint.addDataNotify(this);
-                clientEndpoint.connect();
+//                WSEndpoint = new WSEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), symbols);
+                wsEndpoint = new WSEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), symbols);
+                wsEndpoint.setInterval(3000);
+                wsEndpoint.addDataNotify(this);
+                wsEndpoint.connect();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -92,7 +92,7 @@ public class MenuAfterLoginFragment extends Fragment implements DataNotify {
     public void onDestroy() {
         super.onDestroy();
         System.out.println("On Destroy");
-        clientEndpoint.close(1000, "Close from client");
+        wsEndpoint.close(1000, "Close from client");
     }
 
     private String getBulletString(int length) {

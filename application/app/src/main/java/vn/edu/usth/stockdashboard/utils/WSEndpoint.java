@@ -9,13 +9,13 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.util.*;
 
-public class ClientEndpoint extends WebSocketClient {
-    private List<DataNotify> dataNotifies = new ArrayList<>();
+public class WSEndpoint extends WebSocketClient {
+    private List<WSDataNotify> dataNotifies = new ArrayList<>();
     private HashMap<String, CustomCandleData> stocksData = new HashMap<>();
     private long lastUpdate = 0L;
     private int interval = 60000;
 
-    public ClientEndpoint(URI serverUri, String[] symbols) {
+    public WSEndpoint(URI serverUri, String[] symbols) {
         super(serverUri);
         assert symbols.length > 0;
         for (String symbol : symbols) {
@@ -123,9 +123,9 @@ public class ClientEndpoint extends WebSocketClient {
 //                System.out.println("\n");
             }
 
-            // Notify all DataNotify objects
-            for (DataNotify dataNotify : dataNotifies) {
-                dataNotify.onNewData(changeData);
+            // Notify all WSDataNotify objects
+            for (WSDataNotify wsDataNotify : dataNotifies) {
+                wsDataNotify.onNewData(changeData);
             }
         }
         catch (JSONException e) {
@@ -141,12 +141,12 @@ public class ClientEndpoint extends WebSocketClient {
         return stocksData.get(symbol);
     }
 
-    public void addDataNotify(DataNotify dataNotify) {
-        dataNotifies.add(dataNotify);
+    public void addDataNotify(WSDataNotify wsDataNotify) {
+        dataNotifies.add(wsDataNotify);
     }
 
-    public void removeDataNotify(DataNotify dataNotify) {
-        dataNotifies.remove(dataNotify);
+    public void removeDataNotify(WSDataNotify wsDataNotify) {
+        dataNotifies.remove(wsDataNotify);
     }
 
     public void setInterval(int interval) {
