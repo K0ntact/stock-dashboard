@@ -160,6 +160,8 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
     public void onResume() {
         super.onResume();
     }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         System.out.println("On Destroy");

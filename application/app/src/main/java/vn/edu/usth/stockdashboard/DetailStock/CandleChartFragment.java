@@ -42,7 +42,7 @@ public class CandleChartFragment extends Fragment implements WSDataNotify {
         if (dateRange.equals("1D")) {
             try {
 //                WSEndpoint = new WSEndpoint(new java.net.URI("ws//146.190.83.69:8080/trade?uuid=bhhoang"), new String[]{symbol});
-                wsEndpoint = new WSEndpoint(new java.net.URI("ws//192.168.242.185:8080/trade?uuid=bhhoangcandle"), new String[]{symbol});
+                wsEndpoint = new WSEndpoint(new java.net.URI("ws://192.168.1.2:8080/trade?uuid=kontact"), new String[]{symbol});
                 wsEndpoint.setInterval(3000);
                 wsEndpoint.addDataNotify(this);
             } catch (URISyntaxException e) {

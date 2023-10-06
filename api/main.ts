@@ -28,11 +28,9 @@ if (import.meta.main) {
         console.log(value);
         
         const { firstname, lastname, username, password, netassest } = value;
-        console.log(firstname, lastname, username, password, netassest);
     
         // const pwdhash = hash(password);
         const query = `INSERT INTO users (firstname, lastname, username, pwdhash, netassest) VALUES ('${firstname}', '${lastname}', '${username}', '${password}', '${netassest}')`;
-        console.log(query);
         
         const result = await db.query(query);
         if (result) {
@@ -50,8 +48,9 @@ if (import.meta.main) {
         // const pwdhash = hash(password);
         const query = `SELECT * FROM users WHERE username='${username}' AND pwdhash='${password}'`;
         const result = await db.execute(query);
+
         if (result != null) {
-            context.response.body = result;
+            context.response.body = result.rows;
         }
         else {
             context.response.body = null;
@@ -66,7 +65,7 @@ if (import.meta.main) {
         const result = await db.execute(query);
     
         if (result != null) {
-            context.response.body = result;
+            context.response.body = result.rows;
         }
         else {
             context.response.body = null;
