@@ -4,7 +4,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D1015">
+    >
 
     <TextView
         android:id="@+id/userNameHeaderMenu"
@@ -25,6 +25,8 @@
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
         android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/show_id"
         android:src="@drawable/eye_icon_open"
         app:layout_constraintBottom_toBottomOf="@+id/userNameHeaderMenu"
         app:layout_constraintStart_toEndOf="@+id/userNameHeaderMenu"

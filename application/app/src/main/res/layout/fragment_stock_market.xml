@@ -6,14 +6,12 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D1015"
     tools:context=".StockMarketFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0D1015">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/stockmarket_toolbar"
@@ -39,10 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/burger_menu"
+            android:contentDescription="Menu"
             android:id="@+id/burgerIcon"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/searchHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -51,7 +50,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/rectangle_2"
         android:hint="@string/search"
-        android:inputType="text"
+        android:gravity="start|center_vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:textColor="@color/white"
@@ -80,7 +79,7 @@
     <com.google.android.material.navigation.NavigationView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="left|start">
+        android:layout_gravity="start|start">
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

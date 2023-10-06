@@ -1,5 +1,6 @@
 package vn.edu.usth.stockdashboard;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -46,6 +48,7 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
     private WSEndpoint wsEndpoint;
     private final ArrayList<StockItem> entries;
     private final StockListAdapter adapter;
+    private boolean isLogin = false;
 
 
     public StockMarketFragment() {
@@ -75,6 +78,8 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+            isLogin = savedInstanceState.getBoolean("isLogin");
         setHasOptionsMenu(true);
         Thread thread = new Thread(() -> {
             try {
@@ -121,12 +126,9 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
         //Header for sidebar
         View listHeaderView = getLayoutInflater().inflate(R.layout.slidebar_nav_header,null,false);
         //back button in header
-        listHeaderView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawerLayout != null){
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                }
+        listHeaderView.setOnClickListener(v -> {
+            if (drawerLayout != null){
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
         expandableListView.addHeaderView(listHeaderView);
@@ -141,17 +143,22 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
             actionBar.setTitle("AHIHI NUMBER 3");
         }
         ImageView imageView = view.findViewById(R.id.burgerIcon);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawerLayout != null) {
-                    if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                    } else {
-                        drawerLayout.openDrawer(GravityCompat.START);
-                    }
+        imageView.setOnClickListener(v -> {
+            if (drawerLayout != null) {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
                 }
             }
+        });
+
+        Button searchBtn = view.findViewById(R.id.searchHeaderBar);
+        searchBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            intent.putExtra("buyStock", false);
+            intent.putExtra("isLogin", isLogin);
+            startActivity(intent);
         });
         return view;
     }
@@ -196,40 +203,31 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
         ExpandableListAdapter expandableListAdapter = new SlideBarExpandableListAdapter(getActivity(), listTitle, listChild);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setGroupIndicator(null); // Set null indicator
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int i) {
-                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setTitle(listTitle.get(i).toString());
-                }
+        expandableListView.setOnGroupExpandListener(i -> {
+            ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(listTitle.get(i));
             }
         });
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int i) {
-                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setTitle("AHIHI");
-                }
+        expandableListView.setOnGroupCollapseListener(i -> {
+            ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle("AHIHI");
             }
         });
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                String selectedItem = ((List)(listChild.get(listTitle.get(i))))
-                        .get(i1).toString();
-                ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setTitle(selectedItem);
-                }
+        expandableListView.setOnChildClickListener((expandableListView, view, i, i1, l) -> {
+            String selectedItem = ((List<?>)(Objects.requireNonNull(listChild.get(listTitle.get(i)))))
+                    .get(i1).toString();
+            ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(selectedItem);
+            }
 
-                if (items[0].equals(listTitle.get(i)))
-                    navigationManager.showFragment(selectedItem);
-                else throw new IllegalArgumentException("Not Supported Fragment");
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return false;
-            }
+            if (items[0].equals(listTitle.get(i)))
+                navigationManager.showFragment(selectedItem);
+            else throw new IllegalArgumentException("Not Supported Fragment");
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return false;
         });
     }
 
@@ -243,7 +241,7 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
                 if (actionBar != null) {
                     actionBar.setTitle("AHIHI NUMBER 2");
                 }
-                getActivity().invalidateOptionsMenu();
+                requireActivity().invalidateOptionsMenu();
             }
 
             @Override
@@ -280,7 +278,7 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
                 "Banks",
                 "Real Estate"
         );
-        List<String> nothing = Arrays.asList();
+        List<String> nothing = Collections.emptyList();
 
         listChild = new TreeMap<>();
 
@@ -305,7 +303,7 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        item.getItemId();
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) return true;
         return super.onOptionsItemSelected(item);
     }

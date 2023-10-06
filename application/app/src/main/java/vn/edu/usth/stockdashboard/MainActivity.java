@@ -6,10 +6,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -25,6 +31,8 @@ public class MainActivity extends AppCompatActivity{
     private boolean isLogin;
     private boolean doubleBackToExitPressedOnce;
     private final HashMap<String, Fragment> fragmentHashMap;
+
+    private int slide = 0;
 
     public MainActivity() {
         isLogin = false;
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity{
 
         if (getIntent().getExtras() != null) {
             isLogin = getIntent().getExtras().getBoolean("isLogin");
+            slide = getIntent().getExtras().getInt("slide");
             if (getIntent().getExtras().getString("userdata") != null)
                 userdata = getIntent().getExtras().getString("userdata");
         }
@@ -62,7 +71,7 @@ public class MainActivity extends AppCompatActivity{
         Fragment stockBuyFragment = new StockBuyFragment();
         stockBuyFragment.setArguments(bundle);
         fragmentHashMap.put("stockBuy", stockBuyFragment);
-
+        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#232b36"));
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -73,7 +82,6 @@ public class MainActivity extends AppCompatActivity{
                     fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     transaction.replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList")));
                     transaction.commit();
-                    overridePendingTransition(0, 0);
                     return true;
                 case R.id.buystockTab:
                     fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -95,7 +103,26 @@ public class MainActivity extends AppCompatActivity{
                     return false;
             }
         });
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList"))).commit();
+        switch (slide){
+            case 0:
+                bottomNavigationView.setSelectedItemId(R.id.listTab);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockList"))).commit();
+                break;
+            case 1:
+                bottomNavigationView.setSelectedItemId(R.id.buystockTab);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("stockBuy"))).commit();
+                break;
+            case 2:
+                bottomNavigationView.setSelectedItemId(R.id.menuTab);
+                if (isLogin) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("menuLogin"))).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, Objects.requireNonNull(fragmentHashMap.get("menuNotLogin"))).commit();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
