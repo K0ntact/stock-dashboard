@@ -14,9 +14,9 @@
     <string name="time_all">ALL</string>
     <string name="usth">USTH</string>
     <string name="usth_retake_corp">USTH Retake Corp.</string>
-    <string name="up_percent">+0.62%</string>
-    <string name="up_val">+1.10</string>
-    <string name="stock_val">179.07</string>
+    <string name="up_percent">+13.04%</string>
+    <string name="up_val">+222.88</string>
+    <string name="stock_val">1885.08</string>
     <string name="open">Open</string>
     <string name="highest">Highest</string>
     <string name="lowest">Lowest</string>
@@ -48,4 +48,6 @@
     <string name="close_drawer">Close Drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="underscore">_</string>
+    <string name="zeroPercent">0%</string>
 </resources>
