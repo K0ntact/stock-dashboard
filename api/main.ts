@@ -1,15 +1,15 @@
 // import WebSocket, { WebSocketServer, WebSocketClient } from "npm:ws@8.14.2";
 import "https://deno.land/std@0.202.0/dotenv/load.ts";
-import { Application, Router } from "https://deno.land/x/oak@v12.6.1/mod.ts";
+import { Application, Context, Router } from "https://deno.land/x/oak@v12.6.1/mod.ts";
 import { DataBase } from "./router/database.ts";
 import { tradeEventHandler } from "./router/trade.ts";
 
 if (import.meta.main) {
     const db_name = "project";
     const db_schema_path = "./model";
-    const db_hostname = "127.0.0.1";
+    const db_hostname = "localhost";
     const db_username = "root";
-    const db_password = "";
+    const db_password = "root";
     const db = new DataBase(
         db_name,
         db_schema_path,
@@ -17,17 +17,55 @@ if (import.meta.main) {
         db_username,
         db_password
     );
-    db.init();
+    db.connect();
 
     const router = new Router();
     const app = new Application();
     router.post("/api/register", async (context) => {
+        console.log("Register");
+        const body = context.request.body();
+        const value = await body.value;
+        const { firstname, lastname, username, password } = value;
+        const netassest = 20000;
+        // const pwdhash = hash(password);
+        const query = `INSERT INTO users (firstname, lastname, username, pwdhash, netassest) VALUES ('${firstname}, ${lastname}, ${username}', '${password}, ${netassest}')`;
+        const result = await db.query(query);
+        if (result) {
+            context.response.body = "OK";
+        }
+        else {
+            context.response.body = "FAIL";
+        }
+    });
+
+    router.post("/api/login", async (context) => {
         const body = context.request.body();
         const value = await body.value;
         const { username, password } = value;
-        const query = `INSERT INTO user (username, password) VALUES ('${username}', '${password}')`;
-        await db.query(query);
-        context.response.body = "OK";
+        // const pwdhash = hash(password);
+        const query = `SELECT * FROM users WHERE username='${username}' AND pwdhash='${password}'`;
+        const result = await db.query(query);
+        if (result) {
+            context.response.body = "OK";
+        }
+        else {
+            context.response.body = "FAIL";
+        }
+    });
+
+    // Get detail of a stock
+    router.get("/api/stock", async (context: Context) => {
+        console.log("Get stock detail");
+        const symbol = context.request.url.searchParams.get("symbol");
+        const query = `SELECT * FROM stock WHERE symbol='${symbol}'`;
+        const result = await db.execute(query);
+    
+        if (result != null) {
+            context.response.body = result;
+        }
+        else {
+            context.response.body = null;
+        }
     });
 
     router.get("/trade", (context) => {
