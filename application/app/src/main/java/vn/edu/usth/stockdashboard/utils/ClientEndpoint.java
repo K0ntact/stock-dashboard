@@ -13,6 +13,7 @@ public class ClientEndpoint extends WebSocketClient {
     private List<DataNotify> dataNotifies = new ArrayList<>();
     private HashMap<String, CustomCandleData> stocksData = new HashMap<>();
     private long lastUpdate = 0L;
+    private int interval = 60000;
 
     public ClientEndpoint(URI serverUri, String[] symbols) {
         super(serverUri);
@@ -63,7 +64,7 @@ public class ClientEndpoint extends WebSocketClient {
                 String symbol = data.getString("s");
 
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - lastUpdate < 50) continue;
+                if (currentTime - lastUpdate < 30) continue;
                 lastUpdate = currentTime;
 
                 CustomCandleData candleData = stocksData.get(symbol);
@@ -79,7 +80,7 @@ public class ClientEndpoint extends WebSocketClient {
                     continue;
                 }
 
-                if (timestamp - candleData.timestamp > 1000) {
+                if (timestamp - candleData.timestamp > this.interval) {
                     // If the time difference is more than 1 minute, reset the values to current price
                     candleData.open = current_price;
                     candleData.close = current_price;
@@ -146,5 +147,13 @@ public class ClientEndpoint extends WebSocketClient {
 
     public void removeDataNotify(DataNotify dataNotify) {
         dataNotifies.remove(dataNotify);
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+    public int getInterval() {
+        return interval;
     }
 }

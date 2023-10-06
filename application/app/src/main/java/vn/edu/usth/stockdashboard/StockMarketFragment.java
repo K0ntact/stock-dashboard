@@ -51,7 +51,6 @@ public class StockMarketFragment extends Fragment implements DataNotify {
 
     public StockMarketFragment() {
         entries = new ArrayList<>();
-        entries.add(new StockItem("VNM", "VanEck VietNam ETF"));
         entries.add(new StockItem("AAPL", "Apple Inc."));
         entries.add(new StockItem("SBUX", "Starbucks Corporation"));
         entries.add(new StockItem("NKE", "NIKE, Inc."));
@@ -87,10 +86,12 @@ public class StockMarketFragment extends Fragment implements DataNotify {
                 // ...
 
                 // If running server on local computer, change IP address to IP address of your computer
-//                String[] symbols = {"VNM","AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"};
-                String[] symbols = {"AAPL"};
+                String[] symbols = {"AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"};
+//                String[] symbols = {"BINANCE:BTCUSDT"};
 //                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
+//                clientEndpoint = new ClientEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), symbols);
                 clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), symbols);
+                clientEndpoint.setInterval(3000);
                 clientEndpoint.addDataNotify(this);
                 clientEndpoint.connect();
             } catch (URISyntaxException e) {
@@ -99,7 +100,6 @@ public class StockMarketFragment extends Fragment implements DataNotify {
         });
         thread.start();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
