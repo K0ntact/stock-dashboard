@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity{
         Fragment stockBuyFragment = new StockBuyFragment();
         stockBuyFragment.setArguments(bundle);
         fragmentHashMap.put("stockBuy", stockBuyFragment);
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#232b36"));
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
