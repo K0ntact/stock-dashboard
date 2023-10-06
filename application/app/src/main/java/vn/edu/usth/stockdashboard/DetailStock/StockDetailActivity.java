@@ -37,11 +37,6 @@ public class StockDetailActivity extends AppCompatActivity implements WSDataNoti
 
         thread = new Thread(() -> {
             try {
-                clientEndpoint = new ClientEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), new String[]{stockName});
-                clientEndpoint.addDataNotify(this);
-                clientEndpoint.connect();
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
 //                WSEndpoint = new WSEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), new String[]{stockName});
                 wsEndpoint = new WSEndpoint(new URI("ws://192.168.1.155:8080/trade?uuid=bhhoang"), new String[]{stockName});
                 wsEndpoint.addDataNotify(this);
