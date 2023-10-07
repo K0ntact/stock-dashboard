@@ -25,11 +25,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
 import androidx.recyclerview.widget.SimpleItemAnimator;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import vn.edu.usth.stockdashboard.HelperSideBar.FragmentNavigationManager;
 import vn.edu.usth.stockdashboard.InterfaceSideBar.NavigationManager;
 import vn.edu.usth.stockdashboard.utils.*;
@@ -53,25 +57,24 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
 
     public StockMarketFragment() {
         entries = new ArrayList<>();
-        entries.add(new StockItem("AAPL", "Apple Inc."));
-        entries.add(new StockItem("SBUX", "Starbucks Corporation"));
-        entries.add(new StockItem("NKE", "NIKE, Inc."));
-        entries.add(new StockItem("TSLA", "Tesla, Inc."));
-        entries.add(new StockItem("AMZN", "Amazon.com, Inc."));
-        entries.add(new StockItem("META", "Meta Platforms, Inc."));
-        entries.add(new StockItem("GOOGL", "Alphabet Inc."));
-        entries.add(new StockItem("MSFT", "Microsoft Corporation"));
-        entries.add(new StockItem("NVDA", "NVIDIA Corporation"));
-        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc."));
-        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited"));
-        entries.add(new StockItem("V", "Visa Inc."));
-        entries.add(new StockItem("WMT", "Walmart Inc."));
-//        entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS"));
-//        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS"));
-//        entries.add(new StockItem("BINANCE:BNBUSDT", "Binance Coin / TetherUS"));
-//        entries.add(new StockItem("BINANCE:ADAUSDT", "Cardano / TetherUS"));
-//        entries.add(new StockItem("BINANCE:DOTUSDT", "Polkadot / TetherUS"));
-//        entries.add(new StockItem("BINANCE:XRPUSDT", "XRP / TetherUS"));
+        entries.add(new StockItem("AAPL", "Apple Inc.", 177.87F));
+        entries.add(new StockItem("NKE", "NIKE, Inc.", 97.32F));
+        entries.add(new StockItem("TSLA", "Tesla, Inc.", 206.73F));
+        entries.add(new StockItem("AMZN", "Amazon.com, Inc.", 128.1F));
+        entries.add(new StockItem("META", "Meta Platforms, Inc.", 315.69F));
+        entries.add(new StockItem("GOOGL", "Alphabet Inc.", 137.63F));
+        entries.add(new StockItem("MSFT", "Microsoft Corporation", 327.43F));
+        entries.add(new StockItem("NVDA", "NVIDIA Corporation", 457.67F));
+        entries.add(new StockItem("PYPL", "PayPal Holdings, Inc.", 57.76F));
+        entries.add(new StockItem("TSM", "Taiwan Semiconductor Manufacturing Company Limited", 89.29F));
+        entries.add(new StockItem("V", "Visa Inc.", 235.24F));
+        entries.add(new StockItem("WMT", "Walmart Inc.", 156.41F));
+        entries.add(new StockItem("BINANCE:BTCUSDT", "Bitcoin / TetherUS", 27886.16F));
+        entries.add(new StockItem("BINANCE:ETHUSDT", "Ethereum / TetherUS", 1642.09F));
+        entries.add(new StockItem("BINANCE:BNBUSDT", "Binance Coin / TetherUS", 213.4F));
+        entries.add(new StockItem("BINANCE:ADAUSDT", "Cardano / TetherUS", 0.2463F));
+        entries.add(new StockItem("BINANCE:DOTUSDT", "Polkadot / TetherUS",4.07F));
+        entries.add(new StockItem("BINANCE:XRPUSDT", "XRP / TetherUS", 0.5237F));
         adapter = new StockListAdapter(entries);
     }
 
@@ -83,24 +86,20 @@ public class StockMarketFragment extends Fragment implements WSDataNotify {
         setHasOptionsMenu(true);
         Thread thread = new Thread(() -> {
             try {
-                // Should query last price from database first,
-                // because with websocket the price only update when there is a new trade,
-                // so for small stock like VNM, the price will stay at 0 for a while.
-                // DB query here
-                // ...
-
-                // If running server on local computer, change IP address to IP address of your computer
-                String[] symbols = {"AAPL", "SBUX", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT"};
+                String[] symbols = {"AAPL", "NKE", "TSLA", "AMZN", "META", "GOOGL", "MSFT", "NVDA", "PYPL", "TSM", "V", "WMT", "BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
 //                String[] symbols = {"BINANCE:BTCUSDT"};
 //                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
 //                WSEndpoint = new WSEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), symbols);
-                wsEndpoint = new WSEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), symbols);
+                wsEndpoint = new WSEndpoint(new URI("ws://192.168.158.185:8080/trade?uuid=bhhoang"), symbols);
                 wsEndpoint.setInterval(3000);
                 wsEndpoint.addDataNotify(this);
                 wsEndpoint.connect();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
+//            catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
         });
         thread.start();
     }

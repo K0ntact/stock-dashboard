@@ -49,7 +49,8 @@ public class LogInActivity extends AppCompatActivity implements RestDataNotify {
     @Override
     public void onRestDataReceived(String response) {
         runOnUiThread(() -> {
-            if (response.equals("ERROR")) {
+            System.out.println("THIS IS THE" + response);
+            if (response.equals("ERROR") || response.equals("[]d")) {
                 Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();

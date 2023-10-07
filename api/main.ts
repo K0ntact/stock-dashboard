@@ -72,6 +72,32 @@ if (import.meta.main) {
         }
     });
 
+    // Get closed price of a stock
+    router.get("/api/stock/close", async (context: Context) => {
+        console.log("Get stock closed price");
+        const symbol = context.request.url.searchParams.get("symbol");
+        const query = `SELECT c.close FROM candle c
+                        WHERE c.stock_id = (
+                            SELECT id FROM stock
+                            WHERE symbol = '${symbol}'
+                        )
+                        AND c.timestamp = (
+                            SELECT MAX(timestamp)
+                            FROM Candle
+                            WHERE stock_id = 3
+                        );`;
+        const result = await db.execute(query);
+    
+        if (result != null) {
+            // append symbol to the result
+            result.rows[0].symbol = symbol;
+            context.response.body = result.rows;
+        }
+        else {
+            context.response.body = null;
+        }
+    });
+
     router.get("/trade", (context) => {
         try {
             tradeEventHandler(context);

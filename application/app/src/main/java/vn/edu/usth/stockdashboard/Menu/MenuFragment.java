@@ -30,7 +30,6 @@ public class MenuFragment extends Fragment {
         if (savedInstanceState != null)
             isLogin = savedInstanceState.getBoolean("isLogin");
 
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuBeforeLoginFragment()).commit();
         if (isLogin) {
             String userdata = savedInstanceState.getString("userdata");
 
@@ -44,6 +43,8 @@ public class MenuFragment extends Fragment {
             transaction.replace(R.id.menuFragmentContainer, menuAfterLoginFragment);
             requireActivity().getSupportFragmentManager().popBackStack();
             transaction.commit();
+        } else {
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.menuFragmentContainer, new MenuBeforeLoginFragment()).commit();
         }
 
         TextView logout = view.findViewById(R.id.logoutView);

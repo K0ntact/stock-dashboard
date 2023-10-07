@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DbQuery {
     private static DbQuery instance;
-    private String baseUrl = "http://192.168.1.2:8080";
+    private String baseUrl = "http://192.168.158.185:8080";
     private final List<RestDataNotify> dataNotifies = new ArrayList<>();
 
     private DbQuery() {
@@ -77,6 +77,20 @@ public class DbQuery {
 
     public void getStockInfo(String symbol) throws IOException {
         URL url = new URL(baseUrl + "/api/stock?symbol=" + symbol);
+        String response = getResponseString(url);
+        if (response == null) notifyDataReceived("ERROR");
+        else notifyDataReceived(response);
+    }
+
+    public void getStockInfo(String symbol, String dateRange) throws IOException {
+        URL url = new URL(baseUrl + "/api/stock?symbol=" + symbol + "&dateRange=" + dateRange);
+        String response = getResponseString(url);
+        if (response == null) notifyDataReceived("ERROR");
+        else notifyDataReceived(response);
+    }
+
+    public void getClosePrice(String symbol) throws IOException {
+        URL url = new URL(baseUrl + "/api/stock/close?symbol=" + symbol);
         String response = getResponseString(url);
         if (response == null) notifyDataReceived("ERROR");
         else notifyDataReceived(response);

@@ -40,7 +40,7 @@ public class StockDetailActivity extends AppCompatActivity implements WSDataNoti
         thread = new Thread(() -> {
             try {
 //                WSEndpoint = new WSEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), new String[]{stockName});
-                wsEndpoint = new WSEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), new String[]{stockName});
+                wsEndpoint = new WSEndpoint(new URI("ws://192.168.158.185:8080/trade?uuid=bhhoang"), new String[]{stockName});
                 wsEndpoint.addDataNotify(this);
                 wsEndpoint.connect();
                 DbQuery dbQuery = DbQuery.getInstance();

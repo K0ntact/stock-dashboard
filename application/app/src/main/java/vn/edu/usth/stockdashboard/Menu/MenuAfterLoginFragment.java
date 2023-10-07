@@ -51,7 +51,7 @@ public class MenuAfterLoginFragment extends Fragment implements WSDataNotify {
 //                String[] symbols = {"BINANCE:BTCUSDT"};
 //                String[] symbols = {"BINANCE:BTCUSDT", "BINANCE:ETHUSDT", "BINANCE:BNBUSDT", "BINANCE:ADAUSDT", "BINANCE:DOTUSDT", "BINANCE:XRPUSDT"};
 //                WSEndpoint = new WSEndpoint(new URI("ws://146.190.83.69:8080/trade?uuid=bhhoang"), symbols);
-                wsEndpoint = new WSEndpoint(new URI("ws://192.168.1.2:8080/trade?uuid=bhhoang"), symbols);
+                wsEndpoint = new WSEndpoint(new URI("ws://192.168.158.185:8080/trade?uuid=bhhoang"), symbols);
                 wsEndpoint.setInterval(3000);
                 wsEndpoint.addDataNotify(this);
                 wsEndpoint.connect();

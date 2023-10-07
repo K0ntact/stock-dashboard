@@ -63,9 +63,9 @@ public class WSEndpoint extends WebSocketClient {
                 JSONObject data = jsonArray.getJSONObject(i);
                 String symbol = data.getString("s");
 
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastUpdate < 30) continue;
-                lastUpdate = currentTime;
+//                long currentTime = System.currentTimeMillis();
+//                if (currentTime - lastUpdate < 30) continue;
+//                lastUpdate = currentTime;
 
                 CustomCandleData candleData = stocksData.get(symbol);
                 if (candleData == null) continue;
